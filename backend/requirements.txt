@@ -1,0 +1,3 @@
+# Pin when real ETL lands. Sample generator uses stdlib only.
+# pandas>=2.2.0
+# requests>=2.31.0

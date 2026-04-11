@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "industry",
+    "degree_level": "all",
+    "source": "sample",
+    "source_url": null,
+    "methodology": "Synthetic counts for UI development. Replace with UW survey + LinkedIn rollups.",
+    "disclaimer": "Not real UW\u2013Madison statistics."
+  },
+  "charts": {
+    "by_industry": {
+      "type": "bar",
+      "title": "Alumni by industry (sample)",
+      "data": [
+        {
+          "label": "Technology",
+          "value": 4200
+        },
+        {
+          "label": "Healthcare",
+          "value": 3100
+        },
+        {
+          "label": "Finance",
+          "value": 2400
+        },
+        {
+          "label": "Education",
+          "value": 1900
+        },
+        {
+          "label": "Manufacturing",
+          "value": 1200
+        },
+        {
+          "label": "Other",
+          "value": 2800
+        }
+      ]
+    }
+  }
+}

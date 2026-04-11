@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "international_outcomes",
+    "degree_level": "all",
+    "source": "sample",
+    "methodology": "Synthetic destination-country mix; production data may be LinkedIn-filtered aggregates.",
+    "disclaimer": "International \u2018where they go\u2019 is often incomplete in official sources; any LinkedIn layer is a biased sample."
+  },
+  "charts": {
+    "destination_country": {
+      "type": "bar",
+      "title": "Post-UW country \u2014 sample proxy",
+      "data": [
+        {
+          "label": "United States",
+          "value": 450
+        },
+        {
+          "label": "India",
+          "value": 180
+        },
+        {
+          "label": "China",
+          "value": 120
+        },
+        {
+          "label": "South Korea",
+          "value": 55
+        },
+        {
+          "label": "Canada",
+          "value": 48
+        },
+        {
+          "label": "Other",
+          "value": 210
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "postgrad",
+    "degree_level": "all",
+    "source": "sample",
+    "methodology": "Synthetic continuation rate and degree-type mix.",
+    "disclaimer": "Not from an official first-destination survey."
+  },
+  "charts": {
+    "continuation_rate": {
+      "type": "metric",
+      "title": "Continuing formal education within 1 year (sample)",
+      "value": 22.4,
+      "unit": "percent"
+    },
+    "by_degree_type": {
+      "type": "bar",
+      "title": "Next credential type (sample)",
+      "data": [
+        {
+          "label": "Master\u2019s",
+          "value": 890
+        },
+        {
+          "label": "Doctorate",
+          "value": 210
+        },
+        {
+          "label": "Professional (JD/MD/MBA)",
+          "value": 140
+        },
+        {
+          "label": "Certificate / other",
+          "value": 95
+        }
+      ]
+    }
+  }
+}
