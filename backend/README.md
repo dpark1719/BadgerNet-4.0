@@ -19,14 +19,23 @@ Writes JSON to `frontend/public/data/`:
 python scripts/generate_sample_data.py
 ```
 
+## Stubs (extend next)
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/ipeds_origins.py` | Instructions + placeholder for IPEDS → `origins_*.json` |
+| `scripts/linkedin_harvest.py` | Placeholder for aggregate-only Playwright harvest (no API) |
+
+Copy `backend/.env.example` to `backend/.env` for local automation vars (never commit `.env`).
+
 ## Layout
 
 | Path | Purpose |
 |------|---------|
 | `scripts/generate_sample_data.py` | Deterministic sample bundles for UI dev |
-| `scripts/` | Add IPEDS pulls, PDF parsers, LinkedIn rollup jobs here |
+| `scripts/` | IPEDS parsers, PDF extractors, LinkedIn rollup jobs |
 | `../data/raw/` | Gitignored cache for CSVs / exports (create locally) |
 
-## LinkedIn / scraping
+## LinkedIn / automation
 
-If you add harvest scripts, keep output **aggregated only** and document filters in each JSON `meta.methodology`. Do not commit credentials or raw profile dumps.
+Keep output **aggregated only**; document filters in `meta.methodology` and `meta.filter_fingerprint`. Do not commit credentials, `storage_state`, or raw HTML.

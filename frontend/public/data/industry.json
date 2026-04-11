@@ -7,13 +7,13 @@
     "degree_level": "all",
     "source": "sample",
     "source_url": null,
-    "methodology": "Synthetic counts for UI development. Replace with UW survey + LinkedIn rollups.",
+    "methodology": "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups.",
     "disclaimer": "Not real UW\u2013Madison statistics."
   },
   "charts": {
     "by_industry": {
       "type": "bar",
-      "title": "Alumni by industry (sample)",
+      "title": "Alumni by industry (sample, latest snapshot)",
       "data": [
         {
           "label": "Technology",
@@ -38,6 +38,90 @@
         {
           "label": "Other",
           "value": 2800
+        }
+      ]
+    },
+    "tech_share_trend": {
+      "type": "trend",
+      "title": "Technology sector share \u2014 synthetic trend (% of known industry)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 28.0,
+          "w5y": 26.2,
+          "w10y": 24.8
+        },
+        {
+          "year": 2017,
+          "w1y": 28.15,
+          "w5y": 26.32,
+          "w10y": 24.9
+        },
+        {
+          "year": 2018,
+          "w1y": 28.3,
+          "w5y": 26.44,
+          "w10y": 25.0
+        },
+        {
+          "year": 2019,
+          "w1y": 28.45,
+          "w5y": 26.56,
+          "w10y": 25.1
+        },
+        {
+          "year": 2020,
+          "w1y": 28.6,
+          "w5y": 26.68,
+          "w10y": 25.2
+        },
+        {
+          "year": 2021,
+          "w1y": 28.75,
+          "w5y": 26.8,
+          "w10y": 25.3
+        },
+        {
+          "year": 2022,
+          "w1y": 28.9,
+          "w5y": 26.92,
+          "w10y": 25.4
+        },
+        {
+          "year": 2023,
+          "w1y": 29.05,
+          "w5y": 27.04,
+          "w10y": 25.5
+        },
+        {
+          "year": 2024,
+          "w1y": 29.2,
+          "w5y": 27.16,
+          "w10y": 25.6
+        },
+        {
+          "year": 2025,
+          "w1y": 29.35,
+          "w5y": 27.28,
+          "w10y": 25.7
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
         }
       ]
     }

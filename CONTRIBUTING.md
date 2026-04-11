@@ -11,11 +11,11 @@
 
 ## How to avoid problems when both work at once
 
-1. **Stay in your lane (directories).** The only shared artifact that changes often is `frontend/public/data/*.json`. David owns regenerating it; Rohan consumes it. If Rohan needs new fields, open an issue or ping David and update [DATA_CONTRACT.md](./DATA_CONTRACT.md) first.
+1. **Stay in your lane (directories).** The shared artifact that changes often is `frontend/public/data/*.json` (six tab bundles plus `meta.json`). David owns regenerating it; Rohan consumes it. If Rohan needs new fields, update [DATA_CONTRACT.md](./DATA_CONTRACT.md) first and ping David.
 
 2. **Short-lived merges.** At least once a day (or before a big UI change): merge `main` into your branch (`git merge main` or `git rebase main`) so conflicts stay small.
 
-3. **Coordinate contract changes.** If either of you changes JSON shape, update `DATA_CONTRACT.md` in the **same PR** as the producer or consumer change, so the other person isn’t surprised.
+3. **Coordinate contract changes.** If either of you changes JSON shape, update `DATA_CONTRACT.md` in the **same PR** as the producer or consumer change.
 
 4. **Don’t force-push shared branches.** Avoid `git push --force` on `main`, `david/backend`, or `rohan/frontend` unless you both agree.
 
@@ -39,12 +39,10 @@ git push -u origin david/backend
 
 Then open a PR into `main` on GitHub.
 
-## Adding the GitHub remote
-
-When the code repo exists:
+## Remote
 
 ```bash
-git remote add origin https://github.com/dpark1719/<repo-name>.git
+git remote add origin https://github.com/dpark1719/BadgerNet-4.0.git
 git push -u origin main
 git push -u origin david/backend
 git push -u origin rohan/frontend

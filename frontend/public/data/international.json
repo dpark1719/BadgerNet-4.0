@@ -6,13 +6,14 @@
     "tab": "international_outcomes",
     "degree_level": "all",
     "source": "sample",
-    "methodology": "Synthetic destination-country mix; production data may be LinkedIn-filtered aggregates.",
-    "disclaimer": "International \u2018where they go\u2019 is often incomplete in official sources; any LinkedIn layer is a biased sample."
+    "filter_fingerprint": "sample:no_filters",
+    "methodology": "Population (target): non\u2013U.S. citizens who came from abroad before UW. Destination after UW: synthetic country mix; production = LinkedIn aggregate harvest with documented filters (no API). Replace with real rollups only.",
+    "disclaimer": "Approximate and incomplete. LinkedIn-visible alumni are not a census; citizenship and \u2018from abroad\u2019 are proxy-filtered, not administrative records."
   },
   "charts": {
     "destination_country": {
       "type": "bar",
-      "title": "Post-UW country \u2014 sample proxy",
+      "title": "Post-UW country \u2014 sample (non-U.S. citizens from abroad)",
       "data": [
         {
           "label": "United States",
@@ -37,6 +38,90 @@
         {
           "label": "Other",
           "value": 210
+        }
+      ]
+    },
+    "return_vs_stay_trend": {
+      "type": "trend",
+      "title": "Synthetic trend: share remaining in U.S. vs leaving (proxy metric)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 62.0,
+          "w5y": 58.0,
+          "w10y": 55.0
+        },
+        {
+          "year": 2017,
+          "w1y": 62.4,
+          "w5y": 58.35,
+          "w10y": 55.3
+        },
+        {
+          "year": 2018,
+          "w1y": 62.8,
+          "w5y": 58.7,
+          "w10y": 55.6
+        },
+        {
+          "year": 2019,
+          "w1y": 63.2,
+          "w5y": 59.05,
+          "w10y": 55.9
+        },
+        {
+          "year": 2020,
+          "w1y": 63.6,
+          "w5y": 59.4,
+          "w10y": 56.2
+        },
+        {
+          "year": 2021,
+          "w1y": 64.0,
+          "w5y": 59.75,
+          "w10y": 56.5
+        },
+        {
+          "year": 2022,
+          "w1y": 64.4,
+          "w5y": 60.1,
+          "w10y": 56.8
+        },
+        {
+          "year": 2023,
+          "w1y": 64.8,
+          "w5y": 60.45,
+          "w10y": 57.1
+        },
+        {
+          "year": 2024,
+          "w1y": 65.2,
+          "w5y": 60.8,
+          "w10y": 57.4
+        },
+        {
+          "year": 2025,
+          "w1y": 65.6,
+          "w5y": 61.15,
+          "w10y": 57.7
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
         }
       ]
     }

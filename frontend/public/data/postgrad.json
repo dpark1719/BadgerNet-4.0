@@ -6,7 +6,7 @@
     "tab": "postgrad",
     "degree_level": "all",
     "source": "sample",
-    "methodology": "Synthetic continuation rate and degree-type mix.",
+    "methodology": "Synthetic continuation rate, degree-type mix, and trend.",
     "disclaimer": "Not from an official first-destination survey."
   },
   "charts": {
@@ -15,6 +15,90 @@
       "title": "Continuing formal education within 1 year (sample)",
       "value": 22.4,
       "unit": "percent"
+    },
+    "continuation_trend": {
+      "type": "trend",
+      "title": "Continuing education rate \u2014 synthetic (% of cohort)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 19.5,
+          "w5y": 20.1,
+          "w10y": 21.0
+        },
+        {
+          "year": 2017,
+          "w1y": 19.75,
+          "w5y": 20.32,
+          "w10y": 21.18
+        },
+        {
+          "year": 2018,
+          "w1y": 20.0,
+          "w5y": 20.54,
+          "w10y": 21.36
+        },
+        {
+          "year": 2019,
+          "w1y": 20.25,
+          "w5y": 20.76,
+          "w10y": 21.54
+        },
+        {
+          "year": 2020,
+          "w1y": 20.5,
+          "w5y": 20.98,
+          "w10y": 21.72
+        },
+        {
+          "year": 2021,
+          "w1y": 20.75,
+          "w5y": 21.2,
+          "w10y": 21.9
+        },
+        {
+          "year": 2022,
+          "w1y": 21.0,
+          "w5y": 21.42,
+          "w10y": 22.08
+        },
+        {
+          "year": 2023,
+          "w1y": 21.25,
+          "w5y": 21.64,
+          "w10y": 22.26
+        },
+        {
+          "year": 2024,
+          "w1y": 21.5,
+          "w5y": 21.86,
+          "w10y": 22.44
+        },
+        {
+          "year": 2025,
+          "w1y": 21.75,
+          "w5y": 22.08,
+          "w10y": 22.62
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
+      ]
     },
     "by_degree_type": {
       "type": "bar",

@@ -60,6 +60,7 @@ export default function App() {
     site.status === 'ok' ? site.data.methodology_blurb : ''
   const ghProject =
     site.status === 'ok' ? site.data.github_project : ''
+  const ghRepo = site.status === 'ok' ? site.data.github_repo : ''
 
   return (
     <div className="app">
@@ -119,6 +120,14 @@ export default function App() {
                   <span className="meta-label">Source</span>
                   <span className="meta-value">{bundle.data.meta.source}</span>
                 </div>
+                {bundle.data.meta.filter_fingerprint && (
+                  <div className="meta-span-2">
+                    <span className="meta-label">Filter fingerprint</span>
+                    <span className="meta-value mono">
+                      {bundle.data.meta.filter_fingerprint}
+                    </span>
+                  </div>
+                )}
                 {bundle.data.meta.academic_year && (
                   <div>
                     <span className="meta-label">Academic year</span>
@@ -167,6 +176,13 @@ export default function App() {
         {methodOpen && (
           <div className="footer-panel">
             <p>{methodology}</p>
+            {ghRepo && (
+              <p>
+                <a className="link" href={ghRepo}>
+                  Source repository
+                </a>
+              </p>
+            )}
             {ghProject && (
               <p>
                 <a className="link" href={ghProject}>
@@ -189,5 +205,7 @@ const fallbackTabs = [
   { id: 'industry', label: 'Industry' },
   { id: 'postgrad', label: 'Post-grad education' },
   { id: 'international', label: 'International outcomes' },
-  { id: 'origins', label: 'Student origins' },
+  { id: 'origins_undergrad', label: 'Origins — UG' },
+  { id: 'origins_graduate', label: 'Origins — Grad' },
+  { id: 'origins_doctorate', label: 'Origins — PhD' },
 ]

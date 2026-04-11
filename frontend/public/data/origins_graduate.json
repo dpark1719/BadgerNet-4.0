@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "origins_graduate",
+    "degree_level": "graduate",
+    "source": "sample",
+    "methodology": "Synthetic US state + country origin for graduate enrollment. Production: IPEDS Fall Enrollment / CDS by level (UnitID 240444 = UW\u2013Madison).",
+    "disclaimer": "Not official IPEDS figures; for UI development only."
+  },
+  "charts": {
+    "us_states": {
+      "type": "bar",
+      "title": "US home state \u2014 enrolled (sample, Grad)",
+      "data": [
+        {
+          "label": "Wisconsin",
+          "value": 3444
+        },
+        {
+          "label": "Illinois",
+          "value": 882
+        },
+        {
+          "label": "Minnesota",
+          "value": 411
+        },
+        {
+          "label": "California",
+          "value": 302
+        },
+        {
+          "label": "Other",
+          "value": 2268
+        }
+      ]
+    },
+    "countries": {
+      "type": "bar",
+      "title": "Country of origin \u2014 international enrolled (sample, Grad)",
+      "data": [
+        {
+          "label": "China",
+          "value": 504
+        },
+        {
+          "label": "India",
+          "value": 373
+        },
+        {
+          "label": "South Korea",
+          "value": 172
+        },
+        {
+          "label": "Canada",
+          "value": 109
+        },
+        {
+          "label": "Other",
+          "value": 630
+        }
+      ]
+    },
+    "enrollment_intl_trend": {
+      "type": "trend",
+      "title": "International enrollment index \u2014 synthetic (Grad)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 42.0,
+          "w5y": 41.16,
+          "w10y": 39.9
+        },
+        {
+          "year": 2017,
+          "w1y": 42.34,
+          "w5y": 41.45,
+          "w10y": 40.15
+        },
+        {
+          "year": 2018,
+          "w1y": 42.67,
+          "w5y": 41.75,
+          "w10y": 40.4
+        },
+        {
+          "year": 2019,
+          "w1y": 43.01,
+          "w5y": 42.04,
+          "w10y": 40.66
+        },
+        {
+          "year": 2020,
+          "w1y": 43.34,
+          "w5y": 42.34,
+          "w10y": 40.91
+        },
+        {
+          "year": 2021,
+          "w1y": 43.68,
+          "w5y": 42.63,
+          "w10y": 41.16
+        },
+        {
+          "year": 2022,
+          "w1y": 44.02,
+          "w5y": 42.92,
+          "w10y": 41.41
+        },
+        {
+          "year": 2023,
+          "w1y": 44.35,
+          "w5y": 43.22,
+          "w10y": 41.66
+        },
+        {
+          "year": 2024,
+          "w1y": 44.69,
+          "w5y": 43.51,
+          "w10y": 41.92
+        },
+        {
+          "year": 2025,
+          "w1y": 45.02,
+          "w5y": 43.81,
+          "w10y": 42.17
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
+      ]
+    }
+  }
+}

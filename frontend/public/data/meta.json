@@ -3,8 +3,9 @@
     "name": "BadgerNet 4.0",
     "tagline": "Where UW\u2013Madison students and alumni go \u2014 data-driven views (in progress)."
   },
+  "github_repo": "https://github.com/dpark1719/BadgerNet-4.0",
   "github_project": "https://github.com/users/dpark1719/projects/2",
-  "methodology_blurb": "This MVP loads static JSON from /data. Industry and international outcomes may later combine UW-published reports with aggregated LinkedIn signals. Origins should track IPEDS/CDS enrollment. Every chart should cite its source and display disclaimers where samples are biased or incomplete.",
+  "methodology_blurb": "This app loads static JSON from /data. Six top-level tabs: Industry, Post-grad education, International outcomes, and three Student origins levels (UG, grad, doctorate). Trend charts use 1y / 5y / 10y-style series (synthetic until real pipelines land). International outcomes target non\u2013U.S. citizens from abroad; LinkedIn harvest is aggregate-only, no API.",
   "tabs": [
     {
       "id": "industry",
@@ -19,8 +20,16 @@
       "label": "International outcomes"
     },
     {
-      "id": "origins",
-      "label": "Student origins"
+      "id": "origins_undergrad",
+      "label": "Origins \u2014 Undergraduate"
+    },
+    {
+      "id": "origins_graduate",
+      "label": "Origins \u2014 Graduate"
+    },
+    {
+      "id": "origins_doctorate",
+      "label": "Origins \u2014 Doctorate"
     }
   ]
 }
