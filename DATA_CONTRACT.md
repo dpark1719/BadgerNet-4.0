@@ -41,6 +41,11 @@ Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each f
 
 Charts in `international.json` should describe methodology for: **non–U.S. citizens who originated from abroad** (pre-UW origin outside the United States), then **post-UW destination** (e.g. country/region). LinkedIn proxies are approximate; state limitations in `meta.disclaimer`.
 
+Common chart keys:
+
+- `ipeds_foreign_context` — IPEDS DRVEF enrollment-related aggregate (not destination).
+- `aggregate_destination_proxy` — user-supplied country/region roll-up (e.g. LinkedIn Insights export), merged by `ingest_international_destinations_csv.py`.
+
 ## Chart types
 
 ### `bar`

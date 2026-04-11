@@ -32,7 +32,7 @@ python3 -m pip install -r backend/requirements.txt
 python3 backend/scripts/build_public_data.py
 ```
 
-See [backend/scripts/DATA_PIPELINES.md](backend/scripts/DATA_PIPELINES.md) for UW CSV ingest, LinkedIn CSV → majors, and optional College Scorecard.
+See [backend/scripts/DATA_PIPELINES.md](backend/scripts/DATA_PIPELINES.md) for UW CSV ingest, LinkedIn CSV → majors, and optional College Scorecard. Aggregate-only / no mass scraping: [backend/scripts/POLICY_AGGREGATES_ONLY.md](backend/scripts/POLICY_AGGREGATES_ONLY.md).
 
 ### Backend (sample-only demo)
 

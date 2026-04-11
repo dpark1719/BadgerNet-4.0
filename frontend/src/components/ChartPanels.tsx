@@ -195,11 +195,14 @@ export function renderChart(key: string, spec: ChartSpec) {
   }
   if (spec.type === 'bar') {
     const isEmployers = key === 'top_employers'
+    const isIntlProxy = key === 'aggregate_destination_proxy'
     return (
       <BarPanel
         key={key}
         spec={spec}
-        valueLabel={isEmployers ? 'Estimated count' : 'Count'}
+        valueLabel={
+          isEmployers || isIntlProxy ? 'Estimated count' : 'Count'
+        }
       />
     )
   }

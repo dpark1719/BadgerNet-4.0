@@ -47,7 +47,12 @@ def main() -> None:
     print("\nDone. Optional next steps:")
     print("  COLLEGE_SCORECARD_API_KEY=… python backend/scripts/fetch_college_scorecard.py")
     print("  python backend/scripts/ingest_uw_postgrad.py --csv path/to/fds.csv")
+    print("  python backend/scripts/ingest_international_destinations_csv.py --csv path/to/countries.csv")
+    print("  python backend/scripts/ingest_industry_uw_csv.py --csv path/to/industry_bars.csv")
+    print("  python backend/scripts/ingest_origins_level_csv.py --level graduate --csv path/to/cds_extract.csv")
+    print("  python backend/scripts/merge_notable_manual.py --manual path/to/notable_extra.json")
     print("  python backend/scripts/linkedin_playwright_harvest.py --dry-run")
+    print("Policy: backend/scripts/POLICY_AGGREGATES_ONLY.md")
 
 
 if __name__ == "__main__":

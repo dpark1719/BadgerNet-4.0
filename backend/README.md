@@ -47,8 +47,15 @@ Starting points: [data.wisc.edu — First Destination Survey](https://data.wisc.
 
 ## LinkedIn aggregates (no API)
 
-1. Implement scraping in [`scripts/linkedin_playwright_harvest.py`](scripts/linkedin_playwright_harvest.py) (Playwright + `LINKEDIN_STORAGE_STATE`), **or** export counts manually.
+1. Use LinkedIn (or similar) **facet / roll-up exports** you are permitted to save, **or** manual counts — not mass profile harvesting (see [`scripts/POLICY_AGGREGATES_ONLY.md`](scripts/POLICY_AGGREGATES_ONLY.md)).
 2. Emit a CSV and run [`scripts/linkedin_aggregate_to_majors.py`](scripts/linkedin_aggregate_to_majors.py) → `frontend/public/data/majors/*.json`.
+
+## More CSV ingests
+
+- **International destination proxy** (after `build_international_proxy.py`): [`ingest_international_destinations_csv.py`](scripts/ingest_international_destinations_csv.py) — `country,count` → chart `aggregate_destination_proxy`.
+- **Industry / employers (all majors):** [`ingest_industry_uw_csv.py`](scripts/ingest_industry_uw_csv.py) — `chart_key,label,value`.
+- **Grad / PhD origins:** [`ingest_origins_level_csv.py`](scripts/ingest_origins_level_csv.py) — paste from CDS Excel → `kind,label,value`.
+- **Notable list:** [`merge_notable_manual.py`](scripts/merge_notable_manual.py) after Wikidata.
 
 ## Optional College Scorecard
 
