@@ -1,4 +1,12 @@
 import type { NotableBundle, NotableEntry } from '../types/data'
+import { publicPath } from '../publicPath'
+
+function resolvePhotoSrc(url: string | undefined): string | undefined {
+  if (!url) return undefined
+  if (/^https?:\/\//i.test(url)) return url
+  if (url.startsWith('/')) return publicPath(url.replace(/^\/+/, ''))
+  return url
+}
 
 function notabilityLabel(n: NotableEntry['notability']): string {
   switch (n) {
@@ -33,7 +41,7 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
             <div className="notable-card-head">
               {entry.photo_url ? (
                 <img
-                  src={entry.photo_url}
+                  src={resolvePhotoSrc(entry.photo_url)}
                   alt=""
                   className="notable-photo"
                   width={56}

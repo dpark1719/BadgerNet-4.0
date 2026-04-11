@@ -9,6 +9,7 @@ import {
   majorsIndexPath,
   tabDataPath,
 } from './types/data'
+import { publicPath } from './publicPath'
 import './App.css'
 
 type LoadState<T> =
@@ -48,7 +49,7 @@ export default function App() {
   useEffect(() => {
     let cancelled = false
     setSite({ status: 'loading' })
-    loadJson<SiteMeta>('/data/meta.json')
+    loadJson<SiteMeta>(publicPath('data/meta.json'))
       .then((data) => {
         if (!cancelled) setSite({ status: 'ok', data })
       })
@@ -96,30 +97,37 @@ export default function App() {
     return path
   }, [])
 
-  const loadView = useCallback(
-    (tabId: string, major: string) => {
-      if (tabId === 'world_map') {
-        setView({ status: 'ok', mode: 'worldmap' })
+  useEffect(() => {
+    let cancelled = false
+    const run = async () => {
+      if (activeTab === 'world_map') {
+        if (!cancelled) setView({ status: 'ok', mode: 'worldmap' })
         return
       }
-      const url = resolveDataUrl(tabId, major)
-      setView({ status: 'loading' })
-      if (tabId === 'notable_alumni') {
-        loadJson<NotableBundle>(url)
-          .then((data) => setView({ status: 'ok', mode: 'notable', data }))
-          .catch((e: Error) => setView({ status: 'err', message: e.message }))
-      } else {
-        loadJson<TabBundle>(url)
-          .then((data) => setView({ status: 'ok', mode: 'charts', data }))
-          .catch((e: Error) => setView({ status: 'err', message: e.message }))
+      try {
+        const url = resolveDataUrl(activeTab, majorId)
+        if (!cancelled) setView({ status: 'loading' })
+        if (activeTab === 'notable_alumni') {
+          const data = await loadJson<NotableBundle>(url)
+          if (!cancelled) setView({ status: 'ok', mode: 'notable', data })
+        } else {
+          const data = await loadJson<TabBundle>(url)
+          if (!cancelled) setView({ status: 'ok', mode: 'charts', data })
+        }
+      } catch (e: unknown) {
+        if (!cancelled) {
+          setView({
+            status: 'err',
+            message: e instanceof Error ? e.message : String(e),
+          })
+        }
       }
-    },
-    [resolveDataUrl],
-  )
-
-  useEffect(() => {
-    loadView(activeTab, majorId)
-  }, [activeTab, majorId, loadView])
+    }
+    void run()
+    return () => {
+      cancelled = true
+    }
+  }, [activeTab, majorId, resolveDataUrl])
 
   const onMajorChange = (id: string) => {
     setMajorId(id)

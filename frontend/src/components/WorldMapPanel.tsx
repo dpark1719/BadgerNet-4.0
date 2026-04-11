@@ -7,6 +7,7 @@ import type { Feature, FeatureCollection, LineString } from 'geojson'
 import type { GeometryCollection, Topology } from 'topojson-specification'
 import countriesTopology from 'world-atlas/countries-110m.json'
 import type { BarChartSpec, TabBundle } from '../types/data'
+import { publicPath } from '../publicPath'
 import { COUNTRY_LABEL_TO_LON_LAT } from '../world/countryCentroids'
 import './WorldMapPanel.css'
 
@@ -51,13 +52,21 @@ export default function WorldMapPanel() {
 
   useEffect(() => {
     let cancelled = false
-    loadJson<TabBundle>('/data/map_destinations.json')
-      .then((data) => {
+    ;(async () => {
+      try {
+        const data = await loadJson<TabBundle>(
+          publicPath('data/map_destinations.json'),
+        )
         if (!cancelled) setBundle({ status: 'ok', data })
-      })
-      .catch((e: Error) => {
-        if (!cancelled) setBundle({ status: 'err', message: e.message })
-      })
+      } catch (e: unknown) {
+        if (!cancelled) {
+          setBundle({
+            status: 'err',
+            message: e instanceof Error ? e.message : String(e),
+          })
+        }
+      }
+    })()
     return () => {
       cancelled = true
     }

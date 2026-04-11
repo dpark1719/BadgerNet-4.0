@@ -1,3 +1,5 @@
+import { publicPath } from '../publicPath'
+
 export type ChartMeta = {
   project: string
   tab: string
@@ -111,19 +113,19 @@ export type NotableBundle = {
 }
 
 export const tabDataPath: Record<string, string> = {
-  industry: '/data/industry.json',
-  postgrad: '/data/postgrad.json',
-  international: '/data/international.json',
-  origins_undergrad: '/data/origins_undergrad.json',
-  origins_graduate: '/data/origins_graduate.json',
-  origins_doctorate: '/data/origins_doctorate.json',
-  notable_alumni: '/data/notable.json',
+  industry: publicPath('data/industry.json'),
+  postgrad: publicPath('data/postgrad.json'),
+  international: publicPath('data/international.json'),
+  origins_undergrad: publicPath('data/origins_undergrad.json'),
+  origins_graduate: publicPath('data/origins_graduate.json'),
+  origins_doctorate: publicPath('data/origins_doctorate.json'),
+  notable_alumni: publicPath('data/notable.json'),
 }
 
-export const majorsIndexPath = '/data/majors/index.json'
+export const majorsIndexPath = publicPath('data/majors/index.json')
 
 export const majorAwareTabs = new Set<string>(['industry'])
 
 export function majorSlicePath(majorId: string): string {
-  return `/data/majors/${majorId}.json`
+  return publicPath(`data/majors/${majorId}.json`)
 }
