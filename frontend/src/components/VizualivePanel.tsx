@@ -16,14 +16,15 @@ import { publicPath } from '../publicPath'
 import type { VizualiveBundle, VizualiveNode } from '../types/vizualive'
 import './VizualivePanel.css'
 
-const ARENA_W = 880
-const ARENA_H = 480
-const R_MIN = 26
-const R_MAX = 72
+const ARENA_W = 920
+const ARENA_H = 520
+const R_MIN = 34
+const R_MAX = 100
 
 type SimBubble = VizualiveNode &
   SimulationNodeDatum & {
     radius: number
+    idx: number
   }
 
 async function loadJson<T>(url: string): Promise<T> {
@@ -38,9 +39,16 @@ function bubbleRadius(count: number, maxCount: number): number {
   return R_MIN + (R_MAX - R_MIN) * t
 }
 
-export default function VizualivePanel() {
+function truncateLabel(label: string, radius: number): string {
+  const maxChars = Math.max(4, Math.floor(radius / 5))
+  if (label.length <= maxChars) return label
+  return label.slice(0, maxChars - 1) + '…'
+}
+
+export default function VisualizePanel() {
   const clipId = useId().replace(/[^a-zA-Z0-9]/g, '')
   const clipPathId = `viz-clip-${clipId}`
+  const glassPrefix = `viz-glass-${clipId}`
 
   const [bundle, setBundle] = useState<
     | { status: 'loading' }
@@ -88,20 +96,19 @@ export default function VizualivePanel() {
   )
 
   const restartSimulation = useCallback((): (() => void) | undefined => {
-    if (currentNodes.length === 0) {
-      return undefined
-    }
+    if (currentNodes.length === 0) return undefined
 
-    const simNodes: SimBubble[] = currentNodes.map((n) => ({
+    const simNodes: SimBubble[] = currentNodes.map((n, i) => ({
       ...n,
       radius: bubbleRadius(n.count, maxCount),
+      idx: i,
     }))
 
     const cx = ARENA_W / 2
     const cy = ARENA_H / 2
     simNodes.forEach((n, i) => {
       const angle = (i / simNodes.length) * Math.PI * 2
-      const r = Math.min(ARENA_W, ARENA_H) * 0.22
+      const r = Math.min(ARENA_W, ARENA_H) * 0.18
       n.x = cx + Math.cos(angle) * r
       n.y = cy + Math.sin(angle) * r
     })
@@ -109,26 +116,26 @@ export default function VizualivePanel() {
     const sim = forceSimulation(simNodes)
       .force(
         'charge',
-        forceManyBody<SimBubble>().strength((d) => -28 * Math.sqrt(d.radius)),
+        forceManyBody<SimBubble>().strength((d) => -18 * Math.sqrt(d.radius)),
       )
       .force(
         'collide',
         forceCollide<SimBubble>()
-          .radius((d) => d.radius + 6)
-          .strength(0.85)
-          .iterations(2),
+          .radius((d) => d.radius + 10)
+          .strength(0.9)
+          .iterations(3),
       )
-      .force('center', forceCenter(cx, cy))
-      .alphaDecay(0.022)
-      .velocityDecay(0.31)
+      .force('center', forceCenter(cx, cy).strength(0.8))
+      .alphaDecay(0.02)
+      .velocityDecay(0.35)
 
     sim.on('tick', () => {
       simNodes.forEach((n) => {
         if (n.x !== undefined) {
-          n.x = Math.max(n.radius, Math.min(ARENA_W - n.radius, n.x))
+          n.x = Math.max(n.radius + 6, Math.min(ARENA_W - n.radius - 6, n.x))
         }
         if (n.y !== undefined) {
-          n.y = Math.max(n.radius, Math.min(ARENA_H - n.radius, n.y))
+          n.y = Math.max(n.radius + 6, Math.min(ARENA_H - n.radius - 6, n.y))
         }
       })
       setBubbles(simNodes.map((n) => ({ ...n })))
@@ -163,22 +170,14 @@ export default function VizualivePanel() {
     }
   }
 
-  const goBack = () => {
-    setPath((p) => p.slice(0, -1))
-  }
-
-  const goToIndex = (index: number) => {
-    setPath((p) => p.slice(0, index + 1))
-  }
-
-  const resetRoot = () => {
-    setPath([])
-  }
+  const goBack = () => setPath((p) => p.slice(0, -1))
+  const goToIndex = (index: number) => setPath((p) => p.slice(0, index + 1))
+  const resetRoot = () => setPath([])
 
   const hovered = bubbles.find((b) => b.id === hoverId)
 
   if (bundle.status === 'loading') {
-    return <p className="muted">Loading Vizualive…</p>
+    return <p className="muted">Loading Visualize…</p>
   }
   if (bundle.status === 'err') {
     return (
@@ -189,7 +188,7 @@ export default function VizualivePanel() {
   }
 
   return (
-    <div className="vizualive">
+    <div className="visualize">
       <section className="meta-strip viz-intro" aria-label="Data context">
         <p className="methodology">{bundle.data.meta.methodology}</p>
         {bundle.data.meta.disclaimer && (
@@ -199,14 +198,12 @@ export default function VizualivePanel() {
 
       <div className="viz-toolbar">
         <nav className="viz-breadcrumb" aria-label="Drill path">
-          <button type="button" className="viz-crumb" onClick={resetRoot}>
-            Roots
+          <button type="button" className="viz-crumb viz-crumb--root" onClick={resetRoot}>
+            All paths
           </button>
           {path.map((node, i) => (
             <span key={node.id} className="viz-crumb-wrap">
-              <span className="viz-crumb-sep" aria-hidden>
-                /
-              </span>
+              <span className="viz-crumb-sep" aria-hidden>›</span>
               <button
                 type="button"
                 className="viz-crumb"
@@ -218,20 +215,16 @@ export default function VizualivePanel() {
           ))}
         </nav>
         <div className="viz-toolbar-actions">
-          <button
-            type="button"
-            className="tab"
-            disabled={path.length === 0}
-            onClick={goBack}
-          >
-            Back
-          </button>
+          {path.length > 0 && (
+            <button type="button" className="viz-back-btn" onClick={goBack}>
+              ← Back
+            </button>
+          )}
         </div>
       </div>
 
       <p className="muted small viz-hint">
-        Bubble size reflects headcount (sqrt scale). Click a bubble to drill
-        when it has a next level. Drag simulation settles automatically.
+        Click a bubble to drill down into sub-categories. Bubble size = headcount.
       </p>
 
       <div className="viz-arena-wrap">
@@ -241,7 +234,7 @@ export default function VizualivePanel() {
           width="100%"
           height="auto"
           role="application"
-          aria-label="Vizualive bubble arena"
+          aria-label="Visualize bubble arena"
         >
           <defs>
             <clipPath id={clipPathId}>
@@ -250,10 +243,29 @@ export default function VizualivePanel() {
                 y={4}
                 width={ARENA_W - 8}
                 height={ARENA_H - 8}
-                rx={20}
-                ry={20}
+                rx={24}
+                ry={24}
               />
             </clipPath>
+            <radialGradient id={`${glassPrefix}-bg`} cx="30%" cy="25%" r="70%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
+            </radialGradient>
+            <radialGradient id={`${glassPrefix}-shine`} cx="38%" cy="28%" r="55%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.7)" />
+              <stop offset="50%" stopColor="rgba(255,255,255,0.15)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </radialGradient>
+            <filter id={`${glassPrefix}-blur`} x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="shadow" />
+              <feOffset dy="2" result="offsetShadow" />
+              <feFlood floodColor="rgba(0,0,0,0.08)" />
+              <feComposite in2="offsetShadow" operator="in" />
+              <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
           <rect
             className="viz-arena-bg"
@@ -261,18 +273,21 @@ export default function VizualivePanel() {
             y={0}
             width={ARENA_W}
             height={ARENA_H}
-            rx={22}
+            rx={24}
           />
           <g clipPath={`url(#${clipPathId})`}>
             {bubbles.map((b) => {
               const x = b.x ?? ARENA_W / 2
               const y = b.y ?? ARENA_H / 2
               const canDrill = Boolean(b.children?.length)
+              const isHovered = hoverId === b.id
+              const s = isHovered ? 1.06 : 1
+              const showHint = canDrill && b.radius > 44
               return (
                 <g
                   key={b.id}
                   className={`viz-bubble-group${canDrill ? ' viz-bubble-group--drill' : ''}`}
-                  transform={`translate(${x},${y})`}
+                  transform={`translate(${x},${y}) scale(${s})`}
                   onMouseEnter={() => setHoverId(b.id)}
                   onMouseLeave={() => setHoverId(null)}
                   onClick={() => drill(b)}
@@ -284,36 +299,80 @@ export default function VizualivePanel() {
                   }}
                   role={canDrill ? 'button' : undefined}
                   tabIndex={canDrill ? 0 : -1}
-                  aria-label={`${b.label}, count ${b.count}${canDrill ? ', press to open subgroup' : ', leaf'}`}
+                  aria-label={`${b.label}, count ${b.count}${canDrill ? ', click to expand' : ''}`}
+                  filter={`url(#${glassPrefix}-blur)`}
+                  style={{ transition: 'transform 0.2s ease-out' }}
                 >
+                  {/* Glass body */}
                   <circle
-                    className="viz-bubble-fill"
                     r={b.radius}
-                    style={{
-                      opacity: canDrill ? 0.92 : 0.72,
-                    }}
+                    fill={`url(#${glassPrefix}-bg)`}
+                    stroke="rgba(255,255,255,0.6)"
+                    strokeWidth={1.5}
+                    className="viz-glass-body"
                   />
-                  <text className="viz-bubble-label" textAnchor="middle" dy="-0.15em">
-                    {b.label.length > 18 ? `${b.label.slice(0, 16)}…` : b.label}
+                  {/* Inner accent ring */}
+                  <circle
+                    r={b.radius - 3}
+                    fill="none"
+                    stroke="rgba(197,5,12,0.12)"
+                    strokeWidth={1}
+                  />
+                  {/* Shine highlight */}
+                  <ellipse
+                    cx={-b.radius * 0.15}
+                    cy={-b.radius * 0.2}
+                    rx={b.radius * 0.55}
+                    ry={b.radius * 0.35}
+                    fill={`url(#${glassPrefix}-shine)`}
+                    style={{ pointerEvents: 'none' }}
+                  />
+                  {/* Label */}
+                  <text
+                    className="viz-bubble-label"
+                    textAnchor="middle"
+                    dy={showHint ? '-0.6em' : '-0.15em'}
+                  >
+                    {truncateLabel(b.label, b.radius)}
                   </text>
+                  {/* Count */}
                   <text
                     className="viz-bubble-count"
                     textAnchor="middle"
-                    dy="1.05em"
+                    dy={showHint ? '0.7em' : '1.0em'}
                   >
-                    {b.count}
+                    {b.count.toLocaleString()}
                   </text>
+                  {/* Drill hint — only on big enough bubbles */}
+                  {showHint && (
+                    <text
+                      className="viz-bubble-drill-hint"
+                      textAnchor="middle"
+                      dy="1.9em"
+                    >
+                      click to explore ›
+                    </text>
+                  )}
                 </g>
               )
             })}
           </g>
         </svg>
 
-        {hovered?.subtitle && (
+        {hovered && (
           <div className="viz-tooltip" role="status">
             <strong>{hovered.label}</strong>
-            <p className="viz-tooltip-sub">{hovered.subtitle}</p>
-            <p className="viz-tooltip-count muted small">Count: {hovered.count}</p>
+            <p className="viz-tooltip-count">
+              {hovered.count.toLocaleString()} alumni
+            </p>
+            {hovered.subtitle && (
+              <p className="viz-tooltip-sub">{hovered.subtitle}</p>
+            )}
+            {hovered.children?.length ? (
+              <p className="viz-tooltip-drill">Click to see {hovered.children.length} sub-categories</p>
+            ) : (
+              <p className="viz-tooltip-drill viz-tooltip-leaf">Leaf category</p>
+            )}
           </div>
         )}
       </div>
@@ -331,7 +390,7 @@ export default function VizualivePanel() {
               >
                 {n.label}
               </button>
-              <span className="muted small"> — {n.count}</span>
+              <span className="muted small"> — {n.count.toLocaleString()}</span>
               {n.subtitle && (
                 <span className="muted small"> ({n.subtitle})</span>
               )}

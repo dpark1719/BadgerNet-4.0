@@ -59,6 +59,21 @@
   fill: rgba(255, 255, 255, 0.55);
   stroke: var(--border);
   stroke-width: 0.35;
+  transition: fill 0.15s;
+  cursor: default;
+}
+
+.map-countries .country:hover {
+  fill: rgba(200, 200, 200, 0.7);
+}
+
+.map-countries .country--dest {
+  fill: rgba(197, 5, 12, 0.12);
+}
+
+.map-countries .country--dest:hover,
+.map-countries .country--hover {
+  fill: rgba(197, 5, 12, 0.28);
 }
 
 .map-countries .country.antarctica {
@@ -70,6 +85,16 @@
     fill: rgba(255, 255, 255, 0.08);
     stroke: var(--border);
   }
+  .map-countries .country:hover {
+    fill: rgba(255, 255, 255, 0.15);
+  }
+  .map-countries .country--dest {
+    fill: rgba(255, 80, 80, 0.15);
+  }
+  .map-countries .country--dest:hover,
+  .map-countries .country--hover {
+    fill: rgba(255, 80, 80, 0.3);
+  }
 }
 
 .flow-arc {
@@ -77,6 +102,18 @@
   stroke: var(--accent);
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: stroke-width 0.15s, opacity 0.15s;
+  cursor: pointer;
+  pointer-events: stroke;
+}
+
+.flow-arc--hover {
+  stroke: #ff3333;
+}
+
+.dest-dot {
+  fill: var(--accent);
+  opacity: 0.7;
 }
 
 .hub-ring {

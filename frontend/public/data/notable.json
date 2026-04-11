@@ -6,7 +6,7 @@
     "degree_level": "all",
     "source": "wikidata",
     "source_url": "https://www.wikidata.org/",
-    "methodology": "SPARQL against Wikidata (P69 = Q838330) + manual enrichment from Wikipedia for field, degree, graduation year. Photo URLs are Wikipedia thumbnails (Wikimedia Commons, CC-licensed). Not vetted by UW Advancement; verify each source link.",
+    "methodology": "SPARQL against Wikidata (P69 = Q838330) + manual enrichment from Wikipedia for field, degree, graduation year. Logos served via logo.clearbit.com (free tier). Not vetted by UW Advancement; verify each source link.",
     "disclaimer": "Automated list enriched with publicly available Wikipedia data. Not an official UW ranking. May include faculty or short-term attendees. Every row links to Wikipedia for verification."
   },
   "entries": [
@@ -20,7 +20,7 @@
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Jack_Kilby",
       "source_type": "wikipedia",
-      "photo_url": "https://upload.wikimedia.org/wikipedia/en/4/4e/Jack_Kilby.jpg"
+      "logo_url": "https://logo.clearbit.com/ti.com"
     },
     {
       "name": "Paul D. Boyer",
@@ -31,7 +31,8 @@
       "degree_status": "Ph.D. in Biochemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Paul_D._Boyer",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/ucla.edu"
     },
     {
       "name": "Joshua Lederberg",
@@ -42,7 +43,8 @@
       "degree_status": "Ph.D. in Genetics",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Joshua_Lederberg",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/rockefeller.edu"
     },
     {
       "name": "Edward Tatum",
@@ -53,7 +55,8 @@
       "degree_status": "Ph.D. in Biochemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Edward_Tatum",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/rockefeller.edu"
     },
     {
       "name": "John Hasbrouck Van Vleck",
@@ -64,7 +67,8 @@
       "degree_status": "Ph.D. in Physics",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/John_Hasbrouck_Van_Vleck",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/harvard.edu"
     },
     {
       "name": "Theodore Schultz",
@@ -75,7 +79,8 @@
       "degree_status": "Ph.D. in Economics",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Theodore_Schultz",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/uchicago.edu"
     },
     {
       "name": "Alan MacDiarmid",
@@ -86,7 +91,8 @@
       "degree_status": "M.S. in Chemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Alan_MacDiarmid",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/upenn.edu"
     },
     {
       "name": "Stanford Moore",
@@ -97,7 +103,8 @@
       "degree_status": "Ph.D. in Organic Chemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Stanford_Moore",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/rockefeller.edu"
     },
     {
       "name": "Edward Witten",
@@ -108,7 +115,8 @@
       "degree_status": "B.A. in History (then pursued physics)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Edward_Witten",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/ias.edu"
     },
     {
       "name": "Erwin Neher",
@@ -119,7 +127,8 @@
       "degree_status": "M.S. in Physics (Fulbright at UW)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Erwin_Neher",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/mpg.de"
     },
     {
       "name": "Jim Lovell",
@@ -130,7 +139,8 @@
       "degree_status": "B.S. (honorary D.Sc. from UW, 1970)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Jim_Lovell",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/nasa.gov"
     },
     {
       "name": "Laurel Clark",
@@ -141,7 +151,8 @@
       "degree_status": "M.D. from UW School of Medicine",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Laurel_Clark",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/nasa.gov"
     },
     {
       "name": "Carl Djerassi",
@@ -152,7 +163,8 @@
       "degree_status": "B.S. in Chemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Carl_Djerassi",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/stanford.edu"
     },
     {
       "name": "Fredric March",
@@ -207,7 +219,8 @@
       "degree_status": "B.S. with honors in Anthropology & Sociology",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Saul_Bellow",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/uchicago.edu"
     },
     {
       "name": "Joyce Carol Oates",
@@ -218,7 +231,8 @@
       "degree_status": "M.A. in English from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Joyce_Carol_Oates",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/princeton.edu"
     },
     {
       "name": "Zona Gale",
@@ -251,7 +265,8 @@
       "degree_status": "Ph.D. in Economics",
       "notability": "senior_role",
       "source_url": "https://en.wikipedia.org/wiki/Jan_Hatzius",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/goldmansachs.com"
     },
     {
       "name": "Charlene Barshefsky",
@@ -273,7 +288,8 @@
       "degree_status": "M.S. in Political Science",
       "notability": "senior_role",
       "source_url": "https://en.wikipedia.org/wiki/Lawrence_Eagleburger",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/state.gov"
     },
     {
       "name": "Joseph McCarthy",
@@ -284,7 +300,8 @@
       "degree_status": "LL.B. from Marquette (UW undergrad coursework)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Joseph_McCarthy",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/senate.gov"
     },
     {
       "name": "Lynne Cheney",
@@ -295,7 +312,8 @@
       "degree_status": "B.A. from Colorado College; M.A. from UW",
       "notability": "senior_role",
       "source_url": "https://en.wikipedia.org/wiki/Lynne_Cheney",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/aei.org"
     },
     {
       "name": "Iajuddin Ahmed",
@@ -328,7 +346,8 @@
       "degree_status": "B.A. in History from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Carl_Rogers",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/uchicago.edu"
     },
     {
       "name": "Lynn Margulis",
@@ -339,7 +358,8 @@
       "degree_status": "M.S. in Genetics & Zoology from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Lynn_Margulis",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/umass.edu"
     },
     {
       "name": "Leonard Bloomfield",
@@ -347,10 +367,11 @@
       "organization": "Yale University",
       "field": "Linguistics",
       "graduation_year": "1906",
-      "degree_status": "B.A. from Harvard; Ph.D. from UW (unsure)",
+      "degree_status": "B.A. from Harvard; studied at UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Leonard_Bloomfield",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/yale.edu"
     },
     {
       "name": "Ralph F. Hirschmann",
@@ -361,7 +382,8 @@
       "degree_status": "Ph.D. in Chemistry from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Ralph_F._Hirschmann",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/merck.com"
     },
     {
       "name": "Mary Ann Horton",
@@ -369,10 +391,11 @@
       "organization": "Bell Labs / Lucent",
       "field": "Computer science",
       "graduation_year": "1981",
-      "degree_status": "Ph.D. in Computer Sciences from UW\u2013Berkeley (M.S. UW)",
+      "degree_status": "M.S. from UW; Ph.D. from UC Berkeley",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Mary_Ann_Horton",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/bell-labs.com"
     },
     {
       "name": "Arvid Harnack",
@@ -380,7 +403,7 @@
       "organization": "German resistance",
       "field": "Law / economics",
       "graduation_year": "1926",
-      "degree_status": "Ph.D. in Philosophy from Gie\u00dfen (Rockefeller Fellow at UW)",
+      "degree_status": "Rockefeller Fellow at UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Arvid_Harnack",
       "source_type": "wikipedia"
@@ -394,7 +417,8 @@
       "degree_status": "B.S. from UW; longtime head wrestling coach",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Russ_Hellickson",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/wisc.edu"
     },
     {
       "name": "Douglas L. Coleman",
@@ -405,7 +429,8 @@
       "degree_status": "Ph.D. in Biochemistry from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Douglas_L._Coleman",
-      "source_type": "wikipedia"
+      "source_type": "wikipedia",
+      "logo_url": "https://logo.clearbit.com/jax.org"
     },
     {
       "name": "Seann William Scott",

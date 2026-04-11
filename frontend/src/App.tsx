@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { renderChart } from './components/ChartPanels'
+import LandingPage from './components/LandingPage'
 import { NotablePanel } from './components/NotablePanel'
-import VizualivePanel from './components/VizualivePanel'
+import VisualizePanel from './components/VizualivePanel'
 import WorldMapPanel from './components/WorldMapPanel'
 import type { MajorIndex, NotableBundle, SiteMeta, TabBundle } from './types/data'
 import {
@@ -24,7 +25,7 @@ type ViewState =
   | { status: 'ok'; mode: 'charts'; data: TabBundle }
   | { status: 'ok'; mode: 'notable'; data: NotableBundle }
   | { status: 'ok'; mode: 'worldmap' }
-  | { status: 'ok'; mode: 'vizualive' }
+  | { status: 'ok'; mode: 'visualize' }
 
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -40,6 +41,7 @@ function syncMajorQueryParam(majorId: string) {
 }
 
 export default function App() {
+  const [showLanding, setShowLanding] = useState(true)
   const [site, setSite] = useState<LoadState<SiteMeta>>({ status: 'idle' })
   const [majors, setMajors] = useState<LoadState<MajorIndex>>({ status: 'idle' })
   const [activeTab, setActiveTab] = useState<string>('industry')
@@ -106,8 +108,8 @@ export default function App() {
         if (!cancelled) setView({ status: 'ok', mode: 'worldmap' })
         return
       }
-      if (activeTab === 'vizualive') {
-        if (!cancelled) setView({ status: 'ok', mode: 'vizualive' })
+      if (activeTab === 'visualize') {
+        if (!cancelled) setView({ status: 'ok', mode: 'visualize' })
         return
       }
       try {
@@ -157,9 +159,13 @@ export default function App() {
 
   const mainWide =
     view.status === 'ok' &&
-    (view.mode === 'worldmap' || view.mode === 'vizualive')
+    (view.mode === 'worldmap' || view.mode === 'visualize')
       ? ' main--wide'
       : ''
+
+  if (showLanding) {
+    return <LandingPage onEnter={() => setShowLanding(false)} />
+  }
 
   return (
     <div className="app">
@@ -220,7 +226,7 @@ export default function App() {
           </p>
         )}
         {view.status === 'ok' && view.mode === 'worldmap' && <WorldMapPanel />}
-        {view.status === 'ok' && view.mode === 'vizualive' && <VizualivePanel />}
+        {view.status === 'ok' && view.mode === 'visualize' && <VisualizePanel />}
         {view.status === 'ok' && view.mode === 'notable' && (
           <>
             <section className="meta-strip" aria-label="Data context">
@@ -362,7 +368,7 @@ const fallbackTabs = [
   { id: 'postgrad', label: 'Post-grad education' },
   { id: 'international', label: 'International outcomes' },
   { id: 'world_map', label: 'World map' },
-  { id: 'vizualive', label: 'Vizualive' },
+  { id: 'visualize', label: 'Visualize' },
   { id: 'notable_alumni', label: 'Notable alumni' },
   { id: 'origins_undergrad', label: 'Origins — UG' },
   { id: 'origins_graduate', label: 'Origins — Grad' },

@@ -108,6 +108,7 @@ export type NotableEntry = {
   source_type: NotableSourceType
   year?: string
   photo_url?: string
+  logo_url?: string
 }
 
 export type NotableBundle = {

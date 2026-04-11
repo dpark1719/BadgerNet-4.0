@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { geoInterpolate, geoMercator, geoPath } from 'd3-geo'
+import { geoInterpolate, geoNaturalEarth1, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom, zoomIdentity, type ZoomBehavior } from 'd3-zoom'
 import { feature } from 'topojson-client'
@@ -13,7 +13,7 @@ import './WorldMapPanel.css'
 
 const MADISON_LON_LAT: [number, number] = [-89.4012, 43.0731]
 const VIEW_W = 960
-const VIEW_H = 500
+const VIEW_H = 520
 
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -43,6 +43,8 @@ export default function WorldMapPanel() {
   const svgRef = useRef<SVGSVGElement | null>(null)
   const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null)
   const [zf, setZf] = useState(() => zoomIdentity)
+  const [hoverCountry, setHoverCountry] = useState<string | null>(null)
+  const [hoverArc, setHoverArc] = useState<string | null>(null)
 
   const [bundle, setBundle] = useState<
     | { status: 'loading' }
@@ -77,7 +79,7 @@ export default function WorldMapPanel() {
     if (!el) return
 
     const z = zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.5, 14])
+      .scaleExtent([0.8, 20])
       .on('zoom', (ev) => setZf(ev.transform))
 
     zoomRef.current = z
@@ -127,14 +129,9 @@ export default function WorldMapPanel() {
   )
 
   const projection = useMemo(() => {
-    return geoMercator()
-      .center(MADISON_LON_LAT)
-      .scale(380)
+    return geoNaturalEarth1()
+      .scale(160)
       .translate([VIEW_W / 2, VIEW_H / 2])
-      .clipExtent([
-        [0, 0],
-        [VIEW_W, VIEW_H],
-      ])
   }, [])
 
   const path = useMemo(() => geoPath(projection), [projection])
@@ -260,17 +257,27 @@ export default function WorldMapPanel() {
 
                 <g className="map-countries">
                   {countriesFc.features.map((f) => {
-                    const name = (f.properties as { name?: string })?.name
+                    const name = (f.properties as { name?: string })?.name ?? ''
                     const isAntarctica = name === 'Antarctica'
                     const d = path(f as Feature) ?? ''
+                    const isDestination = flowsMapped.some((fl) => fl.label === name)
+                    const isHovered = hoverCountry === name
                     return (
                       <path
                         key={String(f.id ?? name ?? d.slice(0, 24))}
                         d={d}
                         className={
-                          isAntarctica ? 'country antarctica' : 'country'
+                          isAntarctica
+                            ? 'country antarctica'
+                            : isDestination
+                              ? `country country--dest${isHovered ? ' country--hover' : ''}`
+                              : 'country'
                         }
-                      />
+                        onMouseEnter={() => setHoverCountry(name)}
+                        onMouseLeave={() => setHoverCountry(null)}
+                      >
+                        <title>{name}</title>
+                      </path>
                     )
                   })}
                 </g>
@@ -278,19 +285,39 @@ export default function WorldMapPanel() {
                 <g
                   className="map-flows"
                   filter={`url(#${glowFilterId})`}
-                  style={{ pointerEvents: 'none' }}
                 >
                   {arcPaths.map((a) => (
                     <path
                       key={a.key}
                       d={a.d}
-                      className="flow-arc"
+                      className={`flow-arc${hoverArc === a.key ? ' flow-arc--hover' : ''}`}
                       style={{
-                        strokeWidth: a.strokeWidth,
-                        opacity: a.opacity,
+                        strokeWidth: hoverArc === a.key ? a.strokeWidth + 3 : a.strokeWidth,
+                        opacity: hoverArc === a.key ? 1 : a.opacity,
                       }}
-                    />
+                      onMouseEnter={() => setHoverArc(a.key)}
+                      onMouseLeave={() => setHoverArc(null)}
+                    >
+                      <title>{a.key}: {a.count} alumni</title>
+                    </path>
                   ))}
+                </g>
+
+                <g className="map-dest-dots" style={{ pointerEvents: 'none' }}>
+                  {flowsMapped.map((f) => {
+                    const pt = projection(f.lonLat)
+                    if (!pt) return null
+                    const r = 2 + Math.sqrt(f.count / maxCount) * 4
+                    return (
+                      <circle
+                        key={f.label}
+                        cx={pt[0]}
+                        cy={pt[1]}
+                        r={r}
+                        className="dest-dot"
+                      />
+                    )
+                  })}
                 </g>
 
                 <g className="map-hub" style={{ pointerEvents: 'none' }}>
