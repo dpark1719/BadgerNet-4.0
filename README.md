@@ -7,6 +7,13 @@ Visualization project for **UW–Madison** student origins and alumni-style outc
 - **Data contract:** [DATA_CONTRACT.md](./DATA_CONTRACT.md)
 - **Collaboration:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 
+## Clone
+
+```bash
+git clone https://github.com/dpark1719/BadgerNet-4.0.git
+cd BadgerNet-4.0
+```
+
 ## Repo layout
 
 | Path | Owner (convention) | Purpose |
@@ -40,8 +47,6 @@ git push -u origin main
 git push -u origin david/backend
 git push -u origin rohan/frontend
 ```
-
-If the GitHub repo already has commits (e.g. a placeholder README), reconcile with `git pull origin main --allow-unrelated-histories` and merge, or coordinate a one-time force-with-lease after backup.
 
 ## Branches
 
