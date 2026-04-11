@@ -56,18 +56,39 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
                 <h3 className="notable-name">{entry.name}</h3>
                 <p className="notable-role">
                   {entry.role_title}
-                  {entry.organization ? ` · ${entry.organization}` : ''}
+                  {entry.organization && entry.organization !== '—'
+                    ? ` · ${entry.organization}`
+                    : ''}
                 </p>
               </div>
             </div>
+
+            <div className="notable-details">
+              {entry.field && (
+                <span className="notable-detail">
+                  <span className="notable-detail-label">Field</span>
+                  {entry.field}
+                </span>
+              )}
+              {entry.degree_status && (
+                <span className="notable-detail">
+                  <span className="notable-detail-label">Degree</span>
+                  {entry.degree_status}
+                </span>
+              )}
+              {entry.graduation_year && (
+                <span className="notable-detail">
+                  <span className="notable-detail-label">Year</span>
+                  {entry.graduation_year}
+                </span>
+              )}
+            </div>
+
             <div className="notable-meta">
               <span className="notable-tag">{notabilityLabel(entry.notability)}</span>
               <span className="notable-tag notable-tag--source">
                 {sourceLabel(entry.source_type)}
               </span>
-              {entry.year && (
-                <span className="notable-year muted small">{entry.year}</span>
-              )}
             </div>
             <p className="notable-source">
               <a
@@ -76,7 +97,7 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
                 rel="noopener noreferrer"
                 className="link"
               >
-                Verify source
+                Verify source ↗
               </a>
             </p>
           </li>

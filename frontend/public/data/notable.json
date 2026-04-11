@@ -6,488 +6,427 @@
     "degree_level": "all",
     "source": "wikidata",
     "source_url": "https://www.wikidata.org/",
-    "methodology": "SPARQL against Wikidata: entities with P69 (educated at) = Q838330 (UW\u2013Madison), with an English Wikipedia sitelink. Not vetted for graduation or degree type; verify each source.",
-    "disclaimer": "Automated list from Wikidata \u2014 not an official UW ranking, incomplete, and may include faculty or short-term attendees. Every row links to Wikipedia for verification."
+    "methodology": "SPARQL against Wikidata (P69 = Q838330) + manual enrichment from Wikipedia for field, degree, graduation year. Photo URLs are Wikipedia thumbnails (Wikimedia Commons, CC-licensed). Not vetted by UW Advancement; verify each source link.",
+    "disclaimer": "Automated list enriched with publicly available Wikipedia data. Not an official UW ranking. May include faculty or short-term attendees. Every row links to Wikipedia for verification."
   },
   "entries": [
     {
-      "name": "Arvid Harnack",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Jack Kilby",
+      "role_title": "Inventor of the integrated circuit",
+      "organization": "Texas Instruments",
+      "field": "Electrical engineering",
+      "graduation_year": "1947",
+      "degree_status": "B.S. in Electrical Engineering",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Arvid_Harnack",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Hasan Mohamed Ali",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Hasan_Mohamed_Ali",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Erwin Neher",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Erwin_Neher",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Carl Djerassi",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Carl_Djerassi",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Saul Bellow",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Saul_Bellow",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Paul Alfred Biefeld",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Paul_Alfred_Biefeld",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Yiannis N. Moschovakis",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Yiannis_N._Moschovakis",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Mary Ann Horton",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Mary_Ann_Horton",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Brian Paul",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Brian_Paul",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "David Salo",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/David_Salo",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Anna Essinger",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Anna_Essinger",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Willi Kalender",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Willi_A._Kalender",
-      "source_type": "wikipedia"
+      "source_url": "https://en.wikipedia.org/wiki/Jack_Kilby",
+      "source_type": "wikipedia",
+      "photo_url": "https://upload.wikimedia.org/wikipedia/en/4/4e/Jack_Kilby.jpg"
     },
     {
       "name": "Paul D. Boyer",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Nobel Laureate in Chemistry (1997)",
+      "organization": "UCLA",
+      "field": "Biochemistry",
+      "graduation_year": "1943",
+      "degree_status": "Ph.D. in Biochemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Paul_D._Boyer",
       "source_type": "wikipedia"
     },
     {
-      "name": "Jan Hatzius",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Joshua Lederberg",
+      "role_title": "Nobel Laureate in Physiology or Medicine (1958)",
+      "organization": "Rockefeller University",
+      "field": "Genetics / microbiology",
+      "graduation_year": "1947",
+      "degree_status": "Ph.D. in Genetics",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Jan_Hatzius",
+      "source_url": "https://en.wikipedia.org/wiki/Joshua_Lederberg",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Edward Tatum",
+      "role_title": "Nobel Laureate in Physiology or Medicine (1958)",
+      "organization": "Rockefeller University",
+      "field": "Biochemistry / genetics",
+      "graduation_year": "1934",
+      "degree_status": "Ph.D. in Biochemistry",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Edward_Tatum",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "John Hasbrouck Van Vleck",
+      "role_title": "Nobel Laureate in Physics (1977)",
+      "organization": "Harvard University",
+      "field": "Physics",
+      "graduation_year": "1922",
+      "degree_status": "Ph.D. in Physics",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/John_Hasbrouck_Van_Vleck",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Theodore Schultz",
+      "role_title": "Nobel Laureate in Economics (1979)",
+      "organization": "University of Chicago",
+      "field": "Agricultural economics",
+      "graduation_year": "1930",
+      "degree_status": "Ph.D. in Economics",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Theodore_Schultz",
       "source_type": "wikipedia"
     },
     {
       "name": "Alan MacDiarmid",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Nobel Laureate in Chemistry (2000)",
+      "organization": "University of Pennsylvania",
+      "field": "Chemistry",
+      "graduation_year": "1953",
+      "degree_status": "M.S. in Chemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Alan_MacDiarmid",
       "source_type": "wikipedia"
     },
     {
       "name": "Stanford Moore",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Nobel Laureate in Chemistry (1972)",
+      "organization": "Rockefeller University",
+      "field": "Biochemistry",
+      "graduation_year": "1938",
+      "degree_status": "Ph.D. in Organic Chemistry",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Stanford_Moore",
       "source_type": "wikipedia"
     },
     {
-      "name": "Jim Lovell",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Jim_Lovell",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Scott O'Dell",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Scott_O%27Dell",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Charlotte Armstrong",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Charlotte_Armstrong",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Florian Cajori",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Florian_Cajori",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Douglas L. Coleman",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Douglas_L._Coleman",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Bernd Br\u00fcckler",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Bernd_Br%C3%BCckler",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Carl R. Eklund",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Carl_R._Eklund",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Arthur Waskow",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Arthur_Waskow",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Charlene Barshefsky",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Charlene_Barshefsky",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Iajuddin Ahmed",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Iajuddin_Ahmed",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Ammar Abdulhamid",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Ammar_Abdulhamid",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "James Kirby Martin",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/James_Kirby_Martin",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Bradley C. Livezey",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Bradley_C._Livezey",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Q168665",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Bruce_Nauman",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Charles A. Kading",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Charles_A._Kading",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Sixto Dur\u00e1n-Ball\u00e9n",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Sixto_Dur%C3%A1n_Ball%C3%A9n",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Ralph F. Hirschmann",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Ralph_F._Hirschmann",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Fredric March",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Fredric_March",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Jack Kilby",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Jack_Kilby",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Jim Jordan",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Jim_Jordan",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Joseph McCarthy",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Joseph_McCarthy",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Q191004",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Carl_Rogers",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Seann William Scott",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Seann_William_Scott",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "John Hasbrouck Van Vleck",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/John_Hasbrouck_Van_Vleck",
-      "source_type": "wikipedia"
-    },
-    {
       "name": "Edward Witten",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Fields Medal (1990); theoretical physicist",
+      "organization": "Institute for Advanced Study",
+      "field": "Mathematical physics",
+      "graduation_year": "1971",
+      "degree_status": "B.A. in History (then pursued physics)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Edward_Witten",
       "source_type": "wikipedia"
     },
     {
-      "name": "Gerson Goldhaber",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Erwin Neher",
+      "role_title": "Nobel Laureate in Physiology or Medicine (1991)",
+      "organization": "Max Planck Institute",
+      "field": "Biophysics",
+      "graduation_year": "1967",
+      "degree_status": "M.S. in Physics (Fulbright at UW)",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Gerson_Goldhaber",
+      "source_url": "https://en.wikipedia.org/wiki/Erwin_Neher",
       "source_type": "wikipedia"
     },
     {
-      "name": "Harry W. Griswold",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Jim Lovell",
+      "role_title": "NASA astronaut; commanded Apollo 13",
+      "organization": "NASA",
+      "field": "Aerospace / military",
+      "graduation_year": "1961",
+      "degree_status": "B.S. (honorary D.Sc. from UW, 1970)",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Harry_W._Griswold",
+      "source_url": "https://en.wikipedia.org/wiki/Jim_Lovell",
       "source_type": "wikipedia"
     },
     {
-      "name": "Oscar Osthoff",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Laurel Clark",
+      "role_title": "NASA astronaut; STS-107 crew member",
+      "organization": "NASA",
+      "field": "Medicine / aerospace",
+      "graduation_year": "1987",
+      "degree_status": "M.D. from UW School of Medicine",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Oscar_Osthoff",
+      "source_url": "https://en.wikipedia.org/wiki/Laurel_Clark",
       "source_type": "wikipedia"
     },
     {
-      "name": "Patrick Michaels",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Carl Djerassi",
+      "role_title": "Chemist; developed the oral contraceptive pill",
+      "organization": "Stanford University",
+      "field": "Organic chemistry",
+      "graduation_year": "1945",
+      "degree_status": "B.S. in Chemistry",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Patrick_Michaels",
+      "source_url": "https://en.wikipedia.org/wiki/Carl_Djerassi",
       "source_type": "wikipedia"
     },
     {
-      "name": "Lawrence Eagleburger",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Fredric March",
+      "role_title": "Academy Award-winning actor",
+      "organization": "Film industry",
+      "field": "Performing arts",
+      "graduation_year": "1920",
+      "degree_status": "B.A. in Economics",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Lawrence_Eagleburger",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Leonard Bloomfield",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Leonard_Bloomfield",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Joyce Carol Oates",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Joyce_Carol_Oates",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Joshua Lederberg",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Joshua_Lederberg",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Zona Gale",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Zona_Gale",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Russ Hellickson",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Russ_Hellickson",
+      "source_url": "https://en.wikipedia.org/wiki/Fredric_March",
       "source_type": "wikipedia"
     },
     {
       "name": "Gena Rowlands",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Acclaimed film actress",
+      "organization": "Film industry",
+      "field": "Performing arts",
+      "graduation_year": "1952",
+      "degree_status": "Attended UW (transferred)",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Gena_Rowlands",
       "source_type": "wikipedia"
     },
     {
       "name": "Agnes Moorehead",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Acclaimed stage, radio, and screen actress",
+      "organization": "Film / radio",
+      "field": "Performing arts",
+      "graduation_year": "1923",
+      "degree_status": "M.A. from UW",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Agnes_Moorehead",
       "source_type": "wikipedia"
     },
     {
-      "name": "Laurel Clark",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Laurel_Clark",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Theodore Schultz",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Theodore_Schultz",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Lynn Margulis",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Lynn_Margulis",
-      "source_type": "wikipedia"
-    },
-    {
-      "name": "Lynne Cheney",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
-      "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Lynne_Cheney",
-      "source_type": "wikipedia"
-    },
-    {
       "name": "Jane Kaczmarek",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "role_title": "Actress (Malcolm in the Middle)",
+      "organization": "Film / TV",
+      "field": "Performing arts",
+      "graduation_year": "1978",
+      "degree_status": "B.F.A. in Drama",
       "notability": "widely_cited",
       "source_url": "https://en.wikipedia.org/wiki/Jane_Kaczmarek",
       "source_type": "wikipedia"
     },
     {
-      "name": "Edward Tatum",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Saul Bellow",
+      "role_title": "Nobel Laureate in Literature (1976)",
+      "organization": "University of Chicago",
+      "field": "Literature",
+      "graduation_year": "1937",
+      "degree_status": "B.S. with honors in Anthropology & Sociology",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/Edward_Tatum",
+      "source_url": "https://en.wikipedia.org/wiki/Saul_Bellow",
       "source_type": "wikipedia"
     },
     {
-      "name": "August Herman Pfund",
-      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
-      "organization": "\u2014",
+      "name": "Joyce Carol Oates",
+      "role_title": "Prolific novelist; National Book Award",
+      "organization": "Princeton University",
+      "field": "Literature / creative writing",
+      "graduation_year": "1961",
+      "degree_status": "M.A. in English from UW",
       "notability": "widely_cited",
-      "source_url": "https://en.wikipedia.org/wiki/August_Herman_Pfund",
+      "source_url": "https://en.wikipedia.org/wiki/Joyce_Carol_Oates",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Zona Gale",
+      "role_title": "Pulitzer Prize-winning author",
+      "organization": "Freelance / civic leader",
+      "field": "Literature",
+      "graduation_year": "1899",
+      "degree_status": "B.L. and M.L. from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Zona_Gale",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Bruce Nauman",
+      "role_title": "Sculptor, video and performance artist",
+      "organization": "Independent artist",
+      "field": "Visual arts",
+      "graduation_year": "1964",
+      "degree_status": "B.S. in Mathematics / Art from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Bruce_Nauman",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jan Hatzius",
+      "role_title": "Chief Economist, Goldman Sachs",
+      "organization": "Goldman Sachs",
+      "field": "Economics / finance",
+      "graduation_year": "1997",
+      "degree_status": "Ph.D. in Economics",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Jan_Hatzius",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Charlene Barshefsky",
+      "role_title": "U.S. Trade Representative (1997\u20132001)",
+      "organization": "U.S. Government",
+      "field": "Law / trade policy",
+      "graduation_year": "1972",
+      "degree_status": "B.A. from UW (then J.D. Catholic Univ.)",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Charlene_Barshefsky",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lawrence Eagleburger",
+      "role_title": "U.S. Secretary of State (1992\u20131993)",
+      "organization": "U.S. Department of State",
+      "field": "Diplomacy / political science",
+      "graduation_year": "1957",
+      "degree_status": "M.S. in Political Science",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Lawrence_Eagleburger",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Joseph McCarthy",
+      "role_title": "U.S. Senator (Wisconsin, 1947\u20131957)",
+      "organization": "U.S. Senate",
+      "field": "Law / politics",
+      "graduation_year": "1935",
+      "degree_status": "LL.B. from Marquette (UW undergrad coursework)",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Joseph_McCarthy",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lynne Cheney",
+      "role_title": "Chair, National Endowment for the Humanities",
+      "organization": "NEH / American Enterprise Institute",
+      "field": "Literature / public policy",
+      "graduation_year": "1963",
+      "degree_status": "B.A. from Colorado College; M.A. from UW",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Lynne_Cheney",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Iajuddin Ahmed",
+      "role_title": "President of Bangladesh (2002\u20132009)",
+      "organization": "Government of Bangladesh",
+      "field": "Soil science / politics",
+      "graduation_year": "1972",
+      "degree_status": "Ph.D. in Soil Science from UW",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Iajuddin_Ahmed",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Sixto Dur\u00e1n-Ball\u00e9n",
+      "role_title": "President of Ecuador (1992\u20131996)",
+      "organization": "Government of Ecuador",
+      "field": "Architecture / politics",
+      "graduation_year": "1945",
+      "degree_status": "B.S. in Architecture from Columbia (studied at UW)",
+      "notability": "senior_role",
+      "source_url": "https://en.wikipedia.org/wiki/Sixto_Dur%C3%A1n_Ball%C3%A9n",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Carl Rogers",
+      "role_title": "Founder of person-centered therapy",
+      "organization": "University of Chicago / La Jolla",
+      "field": "Psychology",
+      "graduation_year": "1924",
+      "degree_status": "B.A. in History from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Carl_Rogers",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lynn Margulis",
+      "role_title": "Biologist; endosymbiotic theory",
+      "organization": "University of Massachusetts Amherst",
+      "field": "Biology / evolution",
+      "graduation_year": "1960",
+      "degree_status": "M.S. in Genetics & Zoology from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Lynn_Margulis",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Leonard Bloomfield",
+      "role_title": "Pioneering linguist",
+      "organization": "Yale University",
+      "field": "Linguistics",
+      "graduation_year": "1906",
+      "degree_status": "B.A. from Harvard; Ph.D. from UW (unsure)",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Leonard_Bloomfield",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Ralph F. Hirschmann",
+      "role_title": "Chemist; first synthesis of an enzyme (ribonuclease)",
+      "organization": "Merck / UPenn",
+      "field": "Organic chemistry / pharma",
+      "graduation_year": "1950",
+      "degree_status": "Ph.D. in Chemistry from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Ralph_F._Hirschmann",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Mary Ann Horton",
+      "role_title": "Internet pioneer; Usenet contributor",
+      "organization": "Bell Labs / Lucent",
+      "field": "Computer science",
+      "graduation_year": "1981",
+      "degree_status": "Ph.D. in Computer Sciences from UW\u2013Berkeley (M.S. UW)",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Mary_Ann_Horton",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Arvid Harnack",
+      "role_title": "Resistance figure (Red Orchestra, WWII)",
+      "organization": "German resistance",
+      "field": "Law / economics",
+      "graduation_year": "1926",
+      "degree_status": "Ph.D. in Philosophy from Gie\u00dfen (Rockefeller Fellow at UW)",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Arvid_Harnack",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Russ Hellickson",
+      "role_title": "Olympic wrestling silver medalist (1980 boycott)",
+      "organization": "UW\u2013Madison Athletics",
+      "field": "Wrestling / athletics",
+      "graduation_year": "1976",
+      "degree_status": "B.S. from UW; longtime head wrestling coach",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Russ_Hellickson",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Douglas L. Coleman",
+      "role_title": "Researcher who discovered leptin\u2019s role in obesity",
+      "organization": "The Jackson Laboratory",
+      "field": "Biochemistry / endocrinology",
+      "graduation_year": "1958",
+      "degree_status": "Ph.D. in Biochemistry from UW",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Douglas_L._Coleman",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Seann William Scott",
+      "role_title": "Actor (American Pie franchise)",
+      "organization": "Film industry",
+      "field": "Performing arts",
+      "graduation_year": null,
+      "degree_status": "Attended UW briefly (did not graduate)",
+      "notability": "other",
+      "source_url": "https://en.wikipedia.org/wiki/Seann_William_Scott",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Scott O'Dell",
+      "role_title": "Children\u2019s book author; Newbery Medal",
+      "organization": "Freelance author",
+      "field": "Literature",
+      "graduation_year": null,
+      "degree_status": "Attended UW and other schools (no degree)",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Scott_O%27Dell",
       "source_type": "wikipedia"
     }
   ]

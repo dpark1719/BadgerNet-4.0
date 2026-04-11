@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { renderChart } from './components/ChartPanels'
 import { NotablePanel } from './components/NotablePanel'
+import VizualivePanel from './components/VizualivePanel'
 import WorldMapPanel from './components/WorldMapPanel'
 import type { MajorIndex, NotableBundle, SiteMeta, TabBundle } from './types/data'
 import {
@@ -23,6 +24,7 @@ type ViewState =
   | { status: 'ok'; mode: 'charts'; data: TabBundle }
   | { status: 'ok'; mode: 'notable'; data: NotableBundle }
   | { status: 'ok'; mode: 'worldmap' }
+  | { status: 'ok'; mode: 'vizualive' }
 
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -104,6 +106,10 @@ export default function App() {
         if (!cancelled) setView({ status: 'ok', mode: 'worldmap' })
         return
       }
+      if (activeTab === 'vizualive') {
+        if (!cancelled) setView({ status: 'ok', mode: 'vizualive' })
+        return
+      }
       try {
         const url = resolveDataUrl(activeTab, majorId)
         if (!cancelled) setView({ status: 'loading' })
@@ -150,7 +156,10 @@ export default function App() {
   const majorOptions = majors.status === 'ok' ? majors.data.majors : []
 
   const mainWide =
-    view.status === 'ok' && view.mode === 'worldmap' ? ' main--wide' : ''
+    view.status === 'ok' &&
+    (view.mode === 'worldmap' || view.mode === 'vizualive')
+      ? ' main--wide'
+      : ''
 
   return (
     <div className="app">
@@ -211,6 +220,7 @@ export default function App() {
           </p>
         )}
         {view.status === 'ok' && view.mode === 'worldmap' && <WorldMapPanel />}
+        {view.status === 'ok' && view.mode === 'vizualive' && <VizualivePanel />}
         {view.status === 'ok' && view.mode === 'notable' && (
           <>
             <section className="meta-strip" aria-label="Data context">
@@ -352,6 +362,7 @@ const fallbackTabs = [
   { id: 'postgrad', label: 'Post-grad education' },
   { id: 'international', label: 'International outcomes' },
   { id: 'world_map', label: 'World map' },
+  { id: 'vizualive', label: 'Vizualive' },
   { id: 'notable_alumni', label: 'Notable alumni' },
   { id: 'origins_undergrad', label: 'Origins — UG' },
   { id: 'origins_graduate', label: 'Origins — Grad' },

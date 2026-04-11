@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "tab": "vizualive",
+    "snapshot_date": "2026-04-11",
+    "degree_level": "all",
+    "source": "sample",
+    "methodology": "Synthetic hierarchical cohort for the Vizualive bubble UI only. Each root\u2019s `count` equals the sum of its `children`. Replace with verified path rollups from UW surveys or reviewed LinkedIn aggregates.",
+    "disclaimer": "Not a census; paths like \u201cUW undergrad \u2192 M.S. at Georgia Tech\u201d are illustrative splits for UX testing."
+  },
+  "roots": [
+    {
+      "id": "postgrad",
+      "label": "Postgrad education",
+      "count": 905,
+      "children": [
+        {
+          "id": "pg_ms_gt",
+          "label": "Georgia Tech",
+          "subtitle": "UW undergrad \u2192 M.S. (different institution)",
+          "count": 120,
+          "children": []
+        },
+        {
+          "id": "pg_ms_uw",
+          "label": "UW\u2013Madison",
+          "subtitle": "UW undergrad \u2192 M.S. (same institution)",
+          "count": 340,
+          "children": []
+        },
+        {
+          "id": "pg_phd_mit",
+          "label": "MIT",
+          "subtitle": "UW B.S. \u2192 Ph.D. program",
+          "count": 210,
+          "children": []
+        },
+        {
+          "id": "pg_mba_kellogg",
+          "label": "Kellogg (Northwestern)",
+          "subtitle": "UW \u2192 M.B.A.",
+          "count": 140,
+          "children": []
+        },
+        {
+          "id": "pg_cert_other",
+          "label": "Certificate / other",
+          "subtitle": "Continuing education, non-degree",
+          "count": 95,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "job",
+      "label": "Job",
+      "count": 2010,
+      "children": [
+        {
+          "id": "job_tech",
+          "label": "Technology",
+          "subtitle": "First destination bucket",
+          "count": 520,
+          "children": [
+            {
+              "id": "job_tech_swe",
+              "label": "Software engineer",
+              "subtitle": "Within technology",
+              "count": 280,
+              "children": []
+            },
+            {
+              "id": "job_tech_pm",
+              "label": "Product / program",
+              "subtitle": "Within technology",
+              "count": 150,
+              "children": []
+            },
+            {
+              "id": "job_tech_other",
+              "label": "Other tech roles",
+              "subtitle": "Within technology",
+              "count": 90,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "job_health",
+          "label": "Healthcare",
+          "subtitle": "First destination bucket",
+          "count": 410,
+          "children": []
+        },
+        {
+          "id": "job_finance",
+          "label": "Finance",
+          "subtitle": "First destination bucket",
+          "count": 320,
+          "children": []
+        },
+        {
+          "id": "job_edu",
+          "label": "Education",
+          "subtitle": "First destination bucket",
+          "count": 240,
+          "children": []
+        },
+        {
+          "id": "job_mfg",
+          "label": "Manufacturing",
+          "subtitle": "First destination bucket",
+          "count": 180,
+          "children": []
+        },
+        {
+          "id": "job_other",
+          "label": "Other industries",
+          "subtitle": "First destination bucket",
+          "count": 340,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "country",
+      "label": "Country",
+      "count": 1063,
+      "children": [
+        {
+          "id": "ct_us",
+          "label": "United States",
+          "subtitle": "Post-UW residence (sample)",
+          "count": 450,
+          "children": []
+        },
+        {
+          "id": "ct_in",
+          "label": "India",
+          "subtitle": "Post-UW residence (sample)",
+          "count": 180,
+          "children": [
+            {
+              "id": "ct_in_blr",
+              "label": "Bengaluru cluster",
+              "subtitle": "Within India (sample)",
+              "count": 95,
+              "children": []
+            },
+            {
+              "id": "ct_in_bom",
+              "label": "Mumbai cluster",
+              "subtitle": "Within India (sample)",
+              "count": 85,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "ct_cn",
+          "label": "China",
+          "subtitle": "Post-UW residence (sample)",
+          "count": 120,
+          "children": []
+        },
+        {
+          "id": "ct_kr",
+          "label": "South Korea",
+          "subtitle": "Post-UW residence (sample)",
+          "count": 55,
+          "children": []
+        },
+        {
+          "id": "ct_ca",
+          "label": "Canada",
+          "subtitle": "Post-UW residence (sample)",
+          "count": 48,
+          "children": []
+        },
+        {
+          "id": "ct_other",
+          "label": "Other",
+          "subtitle": "Aggregated remainder",
+          "count": 210,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

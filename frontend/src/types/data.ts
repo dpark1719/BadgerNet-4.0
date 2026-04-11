@@ -100,6 +100,9 @@ export type NotableEntry = {
   name: string
   role_title: string
   organization: string
+  field?: string
+  graduation_year?: string | null
+  degree_status?: string
   notability: Notability
   source_url: string
   source_type: NotableSourceType

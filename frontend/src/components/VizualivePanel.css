@@ -1,0 +1,176 @@
+.vizualive {
+  width: 100%;
+}
+
+.viz-intro {
+  margin-bottom: 1rem;
+}
+
+.viz-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.viz-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.88rem;
+}
+
+.viz-crumb {
+  font: inherit;
+  padding: 0.2rem 0.35rem;
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: underline;
+}
+
+.viz-crumb:hover {
+  background: var(--accent-soft);
+}
+
+.viz-crumb-sep {
+  color: var(--muted);
+  user-select: none;
+}
+
+.viz-hint {
+  margin: 0 0 0.75rem;
+}
+
+.viz-arena-wrap {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.viz-arena {
+  display: block;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    165deg,
+    rgba(197, 5, 12, 0.07),
+    rgba(255, 255, 255, 0.04)
+  );
+  box-shadow:
+    0 16px 44px rgba(20, 18, 16, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  .viz-arena {
+    background: linear-gradient(
+      165deg,
+      rgba(255, 107, 107, 0.1),
+      rgba(255, 255, 255, 0.03)
+    );
+    box-shadow:
+      0 16px 44px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+.viz-arena-bg {
+  fill: var(--panel);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.viz-bubble-group {
+  cursor: default;
+  outline: none;
+}
+
+.viz-bubble-group--drill {
+  cursor: pointer;
+}
+
+.viz-bubble-group--drill:focus-visible .viz-bubble-fill {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.viz-bubble-fill {
+  fill: var(--accent-soft);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.viz-bubble-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--text-h);
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: var(--bg);
+  stroke-width: 3px;
+}
+
+.viz-bubble-count {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--muted);
+  pointer-events: none;
+}
+
+.viz-tooltip {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  max-width: min(16rem, 46vw);
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .viz-tooltip {
+    background: rgba(28, 26, 23, 0.92);
+  }
+}
+
+.viz-tooltip p {
+  margin: 0.25rem 0 0;
+}
+
+.viz-tooltip-count {
+  margin-top: 0.35rem !important;
+}
+
+.viz-a11y {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+  background: var(--panel);
+}
+
+.viz-a11y summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.viz-a11y-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.viz-a11y-list li {
+  margin: 0.35rem 0;
+}

@@ -13,6 +13,7 @@ Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each f
 | `origins_graduate` | `origins_graduate.json` |
 | `origins_doctorate` | `origins_doctorate.json` |
 | `notable_alumni` | `notable.json` (uses `entries`, not `charts`) |
+| `vizualive` | [`vizualive.json`](frontend/public/data/vizualive.json) (uses `roots` tree, not `charts`) |
 
 ## Major filter (Industry tab)
 
@@ -122,13 +123,44 @@ Not a `charts` object. Shape:
 - Cap list length (e.g. ≤100) in production.
 - LinkedIn-derived rows require human review or strict rules before inclusion; never ship raw profile dumps.
 
+## Vizualive — `vizualive.json`
+
+Interactive bubble drill-down (Agar-style force layout in the UI). Not a chart bundle.
+
+```json
+{
+  "meta": { ... },
+  "roots": [
+    {
+      "id": "postgrad",
+      "label": "Postgrad education",
+      "count": 100,
+      "children": [
+        {
+          "id": "pg_ms_gt",
+          "label": "Georgia Tech",
+          "subtitle": "UW undergrad → M.S. (different institution)",
+          "count": 40,
+          "children": []
+        }
+      ]
+    }
+  ]
+}
+```
+
+- **`roots`:** exactly three top-level nodes in v1: post-grad outcomes, job outcomes, country outcomes (ids are stable for analytics).
+- Each node: **`id`**, **`label`**, **`count`** (non-negative integer). **`subtitle`** optional for path context.
+- **`children`:** array of child nodes; omit or use `[]` for leaves. Parent **`count`** should equal the sum of child **`count`** values (enforced in QA / CI when possible).
+- Backend may later replace synthetic trees with real path rollups keyed by `id`.
+
 ### `meta.json`
 
 Site-wide strings, tab entries (`id` + `label`) for each nav item, links (`github_repo`, `github_project`).
 
 ## Backend responsibilities
 
-- Produce `majors/index.json`, `majors/{id}.json`, `notable.json`, and tab JSON into `frontend/public/data/`.
+- Produce `majors/index.json`, `majors/{id}.json`, `notable.json`, `vizualive.json`, and tab JSON into `frontend/public/data/`.
 - Never commit PII or raw LinkedIn HTML; only aggregates.
 - Optional: [`backend/scripts/wikidata_notable.py`](backend/scripts/wikidata_notable.py) seeds `entries` from Wikidata SPARQL; optional: [`backend/scripts/linkedin_major_slices.py`](backend/scripts/linkedin_major_slices.py) builds `majors/*.json` from harvest aggregates.
 
@@ -137,4 +169,4 @@ Site-wide strings, tab entries (`id` + `label`) for each nav item, links (`githu
 - Fetch `/data/<file>.json` at runtime; for Industry + major ≠ all, fetch `/data/majors/{id}.json`.
 - Keep URL query `?major=` in sync for shareable state.
 - Render `meta.disclaimer` prominently for LinkedIn-backed or sample tabs.
-- Tab bar scrolls horizontally on narrow viewports. World map reads sample flows from `map_destinations.json` (not the IPEDS chart on `international.json`).
+- Tab bar scrolls horizontally on narrow viewports. World map reads sample flows from `map_destinations.json` (not the IPEDS chart on `international.json`). Vizualive reads `vizualive.json`.
