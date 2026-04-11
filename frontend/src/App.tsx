@@ -1,7 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { renderChart } from './components/ChartPanels'
-import type { SiteMeta, TabBundle } from './types/data'
-import { tabDataPath } from './types/data'
+import { NotablePanel } from './components/NotablePanel'
+import type { MajorIndex, NotableBundle, SiteMeta, TabBundle } from './types/data'
+import {
+  majorAwareTabs,
+  majorSlicePath,
+  majorsIndexPath,
+  tabDataPath,
+} from './types/data'
 import './App.css'
 
 type LoadState<T> =
@@ -9,17 +15,33 @@ type LoadState<T> =
   | { status: 'ok'; data: T }
   | { status: 'err'; message: string }
 
+type ViewState =
+  | { status: 'idle' | 'loading' }
+  | { status: 'err'; message: string }
+  | { status: 'ok'; mode: 'charts'; data: TabBundle }
+  | { status: 'ok'; mode: 'notable'; data: NotableBundle }
+
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
   return res.json() as Promise<T>
 }
 
+function syncMajorQueryParam(majorId: string) {
+  const u = new URL(window.location.href)
+  if (majorId === 'all') u.searchParams.delete('major')
+  else u.searchParams.set('major', majorId)
+  window.history.replaceState(null, '', `${u.pathname}${u.search}${u.hash}`)
+}
+
 export default function App() {
   const [site, setSite] = useState<LoadState<SiteMeta>>({ status: 'idle' })
+  const [majors, setMajors] = useState<LoadState<MajorIndex>>({ status: 'idle' })
   const [activeTab, setActiveTab] = useState<string>('industry')
-  const [bundle, setBundle] = useState<LoadState<TabBundle>>({ status: 'idle' })
+  const [majorId, setMajorId] = useState<string>('all')
+  const [view, setView] = useState<ViewState>({ status: 'idle' })
   const [methodOpen, setMethodOpen] = useState(false)
+  const majorInited = useRef(false)
 
   useEffect(() => {
     let cancelled = false
@@ -36,18 +58,67 @@ export default function App() {
     }
   }, [])
 
-  const loadTab = useCallback((tabId: string) => {
-    const path = tabDataPath[tabId]
-    if (!path) return
-    setBundle({ status: 'loading' })
-    loadJson<TabBundle>(path)
-      .then((data) => setBundle({ status: 'ok', data }))
-      .catch((e: Error) => setBundle({ status: 'err', message: e.message }))
+  useEffect(() => {
+    let cancelled = false
+    setMajors({ status: 'loading' })
+    loadJson<MajorIndex>(majorsIndexPath)
+      .then((data) => {
+        if (!cancelled) setMajors({ status: 'ok', data })
+      })
+      .catch((e: Error) => {
+        if (!cancelled) setMajors({ status: 'err', message: e.message })
+      })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   useEffect(() => {
-    loadTab(activeTab)
-  }, [activeTab, loadTab])
+    if (majors.status !== 'ok' || majorInited.current) return
+    majorInited.current = true
+    const raw = new URLSearchParams(window.location.search).get('major')
+    if (raw && majors.data.majors.some((m) => m.id === raw)) {
+      setMajorId(raw)
+    }
+  }, [majors])
+
+  const resolveDataUrl = useCallback((tabId: string, major: string): string => {
+    if (tabId === 'notable_alumni') {
+      return tabDataPath.notable_alumni
+    }
+    if (majorAwareTabs.has(tabId) && major !== 'all') {
+      return majorSlicePath(major)
+    }
+    const path = tabDataPath[tabId]
+    if (!path) throw new Error(`Unknown tab: ${tabId}`)
+    return path
+  }, [])
+
+  const loadView = useCallback(
+    (tabId: string, major: string) => {
+      const url = resolveDataUrl(tabId, major)
+      setView({ status: 'loading' })
+      if (tabId === 'notable_alumni') {
+        loadJson<NotableBundle>(url)
+          .then((data) => setView({ status: 'ok', mode: 'notable', data }))
+          .catch((e: Error) => setView({ status: 'err', message: e.message }))
+      } else {
+        loadJson<TabBundle>(url)
+          .then((data) => setView({ status: 'ok', mode: 'charts', data }))
+          .catch((e: Error) => setView({ status: 'err', message: e.message }))
+      }
+    },
+    [resolveDataUrl],
+  )
+
+  useEffect(() => {
+    loadView(activeTab, majorId)
+  }, [activeTab, majorId, loadView])
+
+  const onMajorChange = (id: string) => {
+    setMajorId(id)
+    syncMajorQueryParam(id)
+  }
 
   const siteName =
     site.status === 'ok' ? site.data.site.name : 'BadgerNet 4.0'
@@ -62,6 +133,8 @@ export default function App() {
     site.status === 'ok' ? site.data.github_project : ''
   const ghRepo = site.status === 'ok' ? site.data.github_repo : ''
 
+  const majorOptions = majors.status === 'ok' ? majors.data.majors : []
+
   return (
     <div className="app">
       <header className="header">
@@ -70,6 +143,26 @@ export default function App() {
           <h1>{siteName}</h1>
           <p className="tagline">{tagline}</p>
         </div>
+        {activeTab === 'industry' && majorOptions.length > 0 && (
+          <div className="major-filter">
+            <label htmlFor="major-select" className="major-filter-label">
+              Filter by major
+            </label>
+            <select
+              id="major-select"
+              className="major-select"
+              value={majorId}
+              onChange={(e) => onMajorChange(e.target.value)}
+            >
+              <option value="all">All majors</option>
+              {majorOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </header>
 
       {site.status === 'err' && (
@@ -92,57 +185,92 @@ export default function App() {
       </nav>
 
       <main className="main">
-        {bundle.status === 'loading' && (
+        {view.status === 'loading' && (
           <p className="muted">Loading tab data…</p>
         )}
-        {bundle.status === 'err' && (
+        {view.status === 'err' && (
           <p className="banner error" role="alert">
-            {bundle.message}
+            {view.message}
           </p>
         )}
-        {bundle.status === 'ok' && (
+        {view.status === 'ok' && view.mode === 'notable' && (
           <>
             <section className="meta-strip" aria-label="Data context">
               <div className="meta-grid">
                 <div>
                   <span className="meta-label">Snapshot</span>
                   <span className="meta-value">
-                    {bundle.data.meta.snapshot_date}
+                    {view.data.meta.snapshot_date}
+                  </span>
+                </div>
+                <div>
+                  <span className="meta-label">Source</span>
+                  <span className="meta-value">{view.data.meta.source}</span>
+                </div>
+                <div>
+                  <span className="meta-label">Entries</span>
+                  <span className="meta-value">
+                    {view.data.entries.length}
+                  </span>
+                </div>
+              </div>
+              <p className="methodology">{view.data.meta.methodology}</p>
+              {view.data.meta.disclaimer && (
+                <p className="disclaimer">{view.data.meta.disclaimer}</p>
+              )}
+            </section>
+            <NotablePanel bundle={view.data} />
+          </>
+        )}
+        {view.status === 'ok' && view.mode === 'charts' && (
+          <>
+            <section className="meta-strip" aria-label="Data context">
+              <div className="meta-grid">
+                <div>
+                  <span className="meta-label">Snapshot</span>
+                  <span className="meta-value">
+                    {view.data.meta.snapshot_date}
                   </span>
                 </div>
                 <div>
                   <span className="meta-label">Degree level</span>
                   <span className="meta-value">
-                    {bundle.data.meta.degree_level}
+                    {view.data.meta.degree_level}
                   </span>
                 </div>
                 <div>
                   <span className="meta-label">Source</span>
-                  <span className="meta-value">{bundle.data.meta.source}</span>
+                  <span className="meta-value">{view.data.meta.source}</span>
                 </div>
-                {bundle.data.meta.filter_fingerprint && (
+                {view.data.meta.major_id && (
+                  <div>
+                    <span className="meta-label">Major</span>
+                    <span className="meta-value">{view.data.meta.major_id}</span>
+                  </div>
+                )}
+                {view.data.meta.filter_fingerprint && (
                   <div className="meta-span-2">
                     <span className="meta-label">Filter fingerprint</span>
                     <span className="meta-value mono">
-                      {bundle.data.meta.filter_fingerprint}
+                      {view.data.meta.filter_fingerprint}
                     </span>
                   </div>
                 )}
-                {bundle.data.meta.academic_year && (
+                {view.data.meta.academic_year && (
                   <div>
                     <span className="meta-label">Academic year</span>
                     <span className="meta-value">
-                      {bundle.data.meta.academic_year}
+                      {view.data.meta.academic_year}
                     </span>
                   </div>
                 )}
               </div>
-              <p className="methodology">{bundle.data.meta.methodology}</p>
-              {bundle.data.meta.source_url && (
+              <p className="methodology">{view.data.meta.methodology}</p>
+              {view.data.meta.source_url && (
                 <p>
                   <a
                     className="link"
-                    href={bundle.data.meta.source_url}
+                    href={view.data.meta.source_url}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -150,13 +278,13 @@ export default function App() {
                   </a>
                 </p>
               )}
-              {bundle.data.meta.disclaimer && (
-                <p className="disclaimer">{bundle.data.meta.disclaimer}</p>
+              {view.data.meta.disclaimer && (
+                <p className="disclaimer">{view.data.meta.disclaimer}</p>
               )}
             </section>
 
             <section className="charts" aria-label="Charts">
-              {Object.entries(bundle.data.charts).map(([key, spec]) =>
+              {Object.entries(view.data.charts).map(([key, spec]) =>
                 renderChart(key, spec),
               )}
             </section>
@@ -208,4 +336,5 @@ const fallbackTabs = [
   { id: 'origins_undergrad', label: 'Origins — UG' },
   { id: 'origins_graduate', label: 'Origins — Grad' },
   { id: 'origins_doctorate', label: 'Origins — PhD' },
+  { id: 'notable_alumni', label: 'Notable alumni' },
 ]

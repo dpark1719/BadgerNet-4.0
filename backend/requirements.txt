@@ -1,3 +1,4 @@
-# Pin when real ETL lands. Sample generator uses stdlib only.
-# pandas>=2.2.0
-# requests>=2.31.0
+pandas>=2.2.0
+requests>=2.31.0
+# Optional: PDF tables from UW reports — pip install pdfplumber
+# Optional: LinkedIn automation — pip install playwright && playwright install chromium

@@ -4,7 +4,7 @@
 
 | Branch | Primary person | Touch these paths |
 |--------|----------------|-------------------|
-| `david/backend` | **David** | `backend/`, `data/` (except don’t commit `data/raw/`), `frontend/public/data/*.json` when regenerating datasets |
+| `david/backend` | **David** | `backend/`, `data/` (except don’t commit `data/raw/`), `frontend/public/data/*.json` when regenerating datasets (`python3 backend/scripts/build_public_data.py` for IPEDS + Wikidata) |
 | `rohan/frontend` | **Rohan** | `frontend/` **except** treat `frontend/public/data/` as **David’s output** — don’t hand-edit JSON unless coordinating |
 
 `main` should always run: regenerate data (if needed) + `npm run build` in `frontend/`.

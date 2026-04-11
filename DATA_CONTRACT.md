@@ -1,17 +1,25 @@
 # BadgerNet 4.0 — data contract
 
-Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each file is self-contained for one **top-level tab** (or shared metadata).
+Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each file is self-contained for one **top-level tab** (or shared metadata), except **per-major slices** under `majors/`.
 
 ## Tab IDs and files
 
 | `meta.tab` / nav `id` | File |
 |----------------------|------|
-| `industry` | `industry.json` |
+| `industry` | `industry.json` (all majors); see **Major filter** below |
 | `postgrad` | `postgrad.json` |
 | `international_outcomes` | `international.json` |
 | `origins_undergraduate` | `origins_undergrad.json` |
 | `origins_graduate` | `origins_graduate.json` |
 | `origins_doctorate` | `origins_doctorate.json` |
+| `notable_alumni` | `notable.json` (uses `entries`, not `charts`) |
+
+## Major filter (Industry tab)
+
+- **Index:** [`majors/index.json`](frontend/public/data/majors/index.json) — `{ "majors": [{ "id": "computer_science", "label": "…", "cip": "…" }] }` (no `all` row; UI adds “All majors”).
+- **Per-major bundle:** [`majors/{id}.json`](frontend/public/data/majors/) — same shape as a normal tab: `{ "meta", "charts" }` with `meta.tab` = `industry` and optional **`meta.major_id`** matching `id`.
+- When the user selects **All majors**, load [`industry.json`](frontend/public/data/industry.json). When a specific major is selected on the **Industry** tab, load `majors/{id}.json` instead.
+- Other tabs ignore major selection in v1 unless you add major-aware files later.
 
 ## Common `meta` object
 
@@ -19,10 +27,11 @@ Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each f
 |--------|------|-------------|
 | `project` | string | e.g. `BadgerNet 4.0` |
 | `tab` | string | Matches table above |
+| `major_id` | string? | Set on `majors/*.json` slices (e.g. `computer_science`) |
 | `snapshot_date` | string | ISO date of data snapshot |
 | `academic_year` | string? | e.g. `2023-24` if applicable |
 | `degree_level` | string | `all` \| `undergraduate` \| `graduate` \| `doctorate` |
-| `source` | string | `linkedin` \| `uw_survey` \| `ipeds` \| `sample` \| `mixed` |
+| `source` | string | `linkedin` \| `uw_survey` \| `ipeds` \| `sample` \| `mixed` \| `wikidata` |
 | `source_url` | string? | Primary citation URL |
 | `methodology` | string | Short human-readable note; for LinkedIn include **filter recipe** / `filter_fingerprint` text |
 | `disclaimer` | string? | Bias / coverage warning |
@@ -44,6 +53,8 @@ Charts in `international.json` should describe methodology for: **non–U.S. cit
 }
 ```
 
+Use for **top employers** (e.g. chart key `top_employers`) with employer names as `label` and counts as `value`.
+
 ### `metric`
 
 ```json
@@ -55,42 +66,70 @@ Charts in `international.json` should describe methodology for: **non–U.S. cit
 }
 ```
 
-### `trend` (1y / 5y / 10y style series over calendar year)
+### `trend`
 
-Multiple series share the same `year` axis. Each row is one calendar year (or reporting year). Series keys are arbitrary strings; `series` tells the UI which keys to plot.
+(unchanged — see previous version; `x_key`, `data`, `series`.)
+
+### `sankey` (career flow)
+
+Top **K** nodes and links from aggregate transitions (e.g. early industry bucket → current industry bucket). Cap nodes/links for readability and privacy.
 
 ```json
 {
-  "type": "trend",
-  "title": "Sample trend (synthetic)",
-  "x_key": "year",
-  "data": [
-    { "year": 2016, "w1y": 12.1, "w5y": 11.4, "w10y": 10.9 },
-    { "year": 2017, "w1y": 12.3, "w5y": 11.5, "w10y": 11.0 }
+  "type": "sankey",
+  "title": "Common career transitions (sample)",
+  "nodes": [
+    { "id": "intern_tech", "label": "Early — intern (tech)" },
+    { "id": "swe_mid", "label": "Mid — software engineer" }
   ],
-  "series": [
-    { "dataKey": "w1y", "label": "1-year window", "color": "#c5050c" },
-    { "dataKey": "w5y", "label": "5-year window", "color": "#1e3a8a" },
-    { "dataKey": "w10y", "label": "10-year window", "color": "#047857" }
+  "links": [
+    { "source": "intern_tech", "target": "swe_mid", "value": 420 }
   ]
 }
 ```
 
-- **`x_key`:** defaults to `year` if omitted.
-- **Values** may be counts or percentages; label them in `title` / axis copy.
+- **`id`:** stable string keys; **`links.source` / `target`** reference node `id`s.
+- **`value`:** flow magnitude (count or weighted count).
+
+## Notable alumni — `notable.json`
+
+Not a `charts` object. Shape:
+
+```json
+{
+  "meta": { ... },
+  "entries": [
+    {
+      "name": "…",
+      "role_title": "…",
+      "organization": "…",
+      "notability": "widely_cited" | "senior_role" | "other",
+      "source_url": "https://…",
+      "source_type": "wikipedia" | "uw_news" | "linkedin_aggregate" | "other",
+      "year": "optional",
+      "photo_url": "optional"
+    }
+  ]
+}
+```
+
+- **Every** displayed row must have a **`source_url`**.
+- Cap list length (e.g. ≤100) in production.
+- LinkedIn-derived rows require human review or strict rules before inclusion; never ship raw profile dumps.
 
 ### `meta.json`
 
-Site-wide strings, **six** tab entries (`id` + `label`), links (`github_repo`, `github_project`).
+Site-wide strings, **seven** tab entries (`id` + `label`), links (`github_repo`, `github_project`).
 
 ## Backend responsibilities
 
-- Produce validated JSON into `frontend/public/data/`.
+- Produce `majors/index.json`, `majors/{id}.json`, `notable.json`, and tab JSON into `frontend/public/data/`.
 - Never commit PII or raw LinkedIn HTML; only aggregates.
-- Document LinkedIn filters in `meta.methodology` and optional `meta.filter_fingerprint`.
+- Optional: [`backend/scripts/wikidata_notable.py`](backend/scripts/wikidata_notable.py) seeds `entries` from Wikidata SPARQL; optional: [`backend/scripts/linkedin_major_slices.py`](backend/scripts/linkedin_major_slices.py) builds `majors/*.json` from harvest aggregates.
 
 ## Frontend responsibilities
 
-- Fetch `/data/<file>.json` at runtime.
+- Fetch `/data/<file>.json` at runtime; for Industry + major ≠ all, fetch `/data/majors/{id}.json`.
+- Keep URL query `?major=` in sync for shareable state.
 - Render `meta.disclaimer` prominently for LinkedIn-backed or sample tabs.
-- Support six top-level tabs; tab bar should scroll horizontally on narrow viewports.
+- Tab bar scrolls horizontally on narrow viewports.

@@ -124,6 +124,116 @@
           "color": "#047857"
         }
       ]
+    },
+    "top_employers": {
+      "type": "bar",
+      "title": "Top employers (sample, all majors)",
+      "data": [
+        {
+          "label": "Google",
+          "value": 890
+        },
+        {
+          "label": "Epic",
+          "value": 720
+        },
+        {
+          "label": "Microsoft",
+          "value": 610
+        },
+        {
+          "label": "Amazon",
+          "value": 540
+        },
+        {
+          "label": "UW\u2013Madison",
+          "value": 480
+        },
+        {
+          "label": "Deloitte",
+          "value": 390
+        },
+        {
+          "label": "JPMorgan Chase",
+          "value": 340
+        },
+        {
+          "label": "Other / unknown",
+          "value": 12000
+        }
+      ]
+    },
+    "career_flow": {
+      "type": "sankey",
+      "title": "Synthetic career flow \u2014 all majors (early bucket \u2192 later bucket)",
+      "nodes": [
+        {
+          "id": "e_intern",
+          "label": "Early \u2014 internship"
+        },
+        {
+          "id": "e_entry",
+          "label": "Early \u2014 entry IC"
+        },
+        {
+          "id": "m_ic",
+          "label": "Mid \u2014 individual contributor"
+        },
+        {
+          "id": "m_mgmt",
+          "label": "Mid \u2014 management track"
+        },
+        {
+          "id": "s_lead",
+          "label": "Senior \u2014 lead / principal"
+        },
+        {
+          "id": "s_exec",
+          "label": "Senior \u2014 exec / founder"
+        }
+      ],
+      "links": [
+        {
+          "source": "e_intern",
+          "target": "e_entry",
+          "value": 2400
+        },
+        {
+          "source": "e_intern",
+          "target": "m_ic",
+          "value": 800
+        },
+        {
+          "source": "e_entry",
+          "target": "m_ic",
+          "value": 3200
+        },
+        {
+          "source": "e_entry",
+          "target": "m_mgmt",
+          "value": 900
+        },
+        {
+          "source": "m_ic",
+          "target": "s_lead",
+          "value": 1400
+        },
+        {
+          "source": "m_ic",
+          "target": "s_exec",
+          "value": 220
+        },
+        {
+          "source": "m_mgmt",
+          "target": "s_exec",
+          "value": 410
+        },
+        {
+          "source": "m_mgmt",
+          "target": "s_lead",
+          "value": 380
+        }
+      ]
     }
   }
 }

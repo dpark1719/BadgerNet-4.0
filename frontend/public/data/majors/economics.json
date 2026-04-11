@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "industry",
+    "major_id": "economics",
+    "degree_level": "undergraduate",
+    "source": "sample",
+    "methodology": "Synthetic industry, employer, and career-flow aggregates for major \u201cEconomics, B.A.\u201d. Production: LinkedIn harvest rollups by field-of-study filter + aggregation script.",
+    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only."
+  },
+  "charts": {
+    "by_industry": {
+      "type": "bar",
+      "title": "Alumni by industry \u2014 Economics, B.A. (sample)",
+      "data": [
+        {
+          "label": "Banking / markets",
+          "value": 890
+        },
+        {
+          "label": "Consulting",
+          "value": 620
+        },
+        {
+          "label": "Government / policy",
+          "value": 410
+        },
+        {
+          "label": "Tech",
+          "value": 380
+        },
+        {
+          "label": "Other",
+          "value": 720
+        }
+      ]
+    },
+    "top_employers": {
+      "type": "bar",
+      "title": "Top employers \u2014 Economics, B.A. (sample)",
+      "data": [
+        {
+          "label": "Goldman Sachs",
+          "value": 95
+        },
+        {
+          "label": "McKinsey",
+          "value": 72
+        },
+        {
+          "label": "JPMorgan Chase",
+          "value": 88
+        },
+        {
+          "label": "Federal Reserve",
+          "value": 48
+        },
+        {
+          "label": "Deloitte",
+          "value": 76
+        },
+        {
+          "label": "Other",
+          "value": 1640
+        }
+      ]
+    },
+    "career_flow": {
+      "type": "sankey",
+      "title": "Common pathways \u2014 Economics, B.A. (synthetic flow)",
+      "nodes": [
+        {
+          "id": "e_ra",
+          "label": "Early \u2014 research / analyst intern"
+        },
+        {
+          "id": "e_analyst",
+          "label": "Early \u2014 analyst"
+        },
+        {
+          "id": "e_assoc",
+          "label": "Mid \u2014 associate"
+        },
+        {
+          "id": "e_vp",
+          "label": "Senior \u2014 VP / principal"
+        },
+        {
+          "id": "e_policy",
+          "label": "Mid \u2014 policy / PhD track"
+        },
+        {
+          "id": "e_partner",
+          "label": "Senior \u2014 partner / director"
+        }
+      ],
+      "links": [
+        {
+          "source": "e_ra",
+          "target": "e_analyst",
+          "value": 520
+        },
+        {
+          "source": "e_ra",
+          "target": "e_policy",
+          "value": 180
+        },
+        {
+          "source": "e_analyst",
+          "target": "e_assoc",
+          "value": 640
+        },
+        {
+          "source": "e_analyst",
+          "target": "e_policy",
+          "value": 120
+        },
+        {
+          "source": "e_assoc",
+          "target": "e_vp",
+          "value": 280
+        },
+        {
+          "source": "e_assoc",
+          "target": "e_partner",
+          "value": 95
+        },
+        {
+          "source": "e_policy",
+          "target": "e_vp",
+          "value": 140
+        },
+        {
+          "source": "e_vp",
+          "target": "e_partner",
+          "value": 160
+        }
+      ]
+    },
+    "tech_share_trend": {
+      "type": "trend",
+      "title": "Tech-sector share trend \u2014 Economics, B.A. (sample)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 52.0,
+          "w5y": 48.0,
+          "w10y": 45.0
+        },
+        {
+          "year": 2017,
+          "w1y": 52.2,
+          "w5y": 48.18,
+          "w10y": 45.15
+        },
+        {
+          "year": 2018,
+          "w1y": 52.4,
+          "w5y": 48.36,
+          "w10y": 45.3
+        },
+        {
+          "year": 2019,
+          "w1y": 52.6,
+          "w5y": 48.54,
+          "w10y": 45.45
+        },
+        {
+          "year": 2020,
+          "w1y": 52.8,
+          "w5y": 48.72,
+          "w10y": 45.6
+        },
+        {
+          "year": 2021,
+          "w1y": 53.0,
+          "w5y": 48.9,
+          "w10y": 45.75
+        },
+        {
+          "year": 2022,
+          "w1y": 53.2,
+          "w5y": 49.08,
+          "w10y": 45.9
+        },
+        {
+          "year": 2023,
+          "w1y": 53.4,
+          "w5y": 49.26,
+          "w10y": 46.05
+        },
+        {
+          "year": 2024,
+          "w1y": 53.6,
+          "w5y": 49.44,
+          "w10y": 46.2
+        },
+        {
+          "year": 2025,
+          "w1y": 53.8,
+          "w5y": 49.62,
+          "w10y": 46.35
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
+      ]
+    }
+  }
+}

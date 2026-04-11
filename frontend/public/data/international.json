@@ -1,127 +1,22 @@
 {
   "meta": {
     "project": "BadgerNet 4.0",
-    "snapshot_date": "2026-04-11",
-    "academic_year": "2023-24",
     "tab": "international_outcomes",
+    "snapshot_date": "2026-04-11",
     "degree_level": "all",
-    "source": "sample",
-    "filter_fingerprint": "sample:no_filters",
-    "methodology": "Population (target): non\u2013U.S. citizens who came from abroad before UW. Destination after UW: synthetic country mix; production = LinkedIn aggregate harvest with documented filters (no API). Replace with real rollups only.",
-    "disclaimer": "Approximate and incomplete. LinkedIn-visible alumni are not a census; citizenship and \u2018from abroad\u2019 are proxy-filtered, not administrative records."
+    "source": "ipeds",
+    "source_url": "https://nces.ed.gov/ipeds/datacenter/",
+    "methodology": "DRVEF2022 field RMFRGNCN: count related to nonresident foreign students in IPEDS derived fall enrollment \u2014 **not** post-graduation destination. For country-of-destination after UW, use LinkedIn aggregate harvest + disclaimers.",
+    "disclaimer": "This tab\u2019s primary bar is an enrollment-related IPEDS aggregate, not \u2018where alumni moved.\u2019 Do not interpret as career migration statistics."
   },
   "charts": {
-    "destination_country": {
+    "ipeds_foreign_context": {
       "type": "bar",
-      "title": "Post-UW country \u2014 sample (non-U.S. citizens from abroad)",
+      "title": "IPEDS foreign-national context (DRVEF2022, UW\u2013Madison) \u2014 not destination",
       "data": [
         {
-          "label": "United States",
-          "value": 450
-        },
-        {
-          "label": "India",
-          "value": 180
-        },
-        {
-          "label": "China",
-          "value": 120
-        },
-        {
-          "label": "South Korea",
-          "value": 55
-        },
-        {
-          "label": "Canada",
-          "value": 48
-        },
-        {
-          "label": "Other",
-          "value": 210
-        }
-      ]
-    },
-    "return_vs_stay_trend": {
-      "type": "trend",
-      "title": "Synthetic trend: share remaining in U.S. vs leaving (proxy metric)",
-      "x_key": "year",
-      "data": [
-        {
-          "year": 2016,
-          "w1y": 62.0,
-          "w5y": 58.0,
-          "w10y": 55.0
-        },
-        {
-          "year": 2017,
-          "w1y": 62.4,
-          "w5y": 58.35,
-          "w10y": 55.3
-        },
-        {
-          "year": 2018,
-          "w1y": 62.8,
-          "w5y": 58.7,
-          "w10y": 55.6
-        },
-        {
-          "year": 2019,
-          "w1y": 63.2,
-          "w5y": 59.05,
-          "w10y": 55.9
-        },
-        {
-          "year": 2020,
-          "w1y": 63.6,
-          "w5y": 59.4,
-          "w10y": 56.2
-        },
-        {
-          "year": 2021,
-          "w1y": 64.0,
-          "w5y": 59.75,
-          "w10y": 56.5
-        },
-        {
-          "year": 2022,
-          "w1y": 64.4,
-          "w5y": 60.1,
-          "w10y": 56.8
-        },
-        {
-          "year": 2023,
-          "w1y": 64.8,
-          "w5y": 60.45,
-          "w10y": 57.1
-        },
-        {
-          "year": 2024,
-          "w1y": 65.2,
-          "w5y": 60.8,
-          "w10y": 57.4
-        },
-        {
-          "year": 2025,
-          "w1y": 65.6,
-          "w5y": 61.15,
-          "w10y": 57.7
-        }
-      ],
-      "series": [
-        {
-          "dataKey": "w1y",
-          "label": "1-year window",
-          "color": "#c5050c"
-        },
-        {
-          "dataKey": "w5y",
-          "label": "5-year window",
-          "color": "#1e3a8a"
-        },
-        {
-          "dataKey": "w10y",
-          "label": "10-year window",
-          "color": "#047857"
+          "label": "RMFRGNCN (IPEDS derived)",
+          "value": 801
         }
       ]
     }

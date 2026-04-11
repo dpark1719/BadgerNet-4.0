@@ -1,3 +1,4 @@
+import { ResponsiveSankey } from '@nivo/sankey'
 import {
   Bar,
   BarChart,
@@ -14,6 +15,7 @@ import type {
   BarChartSpec,
   ChartSpec,
   MetricSpec,
+  SankeyChartSpec,
   TrendChartSpec,
 } from '../types/data'
 
@@ -32,7 +34,13 @@ function MetricPanel({ spec }: { spec: MetricSpec }) {
   )
 }
 
-function BarPanel({ spec }: { spec: BarChartSpec }) {
+function BarPanel({
+  spec,
+  valueLabel = 'Count',
+}: {
+  spec: BarChartSpec
+  valueLabel?: string
+}) {
   const rows = spec.data.map((d) => ({ name: d.label, value: d.value }))
   return (
     <div className="bar-panel">
@@ -56,7 +64,7 @@ function BarPanel({ spec }: { spec: BarChartSpec }) {
               cursor={{ fill: 'rgba(197, 5, 12, 0.08)' }}
               formatter={(v) => [
                 typeof v === 'number' ? v.toLocaleString() : String(v),
-                'Count',
+                valueLabel,
               ]}
             />
             <Bar dataKey="value" fill={barColor} radius={[4, 4, 0, 0]} />
@@ -114,15 +122,92 @@ function TrendPanel({ spec }: { spec: TrendChartSpec }) {
   )
 }
 
+function SankeyPanel({ spec }: { spec: SankeyChartSpec }) {
+  const data = {
+    nodes: spec.nodes.map((n) => ({
+      id: n.id,
+      label: n.label,
+    })),
+    links: spec.links.map((l) => ({
+      source: l.source,
+      target: l.target,
+      value: l.value,
+    })),
+  }
+
+  return (
+    <div className="sankey-panel">
+      <h3 className="chart-title">{spec.title}</h3>
+      <div className="chart-wrap chart-wrap--sankey">
+        <ResponsiveSankey
+          data={data}
+          margin={{ top: 12, right: 140, bottom: 12, left: 50 }}
+          align="justify"
+          sort="input"
+          colors={{ scheme: 'set2' }}
+          nodeOpacity={1}
+          nodeHoverOpacity={1}
+          nodeThickness={16}
+          nodeSpacing={20}
+          nodeBorderWidth={0}
+          linkOpacity={0.45}
+          linkHoverOpacity={0.65}
+          linkContract={3}
+          enableLinkGradient
+          labelPosition="outside"
+          labelOrientation="horizontal"
+          labelPadding={12}
+          legends={[
+            {
+              anchor: 'bottom-right',
+              direction: 'column',
+              translateX: 130,
+              itemWidth: 100,
+              itemHeight: 14,
+              symbolShape: 'circle',
+            },
+          ]}
+          theme={{
+            labels: {
+              text: {
+                fontSize: 11,
+              },
+            },
+            tooltip: {
+              container: {
+                fontSize: 12,
+              },
+            },
+          }}
+        />
+      </div>
+      <p className="muted small sankey-note">
+        Flow widths are aggregate counts (or weights), not individual career
+        paths. Cap nodes/links in production ETL for readability.
+      </p>
+    </div>
+  )
+}
+
 export function renderChart(key: string, spec: ChartSpec) {
   if (spec.type === 'metric') {
     return <MetricPanel key={key} spec={spec} />
   }
   if (spec.type === 'bar') {
-    return <BarPanel key={key} spec={spec} />
+    const isEmployers = key === 'top_employers'
+    return (
+      <BarPanel
+        key={key}
+        spec={spec}
+        valueLabel={isEmployers ? 'Estimated count' : 'Count'}
+      />
+    )
   }
   if (spec.type === 'trend') {
     return <TrendPanel key={key} spec={spec} />
+  }
+  if (spec.type === 'sankey') {
+    return <SankeyPanel key={key} spec={spec} />
   }
   return null
 }

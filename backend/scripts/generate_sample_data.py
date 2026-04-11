@@ -15,6 +15,7 @@ YEARS = list(range(2016, 2026))
 def write(name: str, payload: object) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / name
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {path.relative_to(ROOT)}")
 
@@ -82,6 +83,42 @@ def main() -> None:
                     "x_key": "year",
                     "data": trend_rows(28.0, 26.2, 24.8),
                     "series": trend_series,
+                },
+                "top_employers": {
+                    "type": "bar",
+                    "title": "Top employers (sample, all majors)",
+                    "data": [
+                        {"label": "Google", "value": 890},
+                        {"label": "Epic", "value": 720},
+                        {"label": "Microsoft", "value": 610},
+                        {"label": "Amazon", "value": 540},
+                        {"label": "UW–Madison", "value": 480},
+                        {"label": "Deloitte", "value": 390},
+                        {"label": "JPMorgan Chase", "value": 340},
+                        {"label": "Other / unknown", "value": 12000},
+                    ],
+                },
+                "career_flow": {
+                    "type": "sankey",
+                    "title": "Synthetic career flow — all majors (early bucket → later bucket)",
+                    "nodes": [
+                        {"id": "e_intern", "label": "Early — internship"},
+                        {"id": "e_entry", "label": "Early — entry IC"},
+                        {"id": "m_ic", "label": "Mid — individual contributor"},
+                        {"id": "m_mgmt", "label": "Mid — management track"},
+                        {"id": "s_lead", "label": "Senior — lead / principal"},
+                        {"id": "s_exec", "label": "Senior — exec / founder"},
+                    ],
+                    "links": [
+                        {"source": "e_intern", "target": "e_entry", "value": 2400},
+                        {"source": "e_intern", "target": "m_ic", "value": 800},
+                        {"source": "e_entry", "target": "m_ic", "value": 3200},
+                        {"source": "e_entry", "target": "m_mgmt", "value": 900},
+                        {"source": "m_ic", "target": "s_lead", "value": 1400},
+                        {"source": "m_ic", "target": "s_exec", "value": 220},
+                        {"source": "m_mgmt", "target": "s_exec", "value": 410},
+                        {"source": "m_mgmt", "target": "s_lead", "value": 380},
+                    ],
                 },
             },
         },
@@ -226,6 +263,237 @@ def main() -> None:
     write("origins_doctorate.json", origins_bundle("doctorate", "origins_doctorate", "PhD / doctorate"))
 
     write(
+        "majors/index.json",
+        {
+            "majors": [
+                {
+                    "id": "computer_science",
+                    "label": "Computer Sciences, B.S.",
+                    "cip": "11.0701",
+                },
+                {
+                    "id": "economics",
+                    "label": "Economics, B.A.",
+                    "cip": "45.0601",
+                },
+                {
+                    "id": "biochemistry",
+                    "label": "Biochemistry, B.S.",
+                    "cip": "26.0202",
+                },
+            ]
+        },
+    )
+
+    def major_industry_bundle(major_id: str, label: str, employers: list, sankey: dict) -> dict:
+        return {
+            "meta": {
+                **common,
+                "tab": "industry",
+                "major_id": major_id,
+                "degree_level": "undergraduate",
+                "source": "sample",
+                "methodology": (
+                    f"Synthetic industry, employer, and career-flow aggregates for major “{label}”. "
+                    "Production: LinkedIn harvest rollups by field-of-study filter + aggregation script."
+                ),
+                "disclaimer": "Not real UW–Madison statistics; major slice for UI development only.",
+            },
+            "charts": {
+                "by_industry": {
+                    "type": "bar",
+                    "title": f"Alumni by industry — {label} (sample)",
+                    "data": sankey["by_industry_bars"],
+                },
+                "top_employers": {
+                    "type": "bar",
+                    "title": f"Top employers — {label} (sample)",
+                    "data": employers,
+                },
+                "career_flow": {
+                    "type": "sankey",
+                    "title": f"Common pathways — {label} (synthetic flow)",
+                    "nodes": sankey["nodes"],
+                    "links": sankey["links"],
+                },
+                "tech_share_trend": {
+                    "type": "trend",
+                    "title": f"Tech-sector share trend — {label} (sample)",
+                    "x_key": "year",
+                    "data": trend_rows(52.0, 48.0, 45.0, drift=(0.2, 0.18, 0.15)),
+                    "series": trend_series,
+                },
+            },
+        }
+
+    cs_sankey = {
+        "by_industry_bars": [
+            {"label": "Software / internet", "value": 3100},
+            {"label": "Finance / fintech", "value": 420},
+            {"label": "Healthcare IT", "value": 380},
+            {"label": "Defense / aerospace", "value": 290},
+            {"label": "Other", "value": 910},
+        ],
+        "nodes": [
+            {"id": "cs_intern", "label": "Early — intern (SWE)"},
+            {"id": "cs_junior", "label": "Early — junior SWE"},
+            {"id": "cs_swe", "label": "Mid — software engineer"},
+            {"id": "cs_staff", "label": "Senior — staff / principal"},
+            {"id": "cs_pm", "label": "Mid — product / TPM"},
+            {"id": "cs_exec", "label": "Senior — exec / founder"},
+        ],
+        "links": [
+            {"source": "cs_intern", "target": "cs_junior", "value": 980},
+            {"source": "cs_intern", "target": "cs_swe", "value": 320},
+            {"source": "cs_junior", "target": "cs_swe", "value": 1500},
+            {"source": "cs_junior", "target": "cs_pm", "value": 280},
+            {"source": "cs_swe", "target": "cs_staff", "value": 620},
+            {"source": "cs_swe", "target": "cs_exec", "value": 90},
+            {"source": "cs_pm", "target": "cs_exec", "value": 110},
+            {"source": "cs_staff", "target": "cs_exec", "value": 140},
+        ],
+    }
+    cs_employers = [
+        {"label": "Google", "value": 410},
+        {"label": "Microsoft", "value": 290},
+        {"label": "Amazon", "value": 260},
+        {"label": "Meta", "value": 180},
+        {"label": "Epic", "value": 170},
+        {"label": "Apple", "value": 120},
+        {"label": "Other", "value": 2850},
+    ]
+    write(
+        "majors/computer_science.json",
+        major_industry_bundle("computer_science", "Computer Sciences, B.S.", cs_employers, cs_sankey),
+    )
+
+    econ_sankey = {
+        "by_industry_bars": [
+            {"label": "Banking / markets", "value": 890},
+            {"label": "Consulting", "value": 620},
+            {"label": "Government / policy", "value": 410},
+            {"label": "Tech", "value": 380},
+            {"label": "Other", "value": 720},
+        ],
+        "nodes": [
+            {"id": "e_ra", "label": "Early — research / analyst intern"},
+            {"id": "e_analyst", "label": "Early — analyst"},
+            {"id": "e_assoc", "label": "Mid — associate"},
+            {"id": "e_vp", "label": "Senior — VP / principal"},
+            {"id": "e_policy", "label": "Mid — policy / PhD track"},
+            {"id": "e_partner", "label": "Senior — partner / director"},
+        ],
+        "links": [
+            {"source": "e_ra", "target": "e_analyst", "value": 520},
+            {"source": "e_ra", "target": "e_policy", "value": 180},
+            {"source": "e_analyst", "target": "e_assoc", "value": 640},
+            {"source": "e_analyst", "target": "e_policy", "value": 120},
+            {"source": "e_assoc", "target": "e_vp", "value": 280},
+            {"source": "e_assoc", "target": "e_partner", "value": 95},
+            {"source": "e_policy", "target": "e_vp", "value": 140},
+            {"source": "e_vp", "target": "e_partner", "value": 160},
+        ],
+    }
+    econ_employers = [
+        {"label": "Goldman Sachs", "value": 95},
+        {"label": "McKinsey", "value": 72},
+        {"label": "JPMorgan Chase", "value": 88},
+        {"label": "Federal Reserve", "value": 48},
+        {"label": "Deloitte", "value": 76},
+        {"label": "Other", "value": 1640},
+    ]
+    write(
+        "majors/economics.json",
+        major_industry_bundle("economics", "Economics, B.A.", econ_employers, econ_sankey),
+    )
+
+    bio_sankey = {
+        "by_industry_bars": [
+            {"label": "Pharma / biotech", "value": 720},
+            {"label": "Healthcare providers", "value": 540},
+            {"label": "Research / academia", "value": 610},
+            {"label": "Other", "value": 430},
+        ],
+        "nodes": [
+            {"id": "b_lab", "label": "Early — lab / RA"},
+            {"id": "b_assoc_sci", "label": "Early — associate scientist"},
+            {"id": "b_rd", "label": "Mid — R&D scientist"},
+            {"id": "b_med", "label": "Mid — med school / clinician track"},
+            {"id": "b_lead", "label": "Senior — team lead"},
+            {"id": "b_pi", "label": "Senior — PI / medical lead"},
+        ],
+        "links": [
+            {"source": "b_lab", "target": "b_assoc_sci", "value": 480},
+            {"source": "b_lab", "target": "b_med", "value": 220},
+            {"source": "b_assoc_sci", "target": "b_rd", "value": 520},
+            {"source": "b_assoc_sci", "target": "b_med", "value": 140},
+            {"source": "b_rd", "target": "b_lead", "value": 260},
+            {"source": "b_rd", "target": "b_pi", "value": 85},
+            {"source": "b_med", "target": "b_pi", "value": 190},
+            {"source": "b_lead", "target": "b_pi", "value": 70},
+        ],
+    }
+    bio_employers = [
+        {"label": "Pfizer", "value": 62},
+        {"label": "UW Health", "value": 118},
+        {"label": "AbbVie", "value": 54},
+        {"label": "Genentech", "value": 41},
+        {"label": "Other", "value": 2025},
+    ]
+    write(
+        "majors/biochemistry.json",
+        major_industry_bundle("biochemistry", "Biochemistry, B.S.", bio_employers, bio_sankey),
+    )
+
+    write(
+        "notable.json",
+        {
+            "meta": {
+                **common,
+                "tab": "notable_alumni",
+                "degree_level": "all",
+                "source": "mixed",
+                "methodology": (
+                    "Sample entries mix illustrative public figures and synthetic “senior role” placeholders. "
+                    "Production: Wikidata SPARQL (educated at UW–Madison), UW news, and reviewed LinkedIn-aggregate flags. "
+                    "Every row requires source_url."
+                ),
+                "disclaimer": (
+                    "Not an official UW ranking. Inclusion is for illustration; verify via linked sources. "
+                    "LinkedIn-derived rows must be reviewed before publication."
+                ),
+            },
+            "entries": [
+                {
+                    "name": "Charles Lindbergh",
+                    "role_title": "Aviator (attended engineering, did not graduate)",
+                    "organization": "—",
+                    "notability": "widely_cited",
+                    "source_url": "https://en.wikipedia.org/wiki/Charles_Lindbergh",
+                    "source_type": "wikipedia",
+                    "year": "1920s attendance",
+                },
+                {
+                    "name": "Frank Lloyd Wright",
+                    "role_title": "Architect (attended, did not graduate)",
+                    "organization": "—",
+                    "notability": "widely_cited",
+                    "source_url": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+                    "source_type": "wikipedia",
+                },
+                {
+                    "name": "Sample placeholder — CEO",
+                    "role_title": "Chief Executive Officer (synthetic)",
+                    "organization": "Example Corp",
+                    "notability": "senior_role",
+                    "source_url": "https://github.com/dpark1719/BadgerNet-4.0",
+                    "source_type": "other",
+                },
+            ],
+        },
+    )
+
+    write(
         "meta.json",
         {
             "site": {
@@ -235,10 +503,9 @@ def main() -> None:
             "github_repo": "https://github.com/dpark1719/BadgerNet-4.0",
             "github_project": "https://github.com/users/dpark1719/projects/2",
             "methodology_blurb": (
-                "This app loads static JSON from /data. Six top-level tabs: Industry, Post-grad education, "
-                "International outcomes, and three Student origins levels (UG, grad, doctorate). "
-                "Trend charts use 1y / 5y / 10y-style series (synthetic until real pipelines land). "
-                "International outcomes target non–U.S. citizens from abroad; LinkedIn harvest is aggregate-only, no API."
+                "This app loads static JSON from /data. Seven top-level tabs including Notable alumni. "
+                "Industry supports a major filter (see /data/majors/). Career flow uses sankey aggregates; "
+                "top employers use bar charts. Notable list requires source_url per row (Wikidata, news, reviewed LinkedIn)."
             ),
             "tabs": [
                 {"id": "industry", "label": "Industry"},
@@ -247,6 +514,7 @@ def main() -> None:
                 {"id": "origins_undergrad", "label": "Origins — Undergraduate"},
                 {"id": "origins_graduate", "label": "Origins — Graduate"},
                 {"id": "origins_doctorate", "label": "Origins — Doctorate"},
+                {"id": "notable_alumni", "label": "Notable alumni"},
             ],
         },
     )

@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "industry",
+    "major_id": "biochemistry",
+    "degree_level": "undergraduate",
+    "source": "sample",
+    "methodology": "Synthetic industry, employer, and career-flow aggregates for major \u201cBiochemistry, B.S.\u201d. Production: LinkedIn harvest rollups by field-of-study filter + aggregation script.",
+    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only."
+  },
+  "charts": {
+    "by_industry": {
+      "type": "bar",
+      "title": "Alumni by industry \u2014 Biochemistry, B.S. (sample)",
+      "data": [
+        {
+          "label": "Pharma / biotech",
+          "value": 720
+        },
+        {
+          "label": "Healthcare providers",
+          "value": 540
+        },
+        {
+          "label": "Research / academia",
+          "value": 610
+        },
+        {
+          "label": "Other",
+          "value": 430
+        }
+      ]
+    },
+    "top_employers": {
+      "type": "bar",
+      "title": "Top employers \u2014 Biochemistry, B.S. (sample)",
+      "data": [
+        {
+          "label": "Pfizer",
+          "value": 62
+        },
+        {
+          "label": "UW Health",
+          "value": 118
+        },
+        {
+          "label": "AbbVie",
+          "value": 54
+        },
+        {
+          "label": "Genentech",
+          "value": 41
+        },
+        {
+          "label": "Other",
+          "value": 2025
+        }
+      ]
+    },
+    "career_flow": {
+      "type": "sankey",
+      "title": "Common pathways \u2014 Biochemistry, B.S. (synthetic flow)",
+      "nodes": [
+        {
+          "id": "b_lab",
+          "label": "Early \u2014 lab / RA"
+        },
+        {
+          "id": "b_assoc_sci",
+          "label": "Early \u2014 associate scientist"
+        },
+        {
+          "id": "b_rd",
+          "label": "Mid \u2014 R&D scientist"
+        },
+        {
+          "id": "b_med",
+          "label": "Mid \u2014 med school / clinician track"
+        },
+        {
+          "id": "b_lead",
+          "label": "Senior \u2014 team lead"
+        },
+        {
+          "id": "b_pi",
+          "label": "Senior \u2014 PI / medical lead"
+        }
+      ],
+      "links": [
+        {
+          "source": "b_lab",
+          "target": "b_assoc_sci",
+          "value": 480
+        },
+        {
+          "source": "b_lab",
+          "target": "b_med",
+          "value": 220
+        },
+        {
+          "source": "b_assoc_sci",
+          "target": "b_rd",
+          "value": 520
+        },
+        {
+          "source": "b_assoc_sci",
+          "target": "b_med",
+          "value": 140
+        },
+        {
+          "source": "b_rd",
+          "target": "b_lead",
+          "value": 260
+        },
+        {
+          "source": "b_rd",
+          "target": "b_pi",
+          "value": 85
+        },
+        {
+          "source": "b_med",
+          "target": "b_pi",
+          "value": 190
+        },
+        {
+          "source": "b_lead",
+          "target": "b_pi",
+          "value": 70
+        }
+      ]
+    },
+    "tech_share_trend": {
+      "type": "trend",
+      "title": "Tech-sector share trend \u2014 Biochemistry, B.S. (sample)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 52.0,
+          "w5y": 48.0,
+          "w10y": 45.0
+        },
+        {
+          "year": 2017,
+          "w1y": 52.2,
+          "w5y": 48.18,
+          "w10y": 45.15
+        },
+        {
+          "year": 2018,
+          "w1y": 52.4,
+          "w5y": 48.36,
+          "w10y": 45.3
+        },
+        {
+          "year": 2019,
+          "w1y": 52.6,
+          "w5y": 48.54,
+          "w10y": 45.45
+        },
+        {
+          "year": 2020,
+          "w1y": 52.8,
+          "w5y": 48.72,
+          "w10y": 45.6
+        },
+        {
+          "year": 2021,
+          "w1y": 53.0,
+          "w5y": 48.9,
+          "w10y": 45.75
+        },
+        {
+          "year": 2022,
+          "w1y": 53.2,
+          "w5y": 49.08,
+          "w10y": 45.9
+        },
+        {
+          "year": 2023,
+          "w1y": 53.4,
+          "w5y": 49.26,
+          "w10y": 46.05
+        },
+        {
+          "year": 2024,
+          "w1y": 53.6,
+          "w5y": 49.44,
+          "w10y": 46.2
+        },
+        {
+          "year": 2025,
+          "w1y": 53.8,
+          "w5y": 49.62,
+          "w10y": 46.35
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
+      ]
+    }
+  }
+}

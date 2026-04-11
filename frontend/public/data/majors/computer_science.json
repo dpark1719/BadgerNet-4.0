@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "snapshot_date": "2026-04-11",
+    "academic_year": "2023-24",
+    "tab": "industry",
+    "major_id": "computer_science",
+    "degree_level": "undergraduate",
+    "source": "sample",
+    "methodology": "Synthetic industry, employer, and career-flow aggregates for major \u201cComputer Sciences, B.S.\u201d. Production: LinkedIn harvest rollups by field-of-study filter + aggregation script.",
+    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only."
+  },
+  "charts": {
+    "by_industry": {
+      "type": "bar",
+      "title": "Alumni by industry \u2014 Computer Sciences, B.S. (sample)",
+      "data": [
+        {
+          "label": "Software / internet",
+          "value": 3100
+        },
+        {
+          "label": "Finance / fintech",
+          "value": 420
+        },
+        {
+          "label": "Healthcare IT",
+          "value": 380
+        },
+        {
+          "label": "Defense / aerospace",
+          "value": 290
+        },
+        {
+          "label": "Other",
+          "value": 910
+        }
+      ]
+    },
+    "top_employers": {
+      "type": "bar",
+      "title": "Top employers \u2014 Computer Sciences, B.S. (sample)",
+      "data": [
+        {
+          "label": "Google",
+          "value": 410
+        },
+        {
+          "label": "Microsoft",
+          "value": 290
+        },
+        {
+          "label": "Amazon",
+          "value": 260
+        },
+        {
+          "label": "Meta",
+          "value": 180
+        },
+        {
+          "label": "Epic",
+          "value": 170
+        },
+        {
+          "label": "Apple",
+          "value": 120
+        },
+        {
+          "label": "Other",
+          "value": 2850
+        }
+      ]
+    },
+    "career_flow": {
+      "type": "sankey",
+      "title": "Common pathways \u2014 Computer Sciences, B.S. (synthetic flow)",
+      "nodes": [
+        {
+          "id": "cs_intern",
+          "label": "Early \u2014 intern (SWE)"
+        },
+        {
+          "id": "cs_junior",
+          "label": "Early \u2014 junior SWE"
+        },
+        {
+          "id": "cs_swe",
+          "label": "Mid \u2014 software engineer"
+        },
+        {
+          "id": "cs_staff",
+          "label": "Senior \u2014 staff / principal"
+        },
+        {
+          "id": "cs_pm",
+          "label": "Mid \u2014 product / TPM"
+        },
+        {
+          "id": "cs_exec",
+          "label": "Senior \u2014 exec / founder"
+        }
+      ],
+      "links": [
+        {
+          "source": "cs_intern",
+          "target": "cs_junior",
+          "value": 980
+        },
+        {
+          "source": "cs_intern",
+          "target": "cs_swe",
+          "value": 320
+        },
+        {
+          "source": "cs_junior",
+          "target": "cs_swe",
+          "value": 1500
+        },
+        {
+          "source": "cs_junior",
+          "target": "cs_pm",
+          "value": 280
+        },
+        {
+          "source": "cs_swe",
+          "target": "cs_staff",
+          "value": 620
+        },
+        {
+          "source": "cs_swe",
+          "target": "cs_exec",
+          "value": 90
+        },
+        {
+          "source": "cs_pm",
+          "target": "cs_exec",
+          "value": 110
+        },
+        {
+          "source": "cs_staff",
+          "target": "cs_exec",
+          "value": 140
+        }
+      ]
+    },
+    "tech_share_trend": {
+      "type": "trend",
+      "title": "Tech-sector share trend \u2014 Computer Sciences, B.S. (sample)",
+      "x_key": "year",
+      "data": [
+        {
+          "year": 2016,
+          "w1y": 52.0,
+          "w5y": 48.0,
+          "w10y": 45.0
+        },
+        {
+          "year": 2017,
+          "w1y": 52.2,
+          "w5y": 48.18,
+          "w10y": 45.15
+        },
+        {
+          "year": 2018,
+          "w1y": 52.4,
+          "w5y": 48.36,
+          "w10y": 45.3
+        },
+        {
+          "year": 2019,
+          "w1y": 52.6,
+          "w5y": 48.54,
+          "w10y": 45.45
+        },
+        {
+          "year": 2020,
+          "w1y": 52.8,
+          "w5y": 48.72,
+          "w10y": 45.6
+        },
+        {
+          "year": 2021,
+          "w1y": 53.0,
+          "w5y": 48.9,
+          "w10y": 45.75
+        },
+        {
+          "year": 2022,
+          "w1y": 53.2,
+          "w5y": 49.08,
+          "w10y": 45.9
+        },
+        {
+          "year": 2023,
+          "w1y": 53.4,
+          "w5y": 49.26,
+          "w10y": 46.05
+        },
+        {
+          "year": 2024,
+          "w1y": 53.6,
+          "w5y": 49.44,
+          "w10y": 46.2
+        },
+        {
+          "year": 2025,
+          "w1y": 53.8,
+          "w5y": 49.62,
+          "w10y": 46.35
+        }
+      ],
+      "series": [
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
+      ]
+    }
+  }
+}

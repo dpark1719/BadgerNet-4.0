@@ -25,7 +25,16 @@ cd BadgerNet-4.0
 
 ## Quick start
 
-### Backend (sample data)
+### Backend (real IPEDS + Wikidata)
+
+```bash
+python3 -m pip install -r backend/requirements.txt
+python3 backend/scripts/build_public_data.py
+```
+
+See [backend/scripts/DATA_PIPELINES.md](backend/scripts/DATA_PIPELINES.md) for UW CSV ingest, LinkedIn CSV → majors, and optional College Scorecard.
+
+### Backend (sample-only demo)
 
 ```bash
 cd backend && python3 scripts/generate_sample_data.py

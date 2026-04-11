@@ -37,6 +37,33 @@
   line-height: 1.5;
 }
 
+.major-filter {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.major-filter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.major-select {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.4rem 2rem 0.4rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  min-width: 14rem;
+}
+
 .tabs {
   display: flex;
   flex-wrap: nowrap;
@@ -189,6 +216,100 @@
 
 .chart-wrap--trend {
   min-height: 340px;
+}
+
+.sankey-panel {
+  padding-bottom: 0.5rem;
+}
+
+.chart-wrap--sankey {
+  min-height: 420px;
+  width: 100%;
+}
+
+.sankey-note {
+  margin-top: 0.5rem;
+  max-width: 42rem;
+}
+
+.notable-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notable-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+}
+
+.notable-card-head {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.notable-photo,
+.notable-photo-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.notable-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.notable-name {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-h);
+}
+
+.notable-role {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.notable-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+}
+
+.notable-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: var(--border);
+  color: var(--text-h);
+}
+
+.notable-tag--source {
+  background: var(--accent-soft);
+  color: var(--text-h);
+}
+
+.notable-source {
+  margin: 0.5rem 0 0;
 }
 
 .banner {

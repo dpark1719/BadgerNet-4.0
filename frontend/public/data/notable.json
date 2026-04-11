@@ -1,0 +1,494 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "tab": "notable_alumni",
+    "snapshot_date": "2026-04-11",
+    "degree_level": "all",
+    "source": "wikidata",
+    "source_url": "https://www.wikidata.org/",
+    "methodology": "SPARQL against Wikidata: entities with P69 (educated at) = Q838330 (UW\u2013Madison), with an English Wikipedia sitelink. Not vetted for graduation or degree type; verify each source.",
+    "disclaimer": "Automated list from Wikidata \u2014 not an official UW ranking, incomplete, and may include faculty or short-term attendees. Every row links to Wikipedia for verification."
+  },
+  "entries": [
+    {
+      "name": "Arvid Harnack",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Arvid_Harnack",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Hasan Mohamed Ali",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Hasan_Mohamed_Ali",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Erwin Neher",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Erwin_Neher",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Carl Djerassi",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Carl_Djerassi",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Saul Bellow",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Saul_Bellow",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Paul Alfred Biefeld",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Paul_Alfred_Biefeld",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Yiannis N. Moschovakis",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Yiannis_N._Moschovakis",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Mary Ann Horton",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Mary_Ann_Horton",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Brian Paul",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Brian_Paul",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "David Salo",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/David_Salo",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Anna Essinger",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Anna_Essinger",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Willi Kalender",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Willi_A._Kalender",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Paul D. Boyer",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Paul_D._Boyer",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jan Hatzius",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Jan_Hatzius",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Alan MacDiarmid",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Alan_MacDiarmid",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Stanford Moore",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Stanford_Moore",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jim Lovell",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Jim_Lovell",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Scott O'Dell",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Scott_O%27Dell",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Charlotte Armstrong",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Charlotte_Armstrong",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Florian Cajori",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Florian_Cajori",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Douglas L. Coleman",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Douglas_L._Coleman",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Bernd Br\u00fcckler",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Bernd_Br%C3%BCckler",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Carl R. Eklund",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Carl_R._Eklund",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Arthur Waskow",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Arthur_Waskow",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Charlene Barshefsky",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Charlene_Barshefsky",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Iajuddin Ahmed",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Iajuddin_Ahmed",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Ammar Abdulhamid",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Ammar_Abdulhamid",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "James Kirby Martin",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/James_Kirby_Martin",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Bradley C. Livezey",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Bradley_C._Livezey",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Q168665",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Bruce_Nauman",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Charles A. Kading",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Charles_A._Kading",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Sixto Dur\u00e1n-Ball\u00e9n",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Sixto_Dur%C3%A1n_Ball%C3%A9n",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Ralph F. Hirschmann",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Ralph_F._Hirschmann",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Fredric March",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Fredric_March",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jack Kilby",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Jack_Kilby",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jim Jordan",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Jim_Jordan",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Joseph McCarthy",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Joseph_McCarthy",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Q191004",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Carl_Rogers",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Seann William Scott",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Seann_William_Scott",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "John Hasbrouck Van Vleck",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/John_Hasbrouck_Van_Vleck",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Edward Witten",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Edward_Witten",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Gerson Goldhaber",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Gerson_Goldhaber",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Harry W. Griswold",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Harry_W._Griswold",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Oscar Osthoff",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Oscar_Osthoff",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Patrick Michaels",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Patrick_Michaels",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lawrence Eagleburger",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Lawrence_Eagleburger",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Leonard Bloomfield",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Leonard_Bloomfield",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Joyce Carol Oates",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Joyce_Carol_Oates",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Joshua Lederberg",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Joshua_Lederberg",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Zona Gale",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Zona_Gale",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Russ Hellickson",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Russ_Hellickson",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Gena Rowlands",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Gena_Rowlands",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Agnes Moorehead",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Agnes_Moorehead",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Laurel Clark",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Laurel_Clark",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Theodore Schultz",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Theodore_Schultz",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lynn Margulis",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Lynn_Margulis",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Lynne Cheney",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Lynne_Cheney",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Jane Kaczmarek",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Jane_Kaczmarek",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "Edward Tatum",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/Edward_Tatum",
+      "source_type": "wikipedia"
+    },
+    {
+      "name": "August Herman Pfund",
+      "role_title": "Notable person (Wikidata: educated at UW\u2013Madison)",
+      "organization": "\u2014",
+      "notability": "widely_cited",
+      "source_url": "https://en.wikipedia.org/wiki/August_Herman_Pfund",
+      "source_type": "wikipedia"
+    }
+  ]
+}
