@@ -5,35 +5,15 @@
   },
   "github_repo": "https://github.com/dpark1719/BadgerNet-4.0",
   "github_project": "https://github.com/users/dpark1719/projects/2",
-  "methodology_blurb": "This app loads static JSON from /data. Seven top-level tabs including Notable alumni. Industry supports a major filter (see /data/majors/). Career flow uses sankey aggregates; top employers use bar charts. Notable list requires source_url per row (Wikidata, news, reviewed LinkedIn).",
+  "methodology_blurb": "This app loads static JSON from /data. Industry supports an optional major filter via /data/majors/. Tabs include Post-grad, International (including IPEDS context where present), World map (sample destination flows for UI), Notable alumni (Wikidata-backed entries with source_url), and three Origins levels. Career flow may use sankey aggregates; replace synthetic data with UW surveys and reviewed LinkedIn rollups in production.",
   "tabs": [
-    {
-      "id": "industry",
-      "label": "Industry"
-    },
-    {
-      "id": "postgrad",
-      "label": "Post-grad education"
-    },
-    {
-      "id": "international",
-      "label": "International outcomes"
-    },
-    {
-      "id": "origins_undergrad",
-      "label": "Origins \u2014 Undergraduate"
-    },
-    {
-      "id": "origins_graduate",
-      "label": "Origins \u2014 Graduate"
-    },
-    {
-      "id": "origins_doctorate",
-      "label": "Origins \u2014 Doctorate"
-    },
-    {
-      "id": "notable_alumni",
-      "label": "Notable alumni"
-    }
+    { "id": "industry", "label": "Industry" },
+    { "id": "postgrad", "label": "Post-grad education" },
+    { "id": "international", "label": "International outcomes" },
+    { "id": "world_map", "label": "World map" },
+    { "id": "notable_alumni", "label": "Notable alumni" },
+    { "id": "origins_undergrad", "label": "Origins \u2014 Undergraduate" },
+    { "id": "origins_graduate", "label": "Origins \u2014 Graduate" },
+    { "id": "origins_doctorate", "label": "Origins \u2014 Doctorate" }
   ]
 }

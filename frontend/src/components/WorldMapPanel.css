@@ -1,0 +1,243 @@
+.world-map-embed {
+  position: relative;
+  width: 100%;
+}
+
+.map-meta {
+  margin-bottom: 1rem;
+}
+
+.map-surface--interactive {
+  touch-action: none;
+}
+
+.world-map-svg--zoom {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+}
+
+.world-map-svg--zoom:active {
+  cursor: grabbing;
+}
+
+.map-surface {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    160deg,
+    rgba(197, 5, 12, 0.06),
+    rgba(255, 255, 255, 0.04)
+  );
+  box-shadow:
+    0 18px 50px rgba(20, 18, 16, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-surface {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 107, 107, 0.08),
+      rgba(255, 255, 255, 0.03)
+    );
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+.map-ocean {
+  fill: var(--panel);
+}
+
+.map-countries .country {
+  fill: rgba(255, 255, 255, 0.55);
+  stroke: var(--border);
+  stroke-width: 0.35;
+}
+
+.map-countries .country.antarctica {
+  fill: rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-countries .country {
+    fill: rgba(255, 255, 255, 0.08);
+    stroke: var(--border);
+  }
+}
+
+.flow-arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hub-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: 0.35;
+  stroke-width: 2;
+}
+
+.hub-dot {
+  fill: var(--accent);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+
+.hub-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  fill: var(--text-h);
+  paint-order: stroke fill;
+  stroke: var(--bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.map-glass {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  max-width: min(17rem, 46vw);
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 36px rgba(20, 18, 16, 0.1);
+}
+
+.map-glass {
+  pointer-events: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-glass {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(28, 26, 23, 0.55);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.map-legend-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.map-legend-list {
+  margin: 0 0 0.65rem;
+  padding-left: 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-h);
+}
+
+.map-zoom-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.map-zoom-buttons button {
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.map-zoom-buttons button:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.map-table {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.map-table-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.map-table-lead {
+  margin: 0 0 0.85rem;
+  line-height: 1.45;
+}
+
+.map-table-head {
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.map-table-body .map-table-row:last-child {
+  border-bottom: none;
+}
+
+.map-table-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  font-size: 0.9rem;
+  border-bottom: 1px dashed var(--border);
+  padding: 0.35rem 0;
+}
+
+.map-col-n,
+.map-col-map {
+  text-align: right;
+}
+
+.map-col-map {
+  min-width: 3.25rem;
+}
+
+.map-table-summary {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem 1rem;
+  padding-top: 0.5rem;
+  margin-top: 0.35rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.mono {
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.mono-inline {
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.82em;
+}

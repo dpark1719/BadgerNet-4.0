@@ -15,6 +15,27 @@
   );
 }
 
+.header-split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header-actions {
+  padding-bottom: 0.25rem;
+}
+
+.map-nav-link {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.map-nav-link:hover {
+  text-decoration: none;
+}
+
 .header-text h1 {
   margin: 0.25rem 0 0.5rem;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
@@ -112,6 +133,10 @@
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.main.main--wide {
+  max-width: 1180px;
 }
 
 .meta-strip {
