@@ -9,6 +9,17 @@
 
 `main` should always run: regenerate data (if needed) + `npm run build` in `frontend/`.
 
+## Auto-push after every commit (David / Rohan)
+
+This repo includes [`.githooks/post-commit`](.githooks/post-commit): after each local commit it runs `git push` for your current branch so teammates stay current. **Enable once per clone:**
+
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/post-commit   # if your OS strips execute bit
+```
+
+You need working GitHub auth (HTTPS credential helper, SSH remote, or `gh auth`). If push fails, your commit is still local; run `git push` when online.
+
 ## How to avoid problems when both work at once
 
 1. **Stay in your lane (directories).** The shared artifact that changes often is `frontend/public/data/*.json` (six tab bundles plus `meta.json`). David owns regenerating it; Rohan consumes it. If Rohan needs new fields, update [DATA_CONTRACT.md](./DATA_CONTRACT.md) first and ping David.

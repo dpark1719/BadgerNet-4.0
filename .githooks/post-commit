@@ -1,0 +1,13 @@
+#!/bin/sh
+# Auto-push after every commit (optional). Enable once per clone:
+#   git config core.hooksPath .githooks
+#
+# Requires GitHub auth (SSH remote or gh/credential helper). If push fails,
+# the commit is still local — fix auth or run: git push
+
+branch=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
+[ -z "$branch" ] && exit 0
+
+if ! git push -u origin "$branch" 2>&1; then
+  echo "post-commit: git push failed (offline or auth?). Commit is saved locally."
+fi
