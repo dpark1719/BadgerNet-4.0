@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "tab": "world_map_overlay",
+    "snapshot_date": "2026-04-11",
+    "degree_level": "all",
+    "source": "sample",
+    "filter_fingerprint": "sample:map_only",
+    "methodology": "Synthetic destination mix for the World map tab only. Not tied to the IPEDS bar on the International tab.",
+    "disclaimer": "Illustrative flows for UI development. The \u201cOther\u201d bucket is not drawn as a single map point."
+  },
+  "charts": {
+    "destination_country": {
+      "type": "bar",
+      "title": "Sample post-UW country mix (map layer)",
+      "data": [
+        { "label": "United States", "value": 450 },
+        { "label": "India", "value": 180 },
+        { "label": "China", "value": 120 },
+        { "label": "South Korea", "value": 55 },
+        { "label": "Canada", "value": 48 },
+        { "label": "Other", "value": 210 }
+      ]
+    }
+  }
+}

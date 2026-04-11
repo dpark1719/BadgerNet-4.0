@@ -119,7 +119,7 @@ Not a `charts` object. Shape:
 
 ### `meta.json`
 
-Site-wide strings, **seven** tab entries (`id` + `label`), links (`github_repo`, `github_project`).
+Site-wide strings, tab entries (`id` + `label`) for each nav item, links (`github_repo`, `github_project`).
 
 ## Backend responsibilities
 
@@ -132,4 +132,4 @@ Site-wide strings, **seven** tab entries (`id` + `label`), links (`github_repo`,
 - Fetch `/data/<file>.json` at runtime; for Industry + major ≠ all, fetch `/data/majors/{id}.json`.
 - Keep URL query `?major=` in sync for shareable state.
 - Render `meta.disclaimer` prominently for LinkedIn-backed or sample tabs.
-- Tab bar scrolls horizontally on narrow viewports.
+- Tab bar scrolls horizontally on narrow viewports. World map reads sample flows from `map_destinations.json` (not the IPEDS chart on `international.json`).

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { renderChart } from './components/ChartPanels'
 import { NotablePanel } from './components/NotablePanel'
+import WorldMapPanel from './components/WorldMapPanel'
 import type { MajorIndex, NotableBundle, SiteMeta, TabBundle } from './types/data'
 import {
   majorAwareTabs,
@@ -20,6 +21,7 @@ type ViewState =
   | { status: 'err'; message: string }
   | { status: 'ok'; mode: 'charts'; data: TabBundle }
   | { status: 'ok'; mode: 'notable'; data: NotableBundle }
+  | { status: 'ok'; mode: 'worldmap' }
 
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -96,6 +98,10 @@ export default function App() {
 
   const loadView = useCallback(
     (tabId: string, major: string) => {
+      if (tabId === 'world_map') {
+        setView({ status: 'ok', mode: 'worldmap' })
+        return
+      }
       const url = resolveDataUrl(tabId, major)
       setView({ status: 'loading' })
       if (tabId === 'notable_alumni') {
@@ -134,6 +140,9 @@ export default function App() {
   const ghRepo = site.status === 'ok' ? site.data.github_repo : ''
 
   const majorOptions = majors.status === 'ok' ? majors.data.majors : []
+
+  const mainWide =
+    view.status === 'ok' && view.mode === 'worldmap' ? ' main--wide' : ''
 
   return (
     <div className="app">
@@ -184,7 +193,7 @@ export default function App() {
         ))}
       </nav>
 
-      <main className="main">
+      <main className={`main${mainWide}`}>
         {view.status === 'loading' && (
           <p className="muted">Loading tab data…</p>
         )}
@@ -193,6 +202,7 @@ export default function App() {
             {view.message}
           </p>
         )}
+        {view.status === 'ok' && view.mode === 'worldmap' && <WorldMapPanel />}
         {view.status === 'ok' && view.mode === 'notable' && (
           <>
             <section className="meta-strip" aria-label="Data context">
@@ -333,8 +343,9 @@ const fallbackTabs = [
   { id: 'industry', label: 'Industry' },
   { id: 'postgrad', label: 'Post-grad education' },
   { id: 'international', label: 'International outcomes' },
+  { id: 'world_map', label: 'World map' },
+  { id: 'notable_alumni', label: 'Notable alumni' },
   { id: 'origins_undergrad', label: 'Origins — UG' },
   { id: 'origins_graduate', label: 'Origins — Grad' },
   { id: 'origins_doctorate', label: 'Origins — PhD' },
-  { id: 'notable_alumni', label: 'Notable alumni' },
 ]
