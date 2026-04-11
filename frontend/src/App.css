@@ -353,9 +353,64 @@
   text-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
+.notable-avatar--large {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
 .notable-header-text {
   flex: 1;
   min-width: 0;
+}
+
+.notable-photo-stack {
+  position: relative;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+}
+
+.notable-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  background: var(--border);
+}
+
+.notable-photo--logo {
+  object-fit: contain;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--border);
+}
+
+.notable-photo--placeholder {
+  opacity: 0.92;
+}
+
+.notable-achievement-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.notable-achievement-badge img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 
 .notable-name {

@@ -4,9 +4,12 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from backend.lib.majors_index import sync_majors_index  # noqa: E402
 OUT = ROOT / "frontend" / "public" / "data"
 
 YEARS = list(range(2016, 2026))
@@ -132,8 +135,15 @@ def main() -> None:
                 "tab": "postgrad",
                 "degree_level": "all",
                 "source": "sample",
-                "methodology": "Synthetic continuation rate, degree-type mix, and trend.",
-                "disclaimer": "Not from an official first-destination survey.",
+                "methodology": (
+                    "Synthetic continuation rate, credential-type mix, trend, and **illustrative** grad/PhD "
+                    "destination counts (not a real UW tabulation). Replace with First Destination Survey "
+                    "or other UW-published tables."
+                ),
+                "disclaimer": (
+                    "Not from an official first-destination survey. Institution list is demo-only until you "
+                    "import real FDS / outcomes data."
+                ),
             },
             "charts": {
                 "continuation_rate": {
@@ -157,6 +167,29 @@ def main() -> None:
                         {"label": "Doctorate", "value": 210},
                         {"label": "Professional (JD/MD/MBA)", "value": 140},
                         {"label": "Certificate / other", "value": 95},
+                    ],
+                },
+                "grad_phd_destinations": {
+                    "type": "bar",
+                    "title": "Further study — sample grad / PhD destinations (illustrative counts)",
+                    "data": [
+                        {"label": "UW–Madison (continuing)", "value": 612},
+                        {"label": "University of Michigan", "value": 198},
+                        {"label": "Northwestern University", "value": 156},
+                        {"label": "University of Chicago", "value": 134},
+                        {"label": "MIT", "value": 112},
+                        {"label": "Stanford University", "value": 98},
+                        {"label": "Harvard University", "value": 92},
+                        {"label": "UC Berkeley", "value": 88},
+                        {"label": "Cornell University", "value": 76},
+                        {"label": "Georgia Institute of Technology", "value": 71},
+                        {"label": "Johns Hopkins University", "value": 64},
+                        {"label": "Duke University", "value": 58},
+                        {"label": "UCLA", "value": 54},
+                        {"label": "University of Minnesota", "value": 49},
+                        {"label": "University of Illinois Urbana-Champaign", "value": 45},
+                        {"label": "University of Wisconsin Medical School (MD)", "value": 41},
+                        {"label": "Other / not specified", "value": 520},
                     ],
                 },
             },
@@ -262,43 +295,31 @@ def main() -> None:
     write("origins_graduate.json", origins_bundle("graduate", "origins_graduate", "Grad"))
     write("origins_doctorate.json", origins_bundle("doctorate", "origins_doctorate", "PhD / doctorate"))
 
-    write(
-        "majors/index.json",
-        {
-            "majors": [
-                {
-                    "id": "computer_science",
-                    "label": "Computer Sciences, B.S.",
-                    "cip": "11.0701",
-                },
-                {
-                    "id": "economics",
-                    "label": "Economics, B.A.",
-                    "cip": "45.0601",
-                },
-                {
-                    "id": "biochemistry",
-                    "label": "Biochemistry, B.S.",
-                    "cip": "26.0202",
-                },
-            ]
-        },
-    )
-
-    def major_industry_bundle(major_id: str, label: str, employers: list, sankey: dict) -> dict:
+    def major_industry_bundle(
+        major_id: str,
+        label: str,
+        employers: list,
+        sankey: dict,
+        *,
+        cip: str | None = None,
+    ) -> dict:
+        meta = {
+            **common,
+            "tab": "industry",
+            "major_id": major_id,
+            "degree_level": "undergraduate",
+            "source": "sample",
+            "major_display_name": label,
+            "methodology": (
+                f"Synthetic industry, employer, and career-flow aggregates for major “{label}”. "
+                "Production: LinkedIn harvest rollups by field-of-study filter + aggregation script."
+            ),
+            "disclaimer": "Not real UW–Madison statistics; major slice for UI development only.",
+        }
+        if cip:
+            meta["major_cip"] = cip
         return {
-            "meta": {
-                **common,
-                "tab": "industry",
-                "major_id": major_id,
-                "degree_level": "undergraduate",
-                "source": "sample",
-                "methodology": (
-                    f"Synthetic industry, employer, and career-flow aggregates for major “{label}”. "
-                    "Production: LinkedIn harvest rollups by field-of-study filter + aggregation script."
-                ),
-                "disclaimer": "Not real UW–Madison statistics; major slice for UI development only.",
-            },
+            "meta": meta,
             "charts": {
                 "by_industry": {
                     "type": "bar",
@@ -364,7 +385,13 @@ def main() -> None:
     ]
     write(
         "majors/computer_science.json",
-        major_industry_bundle("computer_science", "Computer Sciences, B.S.", cs_employers, cs_sankey),
+        major_industry_bundle(
+            "computer_science",
+            "Computer Sciences, B.S.",
+            cs_employers,
+            cs_sankey,
+            cip="11.0701",
+        ),
     )
 
     econ_sankey = {
@@ -404,7 +431,13 @@ def main() -> None:
     ]
     write(
         "majors/economics.json",
-        major_industry_bundle("economics", "Economics, B.A.", econ_employers, econ_sankey),
+        major_industry_bundle(
+            "economics",
+            "Economics, B.A.",
+            econ_employers,
+            econ_sankey,
+            cip="45.0601",
+        ),
     )
 
     bio_sankey = {
@@ -442,8 +475,16 @@ def main() -> None:
     ]
     write(
         "majors/biochemistry.json",
-        major_industry_bundle("biochemistry", "Biochemistry, B.S.", bio_employers, bio_sankey),
+        major_industry_bundle(
+            "biochemistry",
+            "Biochemistry, B.S.",
+            bio_employers,
+            bio_sankey,
+            cip="26.0202",
+        ),
     )
+
+    sync_majors_index(OUT / "majors", verbose=True)
 
     write(
         "notable.json",
@@ -472,6 +513,13 @@ def main() -> None:
                     "source_url": "https://en.wikipedia.org/wiki/Charles_Lindbergh",
                     "source_type": "wikipedia",
                     "year": "1920s attendance",
+                    "photo_url": (
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/"
+                        "Charles_Lindbergh_%28Harris_%26_Ewing_photo%2C_cropped%29.jpg/"
+                        "160px-Charles_Lindbergh_%28Harris_%26_Ewing_photo%2C_cropped%29.jpg"
+                    ),
+                    "achievement_image_url": "notable/badge-aviation.svg",
+                    "achievement_label": "Aviation",
                 },
                 {
                     "name": "Frank Lloyd Wright",
@@ -480,6 +528,12 @@ def main() -> None:
                     "notability": "widely_cited",
                     "source_url": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
                     "source_type": "wikipedia",
+                    "photo_url": (
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/"
+                        "Frank_Lloyd_Wright_portrait.jpg/160px-Frank_Lloyd_Wright_portrait.jpg"
+                    ),
+                    "achievement_image_url": "notable/badge-architecture.svg",
+                    "achievement_label": "Architecture",
                 },
                 {
                     "name": "Sample placeholder — CEO",
@@ -488,6 +542,9 @@ def main() -> None:
                     "notability": "senior_role",
                     "source_url": "https://github.com/dpark1719/BadgerNet-4.0",
                     "source_type": "other",
+                    "photo_url": "notable/placeholder-person.svg",
+                    "achievement_image_url": "notable/badge-exec.svg",
+                    "achievement_label": "Executive leadership",
                 },
             ],
         },

@@ -1,5 +1,18 @@
 import { useState } from 'react'
 import type { NotableBundle, NotableEntry } from '../types/data'
+import { publicPath } from '../publicPath'
+import { inferAchievementBadge } from '../notable/inferAchievement'
+
+function resolvePhotoSrc(url: string | undefined): string | undefined {
+  if (!url) return undefined
+  if (/^https?:\/\//i.test(url)) return url
+  return publicPath(url.replace(/^\/+/, ''))
+}
+
+function resolveAchievementSrc(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url
+  return publicPath(url.replace(/^\/+/, ''))
+}
 
 function notabilityLabel(n: NotableEntry['notability']): string {
   switch (n) {
@@ -14,19 +27,19 @@ function notabilityLabel(n: NotableEntry['notability']): string {
 
 const FIELD_COLORS: Record<string, string> = {
   'Electrical engineering': '#e07020',
-  'Biochemistry': '#2e8b57',
+  Biochemistry: '#2e8b57',
   'Genetics / microbiology': '#3a9a6e',
   'Biochemistry / genetics': '#3a9a6e',
-  'Physics': '#4a6cf7',
+  Physics: '#4a6cf7',
   'Agricultural economics': '#7a8b3d',
-  'Chemistry': '#c04080',
+  Chemistry: '#c04080',
   'Mathematical physics': '#5a5af7',
-  'Biophysics': '#2a7a9a',
+  Biophysics: '#2a7a9a',
   'Aerospace / military': '#3060c0',
   'Medicine / aerospace': '#3070b0',
   'Organic chemistry': '#c06080',
   'Performing arts': '#b050a0',
-  'Literature': '#8060b0',
+  Literature: '#8060b0',
   'Literature / creative writing': '#8060b0',
   'Visual arts': '#c07040',
   'Economics / finance': '#5a8040',
@@ -36,9 +49,9 @@ const FIELD_COLORS: Record<string, string> = {
   'Literature / public policy': '#7a6090',
   'Soil science / politics': '#6a8a4a',
   'Architecture / politics': '#8a7060',
-  'Psychology': '#9a5a7a',
+  Psychology: '#9a5a7a',
   'Biology / evolution': '#3a8a6a',
-  'Linguistics': '#7a7a50',
+  Linguistics: '#7a7a50',
   'Organic chemistry / pharma': '#b06070',
   'Computer science': '#4a80c0',
   'Law / economics': '#6a7a7a',
@@ -53,19 +66,129 @@ function fieldColor(field?: string): string {
 
 function orgInitials(org: string): string {
   if (!org || org === '—') return '?'
-  return org
-    .split(/[\s/]+/)
-    .filter((w) => w.length > 0 && w[0] === w[0].toUpperCase())
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase() || org[0].toUpperCase()
+  return (
+    org
+      .split(/[\s/]+/)
+      .filter((w) => w.length > 0 && w[0] === w[0].toUpperCase())
+      .slice(0, 2)
+      .map((w) => w[0])
+      .join('')
+      .toUpperCase() || org[0].toUpperCase()
+  )
+}
+
+function achievementForEntry(entry: NotableEntry): { url: string; label: string } | null {
+  if (entry.achievement_image_url && entry.achievement_label) {
+    return {
+      url: entry.achievement_image_url,
+      label: entry.achievement_label,
+    }
+  }
+  if (entry.achievement_image_url) {
+    return { url: entry.achievement_image_url, label: 'Achievement' }
+  }
+  return inferAchievementBadge(entry.role_title, entry.organization)
+}
+
+function NotablePhotoBlock({ entry, color }: { entry: NotableEntry; color: string }) {
+  const [photoFailed, setPhotoFailed] = useState(false)
+  const [logoFailed, setLogoFailed] = useState(false)
+  const resolvedPhoto = resolvePhotoSrc(entry.photo_url)
+  const logoUrl = entry.logo_url?.trim()
+  const placeholder = publicPath('notable/placeholder-person.svg')
+  const achievement = achievementForEntry(entry)
+
+  let src = placeholder
+  let photoClass = 'notable-photo notable-photo--placeholder'
+  let referrerPolicy: 'no-referrer' | undefined
+
+  if (resolvedPhoto && !photoFailed) {
+    src = resolvedPhoto
+    photoClass = 'notable-photo'
+    referrerPolicy = 'no-referrer'
+  } else if (logoUrl && !logoFailed) {
+    src = logoUrl
+    photoClass = 'notable-photo notable-photo--logo'
+  } else {
+    src = placeholder
+    photoClass = 'notable-photo notable-photo--placeholder'
+  }
+
+  const showAvatarFallback =
+    photoFailed && (!logoUrl || logoFailed) && !resolvedPhoto
+
+  if (showAvatarFallback) {
+    return (
+      <div className="notable-photo-stack">
+        <div
+          className="notable-avatar notable-avatar--large"
+          style={{ background: color }}
+          aria-hidden
+        >
+          {orgInitials(entry.organization)}
+        </div>
+        {achievement && (
+          <span
+            className="notable-achievement-badge"
+            title={achievement.label}
+            aria-label={achievement.label}
+          >
+            <img
+              src={resolveAchievementSrc(achievement.url)}
+              alt=""
+              width={26}
+              height={26}
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="notable-photo-stack">
+      <img
+        src={src}
+        alt=""
+        className={photoClass}
+        width={64}
+        height={64}
+        loading="lazy"
+        decoding="async"
+        referrerPolicy={referrerPolicy}
+        onError={() => {
+          if (resolvedPhoto && !photoFailed) {
+            setPhotoFailed(true)
+            return
+          }
+          if (logoUrl && !logoFailed) setLogoFailed(true)
+        }}
+      />
+      {achievement && (
+        <span
+          className="notable-achievement-badge"
+          title={achievement.label}
+          aria-label={achievement.label}
+        >
+          <img
+            src={resolveAchievementSrc(achievement.url)}
+            alt=""
+            width={26}
+            height={26}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      )}
+    </div>
+  )
 }
 
 export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
   const [search, setSearch] = useState('')
   const [filterField, setFilterField] = useState('all')
-  const [brokenLogos, setBrokenLogos] = useState<Set<string>>(new Set())
 
   const allFields = Array.from(
     new Set(bundle.entries.map((e) => e.field).filter(Boolean)),
@@ -80,10 +203,6 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
     const matchField = filterField === 'all' || entry.field === filterField
     return matchSearch && matchField
   })
-
-  const handleLogoError = (url: string) => {
-    setBrokenLogos((prev) => new Set(prev).add(url))
-  }
 
   return (
     <section className="notable-list" aria-label="Notable alumni">
@@ -117,29 +236,10 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
       <ul className="notable-cards">
         {filtered.map((entry, i) => {
           const color = fieldColor(entry.field)
-          const hasLogo = entry.logo_url && !brokenLogos.has(entry.logo_url)
           return (
             <li key={`${entry.name}-${i}`} className="notable-card">
               <div className="notable-card-head">
-                {hasLogo ? (
-                  <img
-                    src={entry.logo_url}
-                    alt={`${entry.organization} logo`}
-                    className="notable-logo"
-                    width={48}
-                    height={48}
-                    loading="lazy"
-                    onError={() => handleLogoError(entry.logo_url!)}
-                  />
-                ) : (
-                  <div
-                    className="notable-avatar"
-                    style={{ background: color }}
-                    aria-hidden
-                  >
-                    {orgInitials(entry.organization)}
-                  </div>
-                )}
+                <NotablePhotoBlock entry={entry} color={color} />
                 <div className="notable-header-text">
                   <h3 className="notable-name">{entry.name}</h3>
                   <p className="notable-role">{entry.role_title}</p>
@@ -153,7 +253,10 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
                 {entry.field && (
                   <span className="notable-detail">
                     <span className="notable-detail-label">Field</span>
-                    <span className="notable-detail-value" style={{ color }}>
+                    <span
+                      className="notable-detail-value"
+                      style={{ color }}
+                    >
                       {entry.field}
                     </span>
                   </span>
@@ -174,14 +277,15 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
                     </span>
                   </span>
                 )}
-                {!entry.graduation_year && entry.degree_status?.toLowerCase().includes('did not') && (
-                  <span className="notable-detail">
-                    <span className="notable-detail-label">Status</span>
-                    <span className="notable-detail-value notable-dropout">
-                      Did not graduate
+                {!entry.graduation_year &&
+                  entry.degree_status?.toLowerCase().includes('did not') && (
+                    <span className="notable-detail">
+                      <span className="notable-detail-label">Status</span>
+                      <span className="notable-detail-value notable-dropout">
+                        Did not graduate
+                      </span>
                     </span>
-                  </span>
-                )}
+                  )}
               </div>
 
               <div className="notable-meta">

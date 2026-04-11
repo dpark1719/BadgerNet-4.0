@@ -15,10 +15,18 @@ Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each f
 | `notable_alumni` | `notable.json` (uses `entries`, not `charts`) |
 | `vizualive` | [`vizualive.json`](frontend/public/data/vizualive.json) (uses `roots` tree, not `charts`) |
 
+## Post-grad tab — common chart keys
+
+- `continuation_rate` — optional `metric` (share continuing within a window).
+- `continuation_trend` — optional `trend` time series.
+- `by_degree_type` — `bar`: next credential type (Master’s, doctorate, professional, etc.).
+- `grad_phd_destinations` — `bar`: institution or program for further study (grad school, PhD, MD, etc.). Load from UW FDS via [`ingest_uw_postgrad.py`](backend/scripts/ingest_uw_postgrad.py) using `institution,count` / `school,count` or `kind,label,count` rows.
+
 ## Major filter (Industry tab)
 
-- **Index:** [`majors/index.json`](frontend/public/data/majors/index.json) — `{ "majors": [{ "id": "computer_science", "label": "…", "cip": "…" }] }` (no `all` row; UI adds “All majors”).
-- **Per-major bundle:** [`majors/{id}.json`](frontend/public/data/majors/) — same shape as a normal tab: `{ "meta", "charts" }` with `meta.tab` = `industry` and optional **`meta.major_id`** matching `id`.
+- **Index:** [`majors/index.json`](frontend/public/data/majors/index.json) — `{ "majors": [{ "id": "computer_science", "label": "…", "cip": "…" }] }` (no `all` row; UI adds “All majors”). **Generated** by [`backend/scripts/sync_majors_index.py`](backend/scripts/sync_majors_index.py) (or automatically after [`linkedin_aggregate_to_majors.py`](backend/scripts/linkedin_aggregate_to_majors.py) / [`generate_sample_data.py`](backend/scripts/generate_sample_data.py)). It lists every `majors/{id}.json` file (except `index.json`) whose `charts` object is non-empty.
+- **Per-major bundle:** [`majors/{id}.json`](frontend/public/data/majors/) — same shape as a normal tab: `{ "meta", "charts" }` with `meta.tab` = `industry` and **`meta.major_id`** matching filename stem `{id}`.
+- **Display name / CIP on slices (optional):** `meta.major_display_name` or `meta.major_label` (human-readable dropdown label); `meta.major_cip` or `meta.cip` (CIP code for index). If missing, the sync script keeps prior `index.json` values for that `id`, else humanizes the stem (e.g. `data_science` → `Data Science`).
 - When the user selects **All majors**, load [`industry.json`](frontend/public/data/industry.json). When a specific major is selected on the **Industry** tab, load `majors/{id}.json` instead.
 - Other tabs ignore major selection in v1 unless you add major-aware files later.
 
@@ -28,7 +36,9 @@ Frontend and backend agree on JSON bundles under `frontend/public/data/`. Each f
 |--------|------|-------------|
 | `project` | string | e.g. `BadgerNet 4.0` |
 | `tab` | string | Matches table above |
-| `major_id` | string? | Set on `majors/*.json` slices (e.g. `computer_science`) |
+| `major_id` | string? | Set on `majors/*.json` slices (e.g. `computer_science`); should match the filename stem |
+| `major_display_name` | string? | Human label for the Industry major filter (also accepts legacy `major_label`) |
+| `major_cip` | string? | Optional CIP code propagated to `majors/index.json` (also accepts `cip` on slice meta) |
 | `snapshot_date` | string | ISO date of data snapshot |
 | `academic_year` | string? | e.g. `2023-24` if applicable |
 | `degree_level` | string | `all` \| `undergraduate` \| `graduate` \| `doctorate` |
@@ -113,13 +123,16 @@ Not a `charts` object. Shape:
       "source_url": "https://…",
       "source_type": "wikipedia" | "uw_news" | "linkedin_aggregate" | "other",
       "year": "optional",
-      "photo_url": "optional"
+      "photo_url": "optional — Wikimedia/Wikipedia HTTPS URL or path under `public/` (e.g. `notable/placeholder-person.svg`)",
+      "achievement_image_url": "optional — small badge under `public/` (e.g. `notable/badge-nobel.svg`) or HTTPS",
+      "achievement_label": "optional — short text for tooltip / a11y (e.g. `Nobel Prize`)"
     }
   ]
 }
 ```
 
 - **Every** displayed row must have a **`source_url`**.
+- **`fetch_wikidata_notable.py`** fills `photo_url` from Wikidata **P18** and/or Wikipedia lead thumbnail, and sets achievement badges when the summary text matches (Nobel, founder, CEO, architecture, aviation, company, etc.).
 - Cap list length (e.g. ≤100) in production.
 - LinkedIn-derived rows require human review or strict rules before inclusion; never ship raw profile dumps.
 

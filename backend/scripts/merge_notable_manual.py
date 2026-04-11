@@ -4,7 +4,8 @@ Append manually curated notable entries to notable.json (e.g. after Wikidata).
 
 Manual file: JSON object `{ "entries": [ { ... same fields as NotableEntry ... } ] }`
 See frontend types / DATA_CONTRACT.md for shape (name, role_title, organization,
-notability, source_url, source_type, optional year).
+notability, source_url, source_type, optional year, photo_url,
+achievement_image_url, achievement_label).
 
 Dedupes by normalized name (case-insensitive); manual entries **skip** if name
 already present. Sets meta.source to `mixed` when merging.

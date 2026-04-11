@@ -7,8 +7,10 @@
     "major_id": "biochemistry",
     "degree_level": "undergraduate",
     "source": "sample",
+    "major_display_name": "Biochemistry, B.S.",
     "methodology": "Synthetic industry, employer, and career-flow aggregates for major \u201cBiochemistry, B.S.\u201d. Production: LinkedIn harvest rollups by field-of-study filter + aggregation script.",
-    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only."
+    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only.",
+    "major_cip": "26.0202"
   },
   "charts": {
     "by_industry": {

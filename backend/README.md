@@ -23,7 +23,7 @@ This refreshes:
 
 - `origins_undergrad.json` — IPEDS **EF2022C** (first-time freshmen, US state of residence + foreign aggregate)
 - `international.json` — IPEDS **DRVEF2022** `RMFRGNCN` (foreign-national **enrollment context**, not alumni destination)
-- `notable.json` — Wikidata (educated at UW–Madison, Wikipedia link)
+- `notable.json` — Wikidata (educated at UW–Madison, Wikipedia link); thumbnails from P18 / Wikipedia REST; optional `--skip-enrich` to skip API calls
 
 Details: [`scripts/DATA_PIPELINES.md`](scripts/DATA_PIPELINES.md)
 
@@ -41,6 +41,7 @@ Tableau and PDFs change URLs often. Export a CSV and run:
 
 ```bash
 python3 backend/scripts/ingest_uw_postgrad.py --csv /path/to/export.csv
+# Grad/PhD schools: CSV with institution,count — use --merge to keep existing charts
 ```
 
 Starting points: [data.wisc.edu — First Destination Survey](https://data.wisc.edu/first-destination-survey/), [careers.wisc.edu](https://careers.wisc.edu/first-destination-survey/).
@@ -48,7 +49,7 @@ Starting points: [data.wisc.edu — First Destination Survey](https://data.wisc.
 ## LinkedIn aggregates (no API)
 
 1. Use LinkedIn (or similar) **facet / roll-up exports** you are permitted to save, **or** manual counts — not mass profile harvesting (see [`scripts/POLICY_AGGREGATES_ONLY.md`](scripts/POLICY_AGGREGATES_ONLY.md)).
-2. Emit a CSV and run [`scripts/linkedin_aggregate_to_majors.py`](scripts/linkedin_aggregate_to_majors.py) → `frontend/public/data/majors/*.json`.
+2. Emit a CSV and run [`scripts/linkedin_aggregate_to_majors.py`](scripts/linkedin_aggregate_to_majors.py) → `frontend/public/data/majors/*.json` and refreshes `majors/index.json` (optional CSV columns `major_label`, `major_cip`). To rebuild the index only: [`scripts/sync_majors_index.py`](scripts/sync_majors_index.py).
 
 ## More CSV ingests
 

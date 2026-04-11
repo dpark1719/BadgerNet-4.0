@@ -6,8 +6,9 @@ No scraping here — you produce CSV from your harvest / manual filters.
 
 CSV columns (header row required):
   major_id, chart_key, type, title, label, value, extra_json
+  Optional: major_label, major_cip (first non-empty per major_id → slice meta for index sync)
 
-- major_id: matches majors/index.json id (e.g. computer_science)
+- major_id: filename stem for majors/{major_id}.json (e.g. computer_science)
 - chart_key: e.g. top_employers, by_industry, career_flow (sankey uses multiple rows — see below)
 - type: bar | metric | trend | sankey_node | sankey_link
 - title: chart title (repeat per row for same chart_key — last wins)
@@ -29,12 +30,15 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 MAJORS_DIR = ROOT / "frontend" / "public" / "data" / "majors"
+sys.path.insert(0, str(ROOT))
+from backend.lib.majors_index import sync_majors_index  # noqa: E402
 
 
 def main() -> None:
@@ -46,12 +50,20 @@ def main() -> None:
         raise SystemExit(f"Missing file: {args.csv_path}")
 
     by_major: dict[str, dict] = defaultdict(lambda: {"charts": {}})
+    major_labels: dict[str, str] = {}
+    major_cips: dict[str, str] = {}
 
     with args.csv_path.open(newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             mid = (row.get("major_id") or "").strip()
             if not mid:
                 continue
+            ml = (row.get("major_label") or "").strip()
+            if ml and mid not in major_labels:
+                major_labels[mid] = ml
+            mc = (row.get("major_cip") or "").strip()
+            if mc and mid not in major_cips:
+                major_cips[mid] = mc
             ck = (row.get("chart_key") or "").strip()
             typ = (row.get("type") or "bar").strip().lower()
             title = (row.get("title") or "").strip()
@@ -104,17 +116,21 @@ def main() -> None:
             if spec.get("type") == "sankey":
                 spec.setdefault("nodes", [])
                 spec.setdefault("links", [])
-        out = {
-            "meta": {
-                **common_meta,
-                "tab": "industry",
-                "major_id": mid,
-            },
-            "charts": blob["charts"],
+        meta_out = {
+            **common_meta,
+            "tab": "industry",
+            "major_id": mid,
         }
+        if mid in major_labels:
+            meta_out["major_display_name"] = major_labels[mid]
+        if mid in major_cips:
+            meta_out["major_cip"] = major_cips[mid]
+        out = {"meta": meta_out, "charts": blob["charts"]}
         dest = MAJORS_DIR / f"{mid}.json"
         dest.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
         print(f"Wrote {dest.relative_to(ROOT)}")
+
+    sync_majors_index(MAJORS_DIR, verbose=True)
 
 
 if __name__ == "__main__":

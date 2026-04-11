@@ -4,6 +4,11 @@ export type ChartMeta = {
   project: string
   tab: string
   major_id?: string
+  /** Dropdown label for Industry major slices; ETL may also emit `major_label`. */
+  major_display_name?: string
+  major_label?: string
+  major_cip?: string
+  cip?: string
   snapshot_date: string
   academic_year?: string
   degree_level: string
@@ -107,8 +112,13 @@ export type NotableEntry = {
   source_url: string
   source_type: NotableSourceType
   year?: string
+  /** Portrait (Wikipedia/Wikidata Commons or site-relative path). */
   photo_url?: string
+  /** Organization logo (e.g. Clearbit); shown when no portrait or as fallback. */
   logo_url?: string
+  /** Small badge (e.g. Nobel, founder, company) — path under `public/`. */
+  achievement_image_url?: string
+  achievement_label?: string
 }
 
 export type NotableBundle = {

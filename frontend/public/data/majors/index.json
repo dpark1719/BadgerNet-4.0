@@ -1,6 +1,11 @@
 {
   "majors": [
     {
+      "id": "biochemistry",
+      "label": "Biochemistry, B.S.",
+      "cip": "26.0202"
+    },
+    {
       "id": "computer_science",
       "label": "Computer Sciences, B.S.",
       "cip": "11.0701"
@@ -9,11 +14,6 @@
       "id": "economics",
       "label": "Economics, B.A.",
       "cip": "45.0601"
-    },
-    {
-      "id": "biochemistry",
-      "label": "Biochemistry, B.S.",
-      "cip": "26.0202"
     }
   ]
 }

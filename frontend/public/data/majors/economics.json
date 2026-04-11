@@ -7,8 +7,10 @@
     "major_id": "economics",
     "degree_level": "undergraduate",
     "source": "sample",
+    "major_display_name": "Economics, B.A.",
     "methodology": "Synthetic industry, employer, and career-flow aggregates for major \u201cEconomics, B.A.\u201d. Production: LinkedIn harvest rollups by field-of-study filter + aggregation script.",
-    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only."
+    "disclaimer": "Not real UW\u2013Madison statistics; major slice for UI development only.",
+    "major_cip": "45.0601"
   },
   "charts": {
     "by_industry": {
