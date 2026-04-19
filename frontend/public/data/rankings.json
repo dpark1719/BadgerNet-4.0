@@ -3,10 +3,10 @@
     "project": "BadgerNet 4.0",
     "tab": "rankings",
     "snapshot_date": "2026-04-19",
-    "degree_level": "all",
+    "degree_level": "by_awlevel",
     "source": "wikidata_ipeds",
     "source_url": "https://www.wikidata.org/",
-    "methodology": "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), taking the latest qualifier year per edition. `rank_surround` adds WDQS slices of institutions whose published rank is within \u00b155 of UW for the same statement year. **Global** deliberately includes non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** are filtered views of the same metrics on subsets of that peer list (see `country`, `us`, and `public` flags in harvest_rankings.py). Majors: U.S. News\u2013based national ranks (1\u201310) from `backend/seed/major_ranks.csv` or `data/raw/major_ranks.csv` (see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP.",
+    "methodology": "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), taking the latest qualifier year per edition. `rank_surround` adds WDQS slices of institutions whose published rank is within \u00b155 of UW for the same statement year. **Global** deliberately includes non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** are filtered views of the same metrics on subsets of that peer list (see `country`, `us`, and `public` flags in harvest_rankings.py). Majors: U.S. News\u2013based national ranks (1\u201310) from `backend/seed/major_ranks.csv` or `data/raw/major_ranks.csv` (see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP and award level (`AWLEVEL`: undergraduate, graduate, doctorate tabs).",
     "disclaimer": "Wikidata ranks are community-sourced and may disagree with official publisher tables. Verify before citing. IPEDS counts are administrative completions, not program quality ranks. UW program ranks are manually curated from U.S. News summaries; they are not an automated pull from U.S. News or Niche."
   },
   "rank_surround": {
@@ -2176,36 +2176,12 @@
     },
     "majors": {
       "title": "UW\u2013Madison programs \u2014 U.S. News national top 10",
-      "blurb": "Programs where UW appears in the U.S. News national top 10 for that discipline or named specialty (see `backend/seed/major_ranks.csv` for the curated list, sources, and edition year). Multiple programs that share the same rank are grouped. Override or extend with `data/raw/major_ranks.csv` (takes precedence) and re-run harvest. IPEDS counts are for the listed CIP, not the whole graduate unit.",
-      "entries": [
-        {
-          "cipcode": "13.0101",
-          "program_label": "Education (graduate school) \u2014 1st nationally among education schools",
-          "ipeds_awards": 72,
-          "publisher_rank": 1,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://news.wisc.edu/most-recent-u-s-news-rankings-by-department/"
-        },
-        {
-          "cipcode": "42.2806",
-          "program_label": "Educational psychology \u2014 1st nationally (education specialty)",
-          "ipeds_awards": 63,
-          "publisher_rank": 1,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-psychology-rankings"
-        },
-        {
-          "cipcode": "51.2210",
-          "program_label": "Rehabilitation counseling \u2014 1st nationally",
-          "ipeds_awards": 255,
-          "publisher_rank": 1,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/rehabilitation-counseling-rankings"
-        },
+      "blurb": "Programs where UW appears in the U.S. News national top 10 for that discipline or named specialty (see `backend/seed/major_ranks.csv` for the curated list, sources, and edition year). Multiple programs that share the same rank are grouped. Override or extend with `data/raw/major_ranks.csv` (takes precedence) and re-run harvest. IPEDS completion totals are summed for the listed CIP at the award level of each tab (bachelor\u2019s and sub-baccalaureate levels vs master\u2019s and graduate certificates vs doctorates), not for an entire school or college.",
+      "entries_undergraduate": [
         {
           "cipcode": "51.0204",
           "program_label": "Speech-language pathology (graduate) \u2014 1st nationally (UW summary; see U.S. News SLP rankings)",
-          "ipeds_awards": 121,
+          "ipeds_awards": 79,
           "publisher_rank": 1,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/speech-language-pathology-rankings"
@@ -2219,17 +2195,9 @@
           "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/teacher-education-rankings"
         },
         {
-          "cipcode": "13.0301",
-          "program_label": "Curriculum & instruction \u2014 3rd nationally (education specialty)",
-          "ipeds_awards": 100,
-          "publisher_rank": 3,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/curriculum-instruction-rankings"
-        },
-        {
           "cipcode": "14.3501",
           "program_label": "Nuclear engineering \u2014 3rd nationally (engineering specialty)",
-          "ipeds_awards": 174,
+          "ipeds_awards": 105,
           "publisher_rank": 3,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/nuclear-engineering-rankings"
@@ -2237,31 +2205,15 @@
         {
           "cipcode": "52.1501",
           "program_label": "Real estate (M.B.A. specialty) \u2014 3rd nationally among business-school real estate programs",
-          "ipeds_awards": 247,
+          "ipeds_awards": 173,
           "publisher_rank": 3,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-business-schools/real-estate-rankings"
         },
         {
-          "cipcode": "13.0401",
-          "program_label": "Educational administration & supervision \u2014 6th nationally (education specialty)",
-          "ipeds_awards": 75,
-          "publisher_rank": 6,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-administration-rankings"
-        },
-        {
-          "cipcode": "51.2001",
-          "program_label": "Pharmacy (Pharm.D. programs) \u2014 6th nationally among pharmacy schools",
-          "ipeds_awards": 94,
-          "publisher_rank": 6,
-          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
-          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/pharmacy-rankings"
-        },
-        {
           "cipcode": "01.0901",
           "program_label": "Veterinary medicine (D.V.M.) \u2014 6th nationally among veterinary schools",
-          "ipeds_awards": 35,
+          "ipeds_awards": 27,
           "publisher_rank": 6,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/veterinary-medicine-rankings"
@@ -2269,7 +2221,7 @@
         {
           "cipcode": "13.1001",
           "program_label": "Special education \u2014 7th nationally (education specialty)",
-          "ipeds_awards": 57,
+          "ipeds_awards": 29,
           "publisher_rank": 7,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/special-needs-education-rankings"
@@ -2285,7 +2237,7 @@
         {
           "cipcode": "14.0701",
           "program_label": "Chemical engineering \u2014 9th nationally (engineering specialty)",
-          "ipeds_awards": 134,
+          "ipeds_awards": 120,
           "publisher_rank": 9,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/chemical-engineering-rankings"
@@ -2293,7 +2245,7 @@
         {
           "cipcode": "45.1101",
           "program_label": "Sociology \u2014 9th nationally among sociology programs",
-          "ipeds_awards": 111,
+          "ipeds_awards": 87,
           "publisher_rank": 9,
           "publisher": "U.S. News Best Graduate Schools (2025 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-humanities-schools/sociology-rankings"
@@ -2301,7 +2253,211 @@
         {
           "cipcode": "11.0101",
           "program_label": "Computer science \u2014 Systems subspecialty ranked 10th nationally (overall CS graduate program ranked 15th in same survey year)",
-          "ipeds_awards": 1252,
+          "ipeds_awards": 875,
+          "publisher_rank": 10,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/computer-science-rankings"
+        }
+      ],
+      "entries_graduate": [
+        {
+          "cipcode": "42.2806",
+          "program_label": "Educational psychology \u2014 1st nationally (education specialty)",
+          "ipeds_awards": 50,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-psychology-rankings"
+        },
+        {
+          "cipcode": "51.2210",
+          "program_label": "Rehabilitation counseling \u2014 1st nationally",
+          "ipeds_awards": 1,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/rehabilitation-counseling-rankings"
+        },
+        {
+          "cipcode": "51.0204",
+          "program_label": "Speech-language pathology (graduate) \u2014 1st nationally (UW summary; see U.S. News SLP rankings)",
+          "ipeds_awards": 41,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/speech-language-pathology-rankings"
+        },
+        {
+          "cipcode": "13.0301",
+          "program_label": "Curriculum & instruction \u2014 3rd nationally (education specialty)",
+          "ipeds_awards": 79,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/curriculum-instruction-rankings"
+        },
+        {
+          "cipcode": "14.3501",
+          "program_label": "Nuclear engineering \u2014 3rd nationally (engineering specialty)",
+          "ipeds_awards": 59,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/nuclear-engineering-rankings"
+        },
+        {
+          "cipcode": "52.1501",
+          "program_label": "Real estate (M.B.A. specialty) \u2014 3rd nationally among business-school real estate programs",
+          "ipeds_awards": 74,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-business-schools/real-estate-rankings"
+        },
+        {
+          "cipcode": "13.0401",
+          "program_label": "Educational administration & supervision \u2014 6th nationally (education specialty)",
+          "ipeds_awards": 53,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-administration-rankings"
+        },
+        {
+          "cipcode": "01.0901",
+          "program_label": "Veterinary medicine (D.V.M.) \u2014 6th nationally among veterinary schools",
+          "ipeds_awards": 3,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/veterinary-medicine-rankings"
+        },
+        {
+          "cipcode": "13.1001",
+          "program_label": "Special education \u2014 7th nationally (education specialty)",
+          "ipeds_awards": 24,
+          "publisher_rank": 7,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/special-needs-education-rankings"
+        },
+        {
+          "cipcode": "14.0701",
+          "program_label": "Chemical engineering \u2014 9th nationally (engineering specialty)",
+          "ipeds_awards": 1,
+          "publisher_rank": 9,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/chemical-engineering-rankings"
+        },
+        {
+          "cipcode": "45.1101",
+          "program_label": "Sociology \u2014 9th nationally among sociology programs",
+          "ipeds_awards": 8,
+          "publisher_rank": 9,
+          "publisher": "U.S. News Best Graduate Schools (2025 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-humanities-schools/sociology-rankings"
+        },
+        {
+          "cipcode": "11.0101",
+          "program_label": "Computer science \u2014 Systems subspecialty ranked 10th nationally (overall CS graduate program ranked 15th in same survey year)",
+          "ipeds_awards": 186,
+          "publisher_rank": 10,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/computer-science-rankings"
+        }
+      ],
+      "entries_doctorate": [
+        {
+          "cipcode": "13.0101",
+          "program_label": "Education (graduate school) \u2014 1st nationally among education schools",
+          "ipeds_awards": 72,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://news.wisc.edu/most-recent-u-s-news-rankings-by-department/"
+        },
+        {
+          "cipcode": "42.2806",
+          "program_label": "Educational psychology \u2014 1st nationally (education specialty)",
+          "ipeds_awards": 13,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-psychology-rankings"
+        },
+        {
+          "cipcode": "51.2210",
+          "program_label": "Rehabilitation counseling \u2014 1st nationally",
+          "ipeds_awards": 254,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/rehabilitation-counseling-rankings"
+        },
+        {
+          "cipcode": "51.0204",
+          "program_label": "Speech-language pathology (graduate) \u2014 1st nationally (UW summary; see U.S. News SLP rankings)",
+          "ipeds_awards": 1,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/speech-language-pathology-rankings"
+        },
+        {
+          "cipcode": "13.0301",
+          "program_label": "Curriculum & instruction \u2014 3rd nationally (education specialty)",
+          "ipeds_awards": 21,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/curriculum-instruction-rankings"
+        },
+        {
+          "cipcode": "14.3501",
+          "program_label": "Nuclear engineering \u2014 3rd nationally (engineering specialty)",
+          "ipeds_awards": 10,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/nuclear-engineering-rankings"
+        },
+        {
+          "cipcode": "13.0401",
+          "program_label": "Educational administration & supervision \u2014 6th nationally (education specialty)",
+          "ipeds_awards": 22,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-administration-rankings"
+        },
+        {
+          "cipcode": "51.2001",
+          "program_label": "Pharmacy (Pharm.D. programs) \u2014 6th nationally among pharmacy schools",
+          "ipeds_awards": 94,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/pharmacy-rankings"
+        },
+        {
+          "cipcode": "01.0901",
+          "program_label": "Veterinary medicine (D.V.M.) \u2014 6th nationally among veterinary schools",
+          "ipeds_awards": 5,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/veterinary-medicine-rankings"
+        },
+        {
+          "cipcode": "13.1001",
+          "program_label": "Special education \u2014 7th nationally (education specialty)",
+          "ipeds_awards": 4,
+          "publisher_rank": 7,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/special-needs-education-rankings"
+        },
+        {
+          "cipcode": "14.0701",
+          "program_label": "Chemical engineering \u2014 9th nationally (engineering specialty)",
+          "ipeds_awards": 13,
+          "publisher_rank": 9,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/chemical-engineering-rankings"
+        },
+        {
+          "cipcode": "45.1101",
+          "program_label": "Sociology \u2014 9th nationally among sociology programs",
+          "ipeds_awards": 16,
+          "publisher_rank": 9,
+          "publisher": "U.S. News Best Graduate Schools (2025 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-humanities-schools/sociology-rankings"
+        },
+        {
+          "cipcode": "11.0101",
+          "program_label": "Computer science \u2014 Systems subspecialty ranked 10th nationally (overall CS graduate program ranked 15th in same survey year)",
+          "ipeds_awards": 191,
           "publisher_rank": 10,
           "publisher": "U.S. News Best Graduate Schools (2026 edition)",
           "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/computer-science-rankings"

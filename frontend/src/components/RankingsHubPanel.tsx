@@ -1,14 +1,57 @@
 import { useMemo, useState } from 'react'
 import type {
   InstitutionRankRow,
+  MajorRankEntry,
   MajorRankingsBundle,
   RankingsHubBundle,
+  RankingsSectionMajors,
   RankSurroundBand,
 } from '../types/data'
 import { MajorRankingsPanel } from './MajorRankingsPanel'
 import './RankingsHubPanel.css'
 
 type SubKey = 'global' | 'us' | 'public' | 'majors'
+
+type MajorsLevelKey = 'undergraduate' | 'graduate' | 'doctorate'
+
+const MAJORS_LEVEL_TABS: { id: MajorsLevelKey; label: string; note: string }[] = [
+  {
+    id: 'undergraduate',
+    label: 'Undergraduate',
+    note:
+      'IPEDS “IPEDS awards” are completions summed for this CIP at bachelor’s and related sub-baccalaureate award levels in C2024_A.',
+  },
+  {
+    id: 'graduate',
+    label: 'Graduate',
+    note:
+      'IPEDS counts are completions at master’s and graduate-certificate award levels (post-baccalaureate and post-master’s certificates) for this CIP.',
+  },
+  {
+    id: 'doctorate',
+    label: 'PhD & professional doctorates',
+    note:
+      'IPEDS counts are completions at doctorate award levels (research/scholarship, professional practice, and other doctorate codes) for this CIP.',
+  },
+]
+
+function resolveMajorsEntries(majors: RankingsSectionMajors): Record<MajorsLevelKey, MajorRankEntry[]> {
+  const u = majors.entries_undergraduate
+  const g = majors.entries_graduate
+  const d = majors.entries_doctorate
+  if (u != null || g != null || d != null) {
+    return {
+      undergraduate: u ?? [],
+      graduate: g ?? [],
+      doctorate: d ?? [],
+    }
+  }
+  return {
+    undergraduate: majors.entries ?? [],
+    graduate: [],
+    doctorate: [],
+  }
+}
 
 /** Peers to show on each side of UW (closest in this ranking); expand adds another step each way. */
 const STEP = 5
@@ -488,14 +531,23 @@ function InstitutionNeighborhoodViews({
 
 export function RankingsHubPanel({ bundle }: { bundle: RankingsHubBundle }) {
   const [sub, setSub] = useState<SubKey>('global')
+  const [majorsLevel, setMajorsLevel] = useState<MajorsLevelKey>('undergraduate')
 
-  const majorsBundle: MajorRankingsBundle = {
-    meta: {
-      ...bundle.meta,
-      methodology: `${bundle.sections.majors.title}. ${bundle.sections.majors.blurb}`,
-    },
-    entries: bundle.sections.majors.entries,
-  }
+  const majorsByLevel = useMemo(() => resolveMajorsEntries(bundle.sections.majors), [bundle.sections.majors])
+
+  const majorsLevelMeta = MAJORS_LEVEL_TABS.find((t) => t.id === majorsLevel)!
+
+  const majorsBundle: MajorRankingsBundle = useMemo(
+    () => ({
+      meta: {
+        ...bundle.meta,
+        methodology: `${bundle.sections.majors.title}. ${bundle.sections.majors.blurb}`,
+      },
+      entries: majorsByLevel[majorsLevel],
+      level_note: majorsLevelMeta.note,
+    }),
+    [bundle.meta, bundle.sections.majors, majorsByLevel, majorsLevel, majorsLevelMeta.note],
+  )
 
   return (
     <div className="rankings-hub">
@@ -531,7 +583,21 @@ export function RankingsHubPanel({ bundle }: { bundle: RankingsHubBundle }) {
           <>
             <h2 className="rankings-subtitle">{bundle.sections.majors.title}</h2>
             <p className="rankings-blurb">{bundle.sections.majors.blurb}</p>
-            <MajorRankingsPanel bundle={majorsBundle} />
+            <div className="rankings-majors-subtabs" role="tablist" aria-label="Program level">
+              {MAJORS_LEVEL_TABS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={majorsLevel === t.id}
+                  className={majorsLevel === t.id ? 'rankings-subtab active' : 'rankings-subtab'}
+                  onClick={() => setMajorsLevel(t.id)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+            <MajorRankingsPanel key={majorsLevel} bundle={majorsBundle} />
           </>
         )}
       </div>

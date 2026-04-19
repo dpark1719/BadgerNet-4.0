@@ -93,6 +93,7 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
           Ranks are the national position reported by U.S. News for that discipline or named specialty (see
           each link). They are not an automated scrape of U.S. News or Niche; update the CSV and re-harvest when
           new editions ship.
+          {bundle.level_note ? <> {bundle.level_note}</> : null}
         </p>
       </div>
     </section>

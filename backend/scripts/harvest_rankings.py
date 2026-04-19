@@ -5,8 +5,9 @@ Build a single rankings bundle: frontend/public/data/rankings.json
 - Institution tables: Wikidata P1352 + P459 for QS World (Q1790510) and ARWU (Q478743).
   **Global** peer set deliberately mixes U.S. and non-U.S. universities so the world view
   is not U.S.-only (earlier versions were mostly U.S. by design of the peer list).
-- Sub-sections inside the app: global | us | public | majors (no separate top-level tabs).
-- UW majors: IPEDS Completions C2024_A (UNITID 240444); NCES CIP-2020 titles; publisher ranks from
+- Sub-sections inside the app: global | us | public | majors (UW programs has undergrad / grad / PhD tabs).
+- UW majors: IPEDS Completions C2024_A (UNITID 240444), completions summed by CIP and IPEDS `AWLEVEL`
+  (undergraduate vs graduate vs doctorate); NCES CIP-2020 titles; publisher ranks from
   data/raw/major_ranks.csv if present, else backend/seed/major_ranks.csv; majors/index.json labels.
 
 Optional publisher probe: npm run harvest:publishers:probe (Playwright; does not merge).
@@ -423,43 +424,73 @@ def load_c2024_df(zip_path: Path) -> pd.DataFrame:
             return pd.read_csv(f, dtype=str, low_memory=False)
 
 
-def build_majors_from_ipeds() -> list[dict]:
+def _awlevel_bucket(awlevel: str) -> str | None:
+    """Map IPEDS Completions AWLEVEL to JSON keys (undergraduate | graduate | doctorate)."""
+    a = (awlevel or "").strip()
+    # NCES Completions: 2–5 sub-bacc / associate / bachelor; 6–8 post-bacc cert / master / post-master;
+    # 17–19, 21 doctorate variants.
+    if a in {"2", "3", "4", "5"}:
+        return "undergraduate"
+    if a in {"6", "7", "8"}:
+        return "graduate"
+    if a in {"17", "18", "19", "21"}:
+        return "doctorate"
+    return None
+
+
+def build_majors_by_awlevel_from_ipeds() -> dict[str, list[dict]]:
+    """Per award-level bucket: CIP rows with IPEDS totals (publisher fields filled later)."""
     zip_path = download_c2024()
     df = load_c2024_df(zip_path)
     sub = df[df["UNITID"].astype(str).str.strip() == str(UNITID)].copy()
+    out: dict[str, list[dict]] = {"undergraduate": [], "graduate": [], "doctorate": []}
     if sub.empty:
-        return []
+        return out
+    if "AWLEVEL" not in sub.columns:
+        return out
     cip_col = "CIPCODE" if "CIPCODE" in sub.columns else "CIPCODE2020"
     tot = "CTOTALT"
     sub["_n"] = pd.to_numeric(sub[tot].astype(str).str.strip(), errors="coerce").fillna(0).astype(int)
     sub["_cip"] = sub[cip_col].astype(str).str.strip()
-    g = sub.groupby("_cip", as_index=False)["_n"].sum()
-    g = g[g["_cip"].str.len() > 0]
-    g = g.sort_values("_n", ascending=False)
+    sub["_bucket"] = sub["AWLEVEL"].astype(str).map(_awlevel_bucket)
+    sub = sub[sub["_bucket"].notna()]
+    if sub.empty:
+        return out
     cip_titles = load_cip_2020_titles(download_cip_lookup_table())
     index_labels = load_majors_index_cip_labels()
-    rows = []
-    for _, r in g.iterrows():
-        cip = str(r["_cip"]).strip()
-        if cip in index_labels:
-            label = index_labels[cip]
-        elif cip in cip_titles:
-            label = cip_titles[cip]
-        elif re.fullmatch(r"\d{2}\.\d{4}", cip):
-            label = f"CIP {cip}"
-        else:
-            label = f"Unclassified reporting ({cip})"
-        rows.append(
-            {
-                "cipcode": cip,
-                "program_label": label,
-                "ipeds_awards": int(r["_n"]),
-                "publisher_rank": None,
-                "publisher": None,
-                "source_url": None,
-            }
-        )
-    return rows
+    for bucket in ("undergraduate", "graduate", "doctorate"):
+        g = sub[sub["_bucket"] == bucket].groupby("_cip", as_index=False)["_n"].sum()
+        g = g[g["_cip"].str.len() > 0]
+        g = g.sort_values("_n", ascending=False)
+        rows: list[dict] = []
+        for _, r in g.iterrows():
+            cip = str(r["_cip"]).strip()
+            if cip in index_labels:
+                label = index_labels[cip]
+            elif cip in cip_titles:
+                label = cip_titles[cip]
+            elif re.fullmatch(r"\d{2}\.\d{4}", cip):
+                label = f"CIP {cip}"
+            else:
+                label = f"Unclassified reporting ({cip})"
+            rows.append(
+                {
+                    "cipcode": cip,
+                    "program_label": label,
+                    "ipeds_awards": int(r["_n"]),
+                    "publisher_rank": None,
+                    "publisher": None,
+                    "source_url": None,
+                }
+            )
+        out[bucket] = rows
+    return out
+
+
+def process_major_entries(entries: list[dict]) -> list[dict]:
+    merge_optional_major_ranks(entries)
+    entries = sort_major_entries(entries)
+    return filter_majors_publisher_top(entries)
 
 
 def major_ranks_csv_path() -> Path | None:
@@ -538,17 +569,21 @@ def main() -> None:
     us_rows = rows_for_peer_subset(entities, lambda p: p["us"])
     public_rows = rows_for_peer_subset(entities, lambda p: p["public"])
 
+    majors_by_level: dict[str, list[dict]] = {
+        "undergraduate": [],
+        "graduate": [],
+        "doctorate": [],
+    }
     try:
-        entries = build_majors_from_ipeds()
-        merge_optional_major_ranks(entries)
+        raw_by_level = build_majors_by_awlevel_from_ipeds()
         mpath = major_ranks_csv_path()
         if mpath:
             print(f"  Major ranks CSV: {mpath.relative_to(ROOT)}")
-        entries = sort_major_entries(entries)
-        entries = filter_majors_publisher_top(entries)
+        for key in ("undergraduate", "graduate", "doctorate"):
+            majors_by_level[key] = process_major_entries(list(raw_by_level.get(key) or []))
     except Exception as e:  # noqa: BLE001
         print(f"warn: IPEDS majors: {e}", file=sys.stderr)
-        entries = []
+        majors_by_level = {"undergraduate": [], "graduate": [], "doctorate": []}
 
     uw_ent = entities.get("Q838330", {})
     uw_claims = uw_ent.get("claims", {})
@@ -569,7 +604,7 @@ def main() -> None:
             "project": "BadgerNet 4.0",
             "tab": "rankings",
             "snapshot_date": snap,
-            "degree_level": "all",
+            "degree_level": "by_awlevel",
             "source": "wikidata_ipeds",
             "source_url": "https://www.wikidata.org/",
             "methodology": (
@@ -583,7 +618,8 @@ def main() -> None:
                 "are filtered views of the same metrics on subsets of that peer list (see `country`, "
                 "`us`, and `public` flags in harvest_rankings.py). Majors: U.S. News–based national ranks "
                 f"(1–{TOP_PUBLISHER_RANK}) from `backend/seed/major_ranks.csv` or `data/raw/major_ranks.csv` "
-                "(see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP."
+                "(see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP and "
+                "award level (`AWLEVEL`: undergraduate, graduate, doctorate tabs)."
             ),
             "disclaimer": (
                 "Wikidata ranks are community-sourced and may disagree with official publisher tables. "
@@ -626,9 +662,13 @@ def main() -> None:
                     "discipline or named specialty (see `backend/seed/major_ranks.csv` for the curated list, "
                     "sources, and edition year). Multiple programs that share the same rank are grouped. "
                     "Override or extend with `data/raw/major_ranks.csv` (takes precedence) and re-run harvest. "
-                    "IPEDS counts are for the listed CIP, not the whole graduate unit."
+                    "IPEDS completion totals are summed for the listed CIP at the award level of each tab "
+                    "(bachelor’s and sub-baccalaureate levels vs master’s and graduate certificates vs "
+                    "doctorates), not for an entire school or college."
                 ),
-                "entries": entries,
+                "entries_undergraduate": majors_by_level["undergraduate"],
+                "entries_graduate": majors_by_level["graduate"],
+                "entries_doctorate": majors_by_level["doctorate"],
             },
         },
     }
@@ -650,7 +690,12 @@ def main() -> None:
 
     print(f"Wrote {OUT.relative_to(ROOT)}")
     print(f"  Global institutions: {len(global_rows)}, US: {len(us_rows)}, public: {len(public_rows)}")
-    print(f"  Major rows: {len(entries)}")
+    n_u, n_g, n_d = (
+        len(majors_by_level["undergraduate"]),
+        len(majors_by_level["graduate"]),
+        len(majors_by_level["doctorate"]),
+    )
+    print(f"  Major rows (publisher top): undergrad {n_u}, graduate {n_g}, doctorate {n_d}")
     if rank_surround.get("qs"):
         print(f"  QS rank_surround rows: {len(rank_surround['qs']['institutions'])}")
     if rank_surround.get("arwu"):

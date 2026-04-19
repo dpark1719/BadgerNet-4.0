@@ -3,6 +3,22 @@
   margin: 0 auto;
 }
 
+.rankings-majors-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
+  padding: 0.2rem;
+  border-radius: 9px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.rankings-majors-subtabs .rankings-subtab {
+  font-size: 0.82rem;
+  padding: 0.38rem 0.7rem;
+}
+
 .rankings-subtabs {
   display: flex;
   flex-wrap: wrap;

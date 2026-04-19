@@ -154,6 +154,8 @@ export type MajorRankEntry = {
 export type MajorRankingsBundle = {
   meta: ChartMeta
   entries: MajorRankEntry[]
+  /** Shown under the table: IPEDS award-level scope for the active tab. */
+  level_note?: string
 }
 
 export type InstitutionRankRow = {
@@ -189,7 +191,14 @@ export type RankingsSectionInstitutions = {
 export type RankingsSectionMajors = {
   title: string
   blurb: string
-  entries: MajorRankEntry[]
+  entries_undergraduate?: MajorRankEntry[]
+  entries_graduate?: MajorRankEntry[]
+  entries_doctorate?: MajorRankEntry[]
+  /**
+   * Legacy single list (pre award-level split). Used when split arrays are absent.
+   * @deprecated Prefer entries_undergraduate / entries_graduate / entries_doctorate.
+   */
+  entries?: MajorRankEntry[]
 }
 
 export type RankingsHubBundle = {
