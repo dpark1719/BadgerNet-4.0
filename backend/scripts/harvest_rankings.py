@@ -35,6 +35,10 @@ UA = "BadgerNet/4.0 (https://github.com/dpark1719/BadgerNet-4.0; harvest_ranking
 
 QS = "Q1790510"
 ARWU = "Q478743"
+US_Q = "Q30"
+WDQS = "https://query.wikidata.org/sparql"
+# Pre-fetch ranks within this many integers of UW for neighborhood + UI expand (no re-query).
+RANK_SURROUND_HALF_WIDTH = 55
 
 # Curated peers. `country` is a short display tag (not an ISO authority).
 # Global list mixes US public flagships, US privates, and non-US research universities.
@@ -73,13 +77,197 @@ def wikidata_entities(qids: list[str]) -> dict[str, dict]:
             "action": "wbgetentities",
             "ids": ids,
             "format": "json",
-            "props": "claims",
+            "props": "labels|claims",
         },
         headers={"User-Agent": UA},
         timeout=120,
     )
     r.raise_for_status()
     return r.json().get("entities", {})
+
+
+def wikidata_entities_batched(qids: list[str], batch_size: int = 45) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for i in range(0, len(qids), batch_size):
+        out.update(wikidata_entities(qids[i : i + batch_size]))
+    return out
+
+
+def year_from_wd_time(timev: str) -> str | None:
+    """Calendar year from WD time value (SPARQL or wb JSON), e.g. +2025-01-01T00:00:00Z."""
+    if not timev:
+        return None
+    m = re.search(r"(\d{4})-\d{2}-\d{2}", timev)
+    if m:
+        return m.group(1)
+    m = re.search(r"(\d{4})", timev)
+    return m.group(1) if m else None
+
+
+def dedupe_band_by_qid_prefer_year(
+    raw: list[dict[str, Any]], uw_year: str | None
+) -> list[dict[str, Any]]:
+    """One row per item; prefer the WD statement year matching uw_year, else closest calendar year."""
+    by: dict[str, list[dict[str, Any]]] = {}
+    for x in raw:
+        by.setdefault(x["qid"], []).append(x)
+    uy = int(uw_year) if uw_year and str(uw_year).isdigit() else None
+    out: list[dict[str, Any]] = []
+    for _qid, variants in by.items():
+        if uy is not None:
+            match = [v for v in variants if v.get("year") == uw_year]
+            if match:
+                out.append(match[0])
+                continue
+            scored: list[tuple[int, int, dict[str, Any]]] = []
+            for v in variants:
+                y = v.get("year")
+                if y and str(y).isdigit():
+                    yi = int(str(y))
+                    scored.append((abs(yi - uy), -yi, v))
+            if scored:
+                scored.sort()
+                out.append(scored[0][2])
+                continue
+        best_y = -1
+        best_v = variants[0]
+        for v in variants:
+            y = v.get("year")
+            yi = int(y) if y and str(y).isdigit() else -1
+            if yi > best_y:
+                best_y = yi
+                best_v = v
+        out.append(best_v)
+    return out
+
+
+def sparql_rank_band_for_edition(
+    edition_qid: str,
+    rank_low: int,
+    rank_high: int,
+) -> list[dict[str, Any]]:
+    """Raw rows: qid, rank (int), year (str|None), p17 (Q-id|None)."""
+    q = f"""
+SELECT DISTINCT ?item ?rank ?time ?country WHERE {{
+  ?item p:P1352 ?st .
+  ?st ps:P1352 ?rank .
+  ?st pq:P459 wd:{edition_qid} .
+  ?st pq:P585 ?time .
+  OPTIONAL {{ ?item wdt:P17 ?country . }}
+  BIND(xsd:integer(xsd:decimal(?rank)) AS ?ri)
+  FILTER(?ri >= {int(rank_low)} && ?ri <= {int(rank_high)})
+}}
+LIMIT 3000
+"""
+    r = requests.get(
+        WDQS,
+        params={"query": q, "format": "json"},
+        headers={"User-Agent": UA, "Accept": "application/sparql-results+json"},
+        timeout=180,
+    )
+    r.raise_for_status()
+    data = r.json()
+    out: list[dict[str, Any]] = []
+    for b in data.get("results", {}).get("bindings", []):
+        item_uri = b.get("item", {}).get("value", "")
+        m = re.search(r"/(Q\d+)$", item_uri)
+        if not m:
+            continue
+        qid = m.group(1)
+        raw_rank = b.get("rank", {}).get("value", "")
+        try:
+            ri = int(float(raw_rank))
+        except ValueError:
+            continue
+        timev = b.get("time", {}).get("value", "")
+        y = year_from_wd_time(timev)
+        c_uri = b.get("country", {}).get("value", "")
+        cm = re.search(r"/(Q\d+)$", c_uri) if c_uri else None
+        cq = cm.group(1) if cm else None
+        out.append({"qid": qid, "rank": ri, "year": y, "p17": cq})
+    return out
+
+
+def build_rank_surround_slice(
+    edition_qid: str,
+    metric_key: str,
+    uw_rank: int | None,
+    uw_year: str | None,
+) -> dict[str, Any] | None:
+    if uw_rank is None:
+        return None
+    lo = max(1, uw_rank - RANK_SURROUND_HALF_WIDTH)
+    hi = uw_rank + RANK_SURROUND_HALF_WIDTH
+    try:
+        raw = sparql_rank_band_for_edition(edition_qid, lo, hi)
+    except Exception as e:  # noqa: BLE001
+        print(f"warn: WDQS {metric_key} band: {e}", file=sys.stderr)
+        return None
+    raw = dedupe_band_by_qid_prefer_year(raw, uw_year)
+    if uw_year:
+        strict = [x for x in raw if x.get("year") == uw_year]
+        if strict:
+            raw = strict
+        else:
+            print(
+                f"warn: WDQS {metric_key}: no rows with statement year {uw_year}; keeping merged years",
+                file=sys.stderr,
+            )
+    by_qid: dict[str, dict[str, Any]] = {x["qid"]: x for x in raw}
+    p17s: set[str] = {x["p17"] for x in by_qid.values() if x.get("p17")}
+    country_q_labels = prefetch_country_labels(p17s)
+    qids = list(by_qid.keys())
+    if not qids:
+        return None
+    entities = wikidata_entities_batched(qids)
+    rows: list[dict[str, Any]] = []
+    for qid, st in by_qid.items():
+        ent = entities.get(qid, {})
+        label = ent.get("labels", {}).get("en", {}).get("value") or qid
+        p17 = st.get("p17")
+        ctag = country_q_labels.get(p17, "") if p17 else ""
+        is_us = p17 == US_Q if p17 else False
+        rk = st["rank"]
+        yr = st.get("year")
+        claims = ent.get("claims", {})
+        qs_r, qs_y = (rk, yr) if metric_key == "qs" else latest_rank_for_edition(claims, QS)
+        ar_r, ar_y = (rk, yr) if metric_key == "arwu" else latest_rank_for_edition(claims, ARWU)
+        rows.append(
+            {
+                "qid": qid,
+                "label": label,
+                "anchor": qid == "Q838330",
+                "country": ctag,
+                "is_us": is_us,
+                "qs_rank": qs_r,
+                "qs_year": qs_y,
+                "arwu_rank": ar_r,
+                "arwu_year": ar_y,
+            }
+        )
+    if metric_key == "qs":
+        rows.sort(key=lambda r: (r["qs_rank"] is None, r["qs_rank"] or 10**9, r["label"]))
+    else:
+        rows.sort(key=lambda r: (r["arwu_rank"] is None, r["arwu_rank"] or 10**9, r["label"]))
+    return {
+        "edition_qid": edition_qid,
+        "year": uw_year,
+        "center_rank": uw_rank,
+        "band_half_width": RANK_SURROUND_HALF_WIDTH,
+        "institutions": rows,
+    }
+
+
+def prefetch_country_labels(p17_qids: set[str]) -> dict[str, str]:
+    if not p17_qids:
+        return {}
+    ents = wikidata_entities_batched(list(p17_qids))
+    out: dict[str, str] = {}
+    for q, ent in ents.items():
+        lab = ent.get("labels", {}).get("en", {}).get("value")
+        if lab:
+            out[q] = lab
+    return out
 
 
 def latest_rank_for_edition(
@@ -260,6 +448,19 @@ def main() -> None:
         print(f"warn: IPEDS majors: {e}", file=sys.stderr)
         entries = []
 
+    uw_ent = entities.get("Q838330", {})
+    uw_claims = uw_ent.get("claims", {})
+    uw_qs_r, uw_qs_y = latest_rank_for_edition(uw_claims, QS)
+    uw_ar_r, uw_ar_y = latest_rank_for_edition(uw_claims, ARWU)
+
+    rank_surround: dict[str, Any] = {}
+    qs_slice = build_rank_surround_slice(QS, "qs", uw_qs_r, uw_qs_y)
+    if qs_slice:
+        rank_surround["qs"] = qs_slice
+    ar_slice = build_rank_surround_slice(ARWU, "arwu", uw_ar_r, uw_ar_y)
+    if ar_slice:
+        rank_surround["arwu"] = ar_slice
+
     snap = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     payload = {
         "meta": {
@@ -272,7 +473,9 @@ def main() -> None:
             "methodology": (
                 "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` "
                 "with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), "
-                "taking the latest qualifier year per edition. **Global** deliberately includes "
+                "taking the latest qualifier year per edition. `rank_surround` adds WDQS slices of "
+                "institutions whose published rank is within ±55 of UW for the same statement year. "
+                "**Global** deliberately includes "
                 "non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) "
                 "alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** "
                 "are filtered views of the same metrics on subsets of that peer list (see `country`, "
@@ -284,6 +487,7 @@ def main() -> None:
                 "Verify before citing. IPEDS counts are administrative completions, not program quality ranks."
             ),
         },
+        "rank_surround": rank_surround,
         "sections": {
             "global": {
                 "title": "World peer comparison",
@@ -339,6 +543,10 @@ def main() -> None:
     print(f"Wrote {OUT.relative_to(ROOT)}")
     print(f"  Global institutions: {len(global_rows)}, US: {len(us_rows)}, public: {len(public_rows)}")
     print(f"  Major rows: {len(entries)}")
+    if rank_surround.get("qs"):
+        print(f"  QS rank_surround rows: {len(rank_surround['qs']['institutions'])}")
+    if rank_surround.get("arwu"):
+        print(f"  ARWU rank_surround rows: {len(rank_surround['arwu']['institutions'])}")
 
 
 if __name__ == "__main__":

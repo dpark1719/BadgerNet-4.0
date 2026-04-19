@@ -1,5 +1,10 @@
 import { useMemo, useState } from 'react'
-import type { InstitutionRankRow, MajorRankingsBundle, RankingsHubBundle } from '../types/data'
+import type {
+  InstitutionRankRow,
+  MajorRankingsBundle,
+  RankingsHubBundle,
+  RankSurroundBand,
+} from '../types/data'
 import { MajorRankingsPanel } from './MajorRankingsPanel'
 import './RankingsHubPanel.css'
 
@@ -61,16 +66,167 @@ function offsetVsUwLabel(rowIndex: number, anchorIndexInWindow: number): string 
   return d > 0 ? `+${d}` : String(d)
 }
 
-function NeighborhoodBlock({
-  rows,
+function focalRank(r: InstitutionRankRow, metric: 'qs_rank' | 'arwu_rank'): number | null {
+  const v = r[metric]
+  return v == null ? null : v
+}
+
+function deltaRankLabel(r: InstitutionRankRow, metric: 'qs_rank' | 'arwu_rank', center: number): string {
+  const rk = focalRank(r, metric)
+  if (rk == null) return '—'
+  const d = rk - center
+  if (d === 0) return '0'
+  return d > 0 ? `+${d}` : String(d)
+}
+
+function NeighborhoodWikidataBand({
+  band,
   metric,
   title,
   note,
 }: {
-  rows: InstitutionRankRow[]
+  band: RankSurroundBand
   metric: 'qs_rank' | 'arwu_rank'
   title: string
   note: string
+}) {
+  const center = band.center_rank
+  const bw = band.band_half_width
+  const [aboveSpan, setAboveSpan] = useState(INITIAL_SPAN)
+  const [belowSpan, setBelowSpan] = useState(INITIAL_SPAN)
+
+  const rankMin = Math.max(1, center - aboveSpan)
+  const rankMax = center + belowSpan
+
+  const windowRows = useMemo(() => {
+    return band.institutions
+      .filter((r) => {
+        const rk = focalRank(r, metric)
+        if (rk == null) return false
+        return rk >= rankMin && rk <= rankMax
+      })
+      .sort((a, b) => {
+        const ar = focalRank(a, metric)
+        const br = focalRank(b, metric)
+        if (ar != null && br != null && ar !== br) return (ar as number) - (br as number)
+        return a.label.localeCompare(b.label)
+      })
+  }, [band.institutions, metric, rankMin, rankMax])
+
+  const presentRanks = new Set(
+    windowRows.map((r) => focalRank(r, metric)).filter((n): n is number => n != null),
+  )
+  const missingRanks: number[] = []
+  for (let rk = rankMin; rk <= rankMax; rk++) {
+    if (!presentRanks.has(rk)) missingRanks.push(rk)
+  }
+
+  const maxAboveSpan = Math.min(bw, Math.max(0, center - 1))
+  const canMoreAbove = aboveSpan < maxAboveSpan
+  const canMoreBelow = belowSpan < bw
+
+  const editionLabel = metric === 'qs_rank' ? 'QS world' : 'ARWU'
+
+  return (
+    <section className="rankings-neighborhood" aria-labelledby={`${metric}-wd-title`}>
+      <h3 className="rankings-neighborhood-title" id={`${metric}-wd-title`}>
+        {title}
+      </h3>
+      <p className="rankings-neighborhood-note muted small">{note}</p>
+
+      <div className="rankings-expand-bar">
+        <button
+          type="button"
+          className="rankings-expand-btn"
+          disabled={!canMoreAbove}
+          onClick={() => setAboveSpan((s) => Math.min(s + STEP, bw, Math.max(0, center - 1)))}
+        >
+          Show next {STEP} ranks (better / lower number)
+        </button>
+        <span className="rankings-expand-hint muted small">
+          Integer window [{rankMin}, {rankMax}] around UW at {editionLabel} rank {center}
+          {band.year ? ` (${band.year} statement year in Wikidata)` : ''}.
+        </span>
+      </div>
+
+      <div className="rankings-table-wrap">
+        <table className="rankings-inst-table">
+          <thead>
+            <tr>
+              <th scope="col" className="num" title="Difference from UW’s rank number in this column">
+                Δ rank
+              </th>
+              <th scope="col">Institution</th>
+              <th scope="col">Region</th>
+              <th scope="col" className="num">
+                QS world
+              </th>
+              <th scope="col" className="num">
+                QS yr
+              </th>
+              <th scope="col" className="num">
+                ARWU
+              </th>
+              <th scope="col" className="num">
+                ARWU yr
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {windowRows.map((r, i) => (
+              <tr
+                key={r.qid ? `${r.qid}-${focalRank(r, metric)}` : `${r.label}-${metric}-${i}`}
+                className={r.anchor ? 'rankings-anchor-row' : undefined}
+              >
+                <td className="num">{deltaRankLabel(r, metric, center)}</td>
+                <td>{r.label}</td>
+                <td>{r.country || '—'}</td>
+                <td className="num">{fmtRank(r.qs_rank)}</td>
+                <td className="num">{r.qs_year ?? '—'}</td>
+                <td className="num">{fmtRank(r.arwu_rank)}</td>
+                <td className="num">{r.arwu_year ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="muted small rankings-table-note">
+          Rows are institutions in Wikidata with a {editionLabel} rank in this integer window (not the
+          small peer-only list). Lower {editionLabel} numbers are better. Some rank integers may have
+          no row if Wikidata has no statement for that place.
+        </p>
+      </div>
+
+      <div className="rankings-expand-bar rankings-expand-bar-below">
+        <button
+          type="button"
+          className="rankings-expand-btn"
+          disabled={!canMoreBelow}
+          onClick={() => setBelowSpan((s) => Math.min(s + STEP, bw))}
+        >
+          Show next {STEP} ranks (worse / higher number)
+        </button>
+      </div>
+
+      {missingRanks.length > 0 && missingRanks.length <= 24 && (
+        <p className="muted small rankings-unranked-footnote">
+          No Wikidata row in this window for rank{missingRanks.length === 1 ? '' : 's'}:{' '}
+          {missingRanks.join(', ')}.
+        </p>
+      )}
+    </section>
+  )
+}
+
+function NeighborhoodPeerSlice({
+  rows,
+  metric,
+  title,
+  peerNote,
+}: {
+  rows: InstitutionRankRow[]
+  metric: 'qs_rank' | 'arwu_rank'
+  title: string
+  peerNote: string
 }) {
   const [aboveN, setAboveN] = useState(INITIAL_SPAN)
   const [belowN, setBelowN] = useState(INITIAL_SPAN)
@@ -157,7 +313,7 @@ function NeighborhoodBlock({
       <h3 className="rankings-neighborhood-title" id={`${metric}-title`}>
         {title}
       </h3>
-      <p className="rankings-neighborhood-note muted small">{note}</p>
+      <p className="rankings-neighborhood-note muted small">{peerNote}</p>
 
       <div className="rankings-expand-bar">
         <button
@@ -285,21 +441,47 @@ function InstitutionTable({ rows }: { rows: InstitutionRankRow[] }) {
   )
 }
 
-function InstitutionNeighborhoodViews({ rows }: { rows: InstitutionRankRow[] }) {
+function InstitutionNeighborhoodViews({
+  rows,
+  bundle,
+}: {
+  rows: InstitutionRankRow[]
+  bundle: RankingsHubBundle
+}) {
+  const qsBand = bundle.rank_surround?.qs
+  const arBand = bundle.rank_surround?.arwu
   return (
     <div className="rankings-neighborhood-stack">
-      <NeighborhoodBlock
-        metric="qs_rank"
-        rows={rows}
-        title="QS world university rankings (peer neighborhood)"
-        note={`Among peers with a QS world rank: the ${INITIAL_SPAN} closest better than UW and the ${INITIAL_SPAN} closest worse (next peers in rank order, not gaps in the global QS table).`}
-      />
-      <NeighborhoodBlock
-        metric="arwu_rank"
-        rows={rows}
-        title="ARWU / Shanghai rankings (peer neighborhood)"
-        note={`Among peers with an ARWU rank: the ${INITIAL_SPAN} directly above UW and ${INITIAL_SPAN} directly below in this list (closest neighbors in rank order).`}
-      />
+      {qsBand && qsBand.institutions.length > 0 ? (
+        <NeighborhoodWikidataBand
+          band={qsBand}
+          metric="qs_rank"
+          title="QS world university rankings (around UW’s rank)"
+          note={`Schools whose Wikidata QS world rank falls in an integer window around UW (${qsBand.year ?? '—'} statement year), matching the published rank ladder—not the short peer list.`}
+        />
+      ) : (
+        <NeighborhoodPeerSlice
+          metric="qs_rank"
+          rows={rows}
+          title="QS world university rankings (peer list)"
+          peerNote={`No Wikidata rank band in this bundle: showing the ${INITIAL_SPAN} closest peers in this tab that have a QS rank.`}
+        />
+      )}
+      {arBand && arBand.institutions.length > 0 ? (
+        <NeighborhoodWikidataBand
+          band={arBand}
+          metric="arwu_rank"
+          title="ARWU / Shanghai rankings (around UW’s rank)"
+          note={`Schools whose Wikidata ARWU rank falls in an integer window around UW (${arBand.year ?? '—'} statement year).`}
+        />
+      ) : (
+        <NeighborhoodPeerSlice
+          metric="arwu_rank"
+          rows={rows}
+          title="ARWU / Shanghai rankings (peer list)"
+          peerNote={`No Wikidata rank band in this bundle: showing the ${INITIAL_SPAN} closest peers in this tab that have an ARWU rank.`}
+        />
+      )}
     </div>
   )
 }
@@ -338,10 +520,11 @@ export function RankingsHubPanel({ bundle }: { bundle: RankingsHubBundle }) {
             <h2 className="rankings-subtitle">{bundle.sections[sub].title}</h2>
             <p className="rankings-blurb">{bundle.sections[sub].blurb}</p>
             <p className="rankings-context-note muted small">
-              Each table shows the five peers immediately above and five immediately below UW in
-              that ranking (within this peer list only). Expand adds the next five in each direction.
+              QS and ARWU neighborhood tables use Wikidata rows near UW’s published rank (integer
+              window). The peer list above is only for the summary comparison tables elsewhere on this
+              tab.
             </p>
-            <InstitutionNeighborhoodViews key={sub} rows={bundle.sections[sub].institutions} />
+            <InstitutionNeighborhoodViews key={sub} rows={bundle.sections[sub].institutions} bundle={bundle} />
           </>
         )}
         {sub === 'majors' && (

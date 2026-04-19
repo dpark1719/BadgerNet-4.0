@@ -157,11 +157,24 @@ export type InstitutionRankRow = {
   label: string
   /** True for UW–Madison; used to center neighborhood tables. */
   anchor?: boolean
+  /** Wikidata item id when row came from WDQS rank_surround. */
+  qid?: string
+  /** Present on WDQS rows: country is United States (P17 = Q30). */
+  is_us?: boolean
   country?: string
   qs_rank?: number | null
   qs_year?: string | null
   arwu_rank?: number | null
   arwu_year?: string | null
+}
+
+/** Pre-fetched institutions near UW’s rank for one edition (harvest_rankings WDQS). */
+export type RankSurroundBand = {
+  edition_qid: string
+  year: string | null
+  center_rank: number
+  band_half_width: number
+  institutions: InstitutionRankRow[]
 }
 
 export type RankingsSectionInstitutions = {
@@ -178,6 +191,11 @@ export type RankingsSectionMajors = {
 
 export type RankingsHubBundle = {
   meta: ChartMeta
+  /** Wikidata QS/ARWU rows within ±band_half_width of UW for integer-rank neighborhoods. */
+  rank_surround?: {
+    qs?: RankSurroundBand
+    arwu?: RankSurroundBand
+  }
   sections: {
     global: RankingsSectionInstitutions
     us: RankingsSectionInstitutions
