@@ -5,6 +5,7 @@ import './RankingsHubPanel.css'
 
 type SubKey = 'global' | 'us' | 'public' | 'majors'
 
+/** Peers to show on each side of UW (closest in this ranking); expand adds another step each way. */
 const STEP = 5
 const INITIAL_SPAN = 5
 
@@ -40,6 +41,24 @@ function anchorIndex(rows: InstitutionRankRow[]): number {
   const byFlag = rows.findIndex((r) => r.anchor)
   if (byFlag >= 0) return byFlag
   return rows.findIndex((r) => /UW/i.test(r.label) && /Madison/i.test(r.label))
+}
+
+/** Closest `countAbove` peers with better ranks (lower numbers), then anchor, then closest `countBelow` worse peers. */
+function windowClosestToAnchor(
+  sortedAsc: InstitutionRankRow[],
+  anchorIdx: number,
+  countAbove: number,
+  countBelow: number,
+): InstitutionRankRow[] {
+  const start = Math.max(0, anchorIdx - countAbove)
+  const end = Math.min(sortedAsc.length, anchorIdx + countBelow + 1)
+  return sortedAsc.slice(start, end)
+}
+
+function offsetVsUwLabel(rowIndex: number, anchorIndexInWindow: number): string {
+  const d = rowIndex - anchorIndexInWindow
+  if (d === 0) return '0'
+  return d > 0 ? `+${d}` : String(d)
 }
 
 function NeighborhoodBlock({
@@ -80,7 +99,13 @@ function NeighborhoodBlock({
   const effBelow = idx >= 0 ? Math.min(belowN, maxBelow) : 0
 
   const windowRows =
-    idx >= 0 ? sortedRanked.slice(idx - effAbove, idx + effBelow + 1) : sortedRanked
+    idx >= 0 ? windowClosestToAnchor(sortedRanked, idx, effAbove, effBelow) : sortedRanked
+
+  const anchorInWindow = windowRows.findIndex((r) => r.anchor)
+  const anchorInWindowFallback = windowRows.findIndex(
+    (r) => /UW/i.test(r.label) && /Madison/i.test(r.label),
+  )
+  const anchorColIdx = anchorInWindow >= 0 ? anchorInWindow : anchorInWindowFallback
 
   const canMoreAbove = idx >= 0 && effAbove < maxAbove
   const canMoreBelow = idx >= 0 && effBelow < maxBelow
@@ -141,11 +166,11 @@ function NeighborhoodBlock({
           disabled={!canMoreAbove}
           onClick={() => setAboveN((n) => Math.min(n + STEP, maxAbove))}
         >
-          Show {STEP} more above (better ranks)
+          Show next {STEP} peers (better rank)
         </button>
         <span className="rankings-expand-hint muted small">
           {idx >= 0
-            ? `Showing ${effAbove} better · UW–Madison · ${effBelow} worse (within peers with a ${metric === 'qs_rank' ? 'QS' : 'ARWU'} rank).`
+            ? `Up to ${effAbove} peers directly above UW and ${effBelow} directly below in this ${metric === 'qs_rank' ? 'QS' : 'ARWU'} order (closest in the peer list).`
             : null}
         </span>
       </div>
@@ -154,6 +179,9 @@ function NeighborhoodBlock({
         <table className="rankings-inst-table">
           <thead>
             <tr>
+              <th scope="col" className="num" title="Steps from UW in this peer ordering (0 = UW)">
+                vs UW
+              </th>
               <th scope="col">Institution</th>
               <th scope="col">Region</th>
               <th scope="col" className="num">
@@ -173,6 +201,9 @@ function NeighborhoodBlock({
           <tbody>
             {windowRows.map((r, i) => (
               <tr key={`${r.label}-${metric}-${i}`} className={r.anchor ? 'rankings-anchor-row' : undefined}>
+                <td className="num">
+                  {anchorColIdx >= 0 ? offsetVsUwLabel(i, anchorColIdx) : '—'}
+                </td>
                 <td>{r.label}</td>
                 <td>{r.country || '—'}</td>
                 <td className="num">{fmtRank(r.qs_rank)}</td>
@@ -196,7 +227,7 @@ function NeighborhoodBlock({
           disabled={!canMoreBelow}
           onClick={() => setBelowN((n) => Math.min(n + STEP, maxBelow))}
         >
-          Show {STEP} more below (worse ranks)
+          Show next {STEP} peers (worse rank)
         </button>
       </div>
 
@@ -261,13 +292,13 @@ function InstitutionNeighborhoodViews({ rows }: { rows: InstitutionRankRow[] }) 
         metric="qs_rank"
         rows={rows}
         title="QS world university rankings (peer neighborhood)"
-        note={`Around UW–Madison among peers that have a QS world rank. Initially ${INITIAL_SPAN} schools with better ranks and ${INITIAL_SPAN} with worse ranks.`}
+        note={`Among peers with a QS world rank: the ${INITIAL_SPAN} closest better than UW and the ${INITIAL_SPAN} closest worse (next peers in rank order, not gaps in the global QS table).`}
       />
       <NeighborhoodBlock
         metric="arwu_rank"
         rows={rows}
         title="ARWU / Shanghai rankings (peer neighborhood)"
-        note={`Around UW–Madison among peers that have an ARWU rank. Initially ${INITIAL_SPAN} schools above and ${INITIAL_SPAN} below on that scale.`}
+        note={`Among peers with an ARWU rank: the ${INITIAL_SPAN} directly above UW and ${INITIAL_SPAN} directly below in this list (closest neighbors in rank order).`}
       />
     </div>
   )
@@ -307,8 +338,8 @@ export function RankingsHubPanel({ bundle }: { bundle: RankingsHubBundle }) {
             <h2 className="rankings-subtitle">{bundle.sections[sub].title}</h2>
             <p className="rankings-blurb">{bundle.sections[sub].blurb}</p>
             <p className="rankings-context-note muted small">
-              Tables below are centered on UW–Madison within this peer list (not the full global
-              publisher tables). Use expand to show more peers in each direction.
+              Each table shows the five peers immediately above and five immediately below UW in
+              that ranking (within this peer list only). Expand adds the next five in each direction.
             </p>
             <InstitutionNeighborhoodViews key={sub} rows={bundle.sections[sub].institutions} />
           </>

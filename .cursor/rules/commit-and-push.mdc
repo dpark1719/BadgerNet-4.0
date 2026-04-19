@@ -1,0 +1,17 @@
+---
+description: After code changes, commit and push to keep origin in sync
+alwaysApply: true
+---
+
+# Commit and push after code changes
+
+When you modify project files to satisfy a request (source, config, data shipped with the app, etc.), finish the task by **committing and pushing** unless the user explicitly asked not to use git.
+
+1. `git status` — confirm what changed.
+2. `git add` the relevant paths (or `git add -A` when the whole change set should ship together).
+3. `git commit -m "…"` with a short, accurate message (present tense or imperative; say what changed and why if non-obvious).
+4. `git push` to `origin` on the current branch.
+
+If there is nothing to commit, skip commit/push. If push fails (network, auth), report the error and leave clear next steps; do not claim the push succeeded.
+
+Do not commit generated secrets, `.env`, or other files that must stay local—respect `.gitignore`.
