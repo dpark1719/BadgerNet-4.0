@@ -9,6 +9,11 @@ import './LandingPage.css'
 const MADISON: [number, number] = [-89.4012, 43.0731]
 const GLOBE_SIZE = 600
 
+/** D3 orthographic `.rotate([a, b])` centers the point at geographic (-a, -b). */
+function orthographicRotateToCenter(lon: number, lat: number): [number, number] {
+  return [-lon, -lat]
+}
+
 const SCROLL_STEPS = 6
 
 interface Props {
@@ -46,8 +51,11 @@ export default function LandingPage({ onEnter }: Props) {
   const graticule = useMemo(() => geoGraticule().step([15, 15])(), [])
 
   const scale = 120 + progress * 2800
-  const rotateLon = -89.4 + (1 - progress) * 60
-  const rotateLat = -43 + (1 - progress) * 20
+  const [rotEndLon, rotEndLat] = orthographicRotateToCenter(MADISON[0], MADISON[1])
+  // Start with the Western Hemisphere facing forward, then pan/zoom to Madison.
+  const [rotStartLon, rotStartLat] = orthographicRotateToCenter(-75, 28)
+  const rotateLon = rotStartLon + progress * (rotEndLon - rotStartLon)
+  const rotateLat = rotStartLat + progress * (rotEndLat - rotStartLat)
 
   const projection = useMemo(() => {
     return geoOrthographic()
