@@ -29,19 +29,20 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
 
   if (tiers.length === 0) {
     return (
-      <section className="major-rankings" aria-label="UW top publisher-ranked programs">
+      <section className="major-rankings" aria-label="UW U.S. News top-10 national programs">
         <p className="muted major-rankings-empty">
-          No UW programs in this bundle have a publisher rank between 1 and {MAX_PUBLISHER_RANK}. Re-run{' '}
-          <code className="mono">python3 backend/scripts/harvest_rankings.py</code> after a successful IPEDS
-          download. Ranks load from <code className="mono">data/raw/major_ranks.csv</code> if present, otherwise
-          from <code className="mono">backend/seed/major_ranks.csv</code>.
+          No UW programs in this bundle have a U.S. News–style national rank between 1 and{' '}
+          {MAX_PUBLISHER_RANK}. Re-run <code className="mono">python3 backend/scripts/harvest_rankings.py</code>{' '}
+          after IPEDS/CIP caches exist. Ranks load from <code className="mono">data/raw/major_ranks.csv</code>{' '}
+          if present, otherwise <code className="mono">backend/seed/major_ranks.csv</code> (curated from U.S. News
+          summaries; not live Niche/U.S. News APIs).
         </p>
       </section>
     )
   }
 
   return (
-    <section className="major-rankings" aria-label="UW top publisher-ranked programs">
+    <section className="major-rankings" aria-label="UW U.S. News top-10 national programs">
       <div className="major-rankings-scroll">
         <table className="major-rankings-table">
           <thead>
@@ -50,7 +51,7 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
               <th scope="col" className="num">
                 IPEDS awards
               </th>
-              <th scope="col">Publisher</th>
+              <th scope="col">List</th>
               <th scope="col">Source</th>
             </tr>
           </thead>
@@ -58,7 +59,7 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
             <tbody key={rank}>
               <tr className="major-rankings-tier">
                 <td colSpan={4}>
-                  <span className="major-rankings-tier-label">National / publisher rank {rank}</span>
+                  <span className="major-rankings-tier-label">U.S. News national rank {rank}</span>
                   <span className="major-rankings-tier-note muted small">
                     {programs.length} UW program{programs.length === 1 ? '' : 's'} at this rank
                   </span>
@@ -88,6 +89,11 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
             </tbody>
           ))}
         </table>
+        <p className="muted small major-rankings-foot">
+          Ranks are the national position reported by U.S. News for that discipline or named specialty (see
+          each link). They are not an automated scrape of U.S. News or Niche; update the CSV and re-harvest when
+          new editions ship.
+        </p>
       </div>
     </section>
   )

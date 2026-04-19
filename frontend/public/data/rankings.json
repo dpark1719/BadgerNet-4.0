@@ -6,8 +6,8 @@
     "degree_level": "all",
     "source": "wikidata_ipeds",
     "source_url": "https://www.wikidata.org/",
-    "methodology": "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), taking the latest qualifier year per edition. `rank_surround` adds WDQS slices of institutions whose published rank is within \u00b155 of UW for the same statement year. **Global** deliberately includes non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** are filtered views of the same metrics on subsets of that peer list (see `country`, `us`, and `public` flags in harvest_rankings.py). Majors: optional `data/raw/major_ranks.csv` supplies publisher vs-peer ranks; bundle keeps only ranks 1\u201310 with NCES CIP titles from IPEDS C2024_A completions context.",
-    "disclaimer": "Wikidata ranks are community-sourced and may disagree with official publisher tables. Verify before citing. IPEDS counts are administrative completions, not program quality ranks."
+    "methodology": "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), taking the latest qualifier year per edition. `rank_surround` adds WDQS slices of institutions whose published rank is within \u00b155 of UW for the same statement year. **Global** deliberately includes non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** are filtered views of the same metrics on subsets of that peer list (see `country`, `us`, and `public` flags in harvest_rankings.py). Majors: U.S. News\u2013based national ranks (1\u201310) from `backend/seed/major_ranks.csv` or `data/raw/major_ranks.csv` (see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP.",
+    "disclaimer": "Wikidata ranks are community-sourced and may disagree with official publisher tables. Verify before citing. IPEDS counts are administrative completions, not program quality ranks. UW program ranks are manually curated from U.S. News summaries; they are not an automated pull from U.S. News or Niche."
   },
   "rank_surround": {
     "qs": {
@@ -2175,96 +2175,136 @@
       ]
     },
     "majors": {
-      "title": "UW\u2013Madison programs \u2014 top publisher ranks (1\u201310)",
-      "blurb": "Only programs with an external publisher rank vs other schools (ranks 1\u201310). Multiple UW programs that share the same national rank are listed together under that rank. Override ranks in `data/raw/major_ranks.csv` or use the bundled seed (`backend/seed/major_ranks.csv`). CIP labels use NCES titles.",
+      "title": "UW\u2013Madison programs \u2014 U.S. News national top 10",
+      "blurb": "Programs where UW appears in the U.S. News national top 10 for that discipline or named specialty (see `backend/seed/major_ranks.csv` for the curated list, sources, and edition year). Multiple programs that share the same rank are grouped. Override or extend with `data/raw/major_ranks.csv` (takes precedence) and re-run harvest. IPEDS counts are for the listed CIP, not the whole graduate unit.",
       "entries": [
         {
-          "cipcode": "11.0101",
-          "program_label": "Computer and Information Sciences, General",
-          "ipeds_awards": 1252,
+          "cipcode": "13.0101",
+          "program_label": "Education (graduate school) \u2014 1st nationally among education schools",
+          "ipeds_awards": 72,
           "publisher_rank": 1,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://news.wisc.edu/most-recent-u-s-news-rankings-by-department/"
         },
         {
-          "cipcode": "30.7001",
-          "program_label": "Data Science, General",
-          "ipeds_awards": 632,
+          "cipcode": "42.2806",
+          "program_label": "Educational psychology \u2014 1st nationally (education specialty)",
+          "ipeds_awards": 63,
           "publisher_rank": 1,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-psychology-rankings"
         },
         {
-          "cipcode": "45.0601",
-          "program_label": "Economics, B.A.",
-          "ipeds_awards": 627,
+          "cipcode": "51.2210",
+          "program_label": "Rehabilitation counseling \u2014 1st nationally",
+          "ipeds_awards": 255,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/rehabilitation-counseling-rankings"
+        },
+        {
+          "cipcode": "51.0204",
+          "program_label": "Speech-language pathology (graduate) \u2014 1st nationally (UW summary; see U.S. News SLP rankings)",
+          "ipeds_awards": 121,
+          "publisher_rank": 1,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/speech-language-pathology-rankings"
+        },
+        {
+          "cipcode": "13.1202",
+          "program_label": "Elementary teacher education \u2014 2nd nationally (education specialty)",
+          "ipeds_awards": 123,
           "publisher_rank": 2,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/teacher-education-rankings"
+        },
+        {
+          "cipcode": "13.0301",
+          "program_label": "Curriculum & instruction \u2014 3rd nationally (education specialty)",
+          "ipeds_awards": 100,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/curriculum-instruction-rankings"
+        },
+        {
+          "cipcode": "14.3501",
+          "program_label": "Nuclear engineering \u2014 3rd nationally (engineering specialty)",
+          "ipeds_awards": 174,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/nuclear-engineering-rankings"
+        },
+        {
+          "cipcode": "52.1501",
+          "program_label": "Real estate (M.B.A. specialty) \u2014 3rd nationally among business-school real estate programs",
+          "ipeds_awards": 247,
+          "publisher_rank": 3,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-business-schools/real-estate-rankings"
+        },
+        {
+          "cipcode": "13.0401",
+          "program_label": "Educational administration & supervision \u2014 6th nationally (education specialty)",
+          "ipeds_awards": 75,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/education-administration-rankings"
+        },
+        {
+          "cipcode": "51.2001",
+          "program_label": "Pharmacy (Pharm.D. programs) \u2014 6th nationally among pharmacy schools",
+          "ipeds_awards": 94,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/pharmacy-rankings"
+        },
+        {
+          "cipcode": "01.0901",
+          "program_label": "Veterinary medicine (D.V.M.) \u2014 6th nationally among veterinary schools",
+          "ipeds_awards": 35,
+          "publisher_rank": 6,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-health-schools/veterinary-medicine-rankings"
+        },
+        {
+          "cipcode": "13.1001",
+          "program_label": "Special education \u2014 7th nationally (education specialty)",
+          "ipeds_awards": 57,
+          "publisher_rank": 7,
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-education-schools/special-needs-education-rankings"
         },
         {
           "cipcode": "42.0101",
-          "program_label": "Psychology, General",
+          "program_label": "Psychology (graduate program) \u2014 8th nationally among psychology programs",
           "ipeds_awards": 548,
-          "publisher_rank": 3,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
-        },
-        {
-          "cipcode": "26.0101",
-          "program_label": "Biology/Biological Sciences, General",
-          "ipeds_awards": 506,
-          "publisher_rank": 4,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
-        },
-        {
-          "cipcode": "52.0801",
-          "program_label": "Finance, General",
-          "ipeds_awards": 426,
-          "publisher_rank": 5,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
-        },
-        {
-          "cipcode": "45.1001",
-          "program_label": "Political Science and Government, General",
-          "ipeds_awards": 370,
-          "publisher_rank": 6,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
-        },
-        {
-          "cipcode": "27.0101",
-          "program_label": "Mathematics, General",
-          "ipeds_awards": 362,
-          "publisher_rank": 7,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
-        },
-        {
-          "cipcode": "52.0701",
-          "program_label": "Entrepreneurship/Entrepreneurial Studies",
-          "ipeds_awards": 360,
           "publisher_rank": 8,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2025 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-humanities-schools/psychology-rankings"
         },
         {
-          "cipcode": "03.0103",
-          "program_label": "Environmental Studies",
-          "ipeds_awards": 350,
+          "cipcode": "14.0701",
+          "program_label": "Chemical engineering \u2014 9th nationally (engineering specialty)",
+          "ipeds_awards": 134,
           "publisher_rank": 9,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/chemical-engineering-rankings"
         },
         {
-          "cipcode": "14.1901",
-          "program_label": "Mechanical Engineering",
-          "ipeds_awards": 345,
+          "cipcode": "45.1101",
+          "program_label": "Sociology \u2014 9th nationally among sociology programs",
+          "ipeds_awards": 111,
+          "publisher_rank": 9,
+          "publisher": "U.S. News Best Graduate Schools (2025 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-humanities-schools/sociology-rankings"
+        },
+        {
+          "cipcode": "11.0101",
+          "program_label": "Computer science \u2014 Systems subspecialty ranked 10th nationally (overall CS graduate program ranked 15th in same survey year)",
+          "ipeds_awards": 1252,
           "publisher_rank": 10,
-          "publisher": "Demo \u2014 vs peer institutions (seed)",
-          "source_url": "https://www.wisc.edu/"
+          "publisher": "U.S. News Best Graduate Schools (2026 edition)",
+          "source_url": "https://www.usnews.com/best-graduate-schools/top-engineering-schools/computer-science-rankings"
         }
       ]
     }

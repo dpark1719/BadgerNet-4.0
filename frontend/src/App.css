@@ -693,6 +693,12 @@
   font-size: 0.9em;
 }
 
+.major-rankings-foot {
+  margin: 0.5rem 0.65rem 0.65rem;
+  max-width: 48rem;
+  line-height: 1.45;
+}
+
 .major-rankings-tier td {
   padding: 0.55rem 0.65rem 0.35rem;
   background: var(--header-tint, rgba(0, 0, 0, 0.04));

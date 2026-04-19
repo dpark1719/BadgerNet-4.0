@@ -581,13 +581,15 @@ def main() -> None:
                 "non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) "
                 "alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** "
                 "are filtered views of the same metrics on subsets of that peer list (see `country`, "
-                "`us`, and `public` flags in harvest_rankings.py). Majors: optional "
-                "`data/raw/major_ranks.csv` supplies publisher vs-peer ranks; bundle keeps only ranks "
-                f"1–{TOP_PUBLISHER_RANK} with NCES CIP titles from IPEDS C2024_A completions context."
+                "`us`, and `public` flags in harvest_rankings.py). Majors: U.S. News–based national ranks "
+                f"(1–{TOP_PUBLISHER_RANK}) from `backend/seed/major_ranks.csv` or `data/raw/major_ranks.csv` "
+                "(see CSV for edition year and links); IPEDS C2024_A gives completion counts by CIP."
             ),
             "disclaimer": (
                 "Wikidata ranks are community-sourced and may disagree with official publisher tables. "
-                "Verify before citing. IPEDS counts are administrative completions, not program quality ranks."
+                "Verify before citing. IPEDS counts are administrative completions, not program quality ranks. "
+                "UW program ranks are manually curated from U.S. News summaries; they are not an automated "
+                "pull from U.S. News or Niche."
             ),
         },
         "rank_surround": rank_surround,
@@ -618,12 +620,13 @@ def main() -> None:
                 "institutions": public_rows,
             },
             "majors": {
-                "title": "UW–Madison programs — top publisher ranks (1–10)",
+                "title": "UW–Madison programs — U.S. News national top 10",
                 "blurb": (
-                    "Only programs with an external publisher rank vs other schools (ranks 1–"
-                    f"{TOP_PUBLISHER_RANK}). Multiple UW programs that share the same national rank "
-                    "are listed together under that rank. Override ranks in `data/raw/major_ranks.csv` "
-                    f"or use the bundled seed (`backend/seed/major_ranks.csv`). CIP labels use NCES titles."
+                    f"Programs where UW appears in the U.S. News national top {TOP_PUBLISHER_RANK} for that "
+                    "discipline or named specialty (see `backend/seed/major_ranks.csv` for the curated list, "
+                    "sources, and edition year). Multiple programs that share the same rank are grouped. "
+                    "Override or extend with `data/raw/major_ranks.csv` (takes precedence) and re-run harvest. "
+                    "IPEDS counts are for the listed CIP, not the whole graduate unit."
                 ),
                 "entries": entries,
             },
