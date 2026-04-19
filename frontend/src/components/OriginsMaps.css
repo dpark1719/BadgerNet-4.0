@@ -1,0 +1,94 @@
+.origins-maps {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.origins-maps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .origins-maps-grid {
+    grid-template-columns: 1fr 1.15fr;
+    align-items: start;
+  }
+}
+
+.origins-map-panel {
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.origins-map-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--text-h);
+}
+
+.origins-map-sub {
+  margin: 0 0 0.75rem;
+  line-height: 1.45;
+}
+
+.origins-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+}
+
+.origins-map-path {
+  cursor: crosshair;
+  transition: opacity 0.12s ease;
+}
+
+.origins-map-path:hover {
+  opacity: 0.92;
+}
+
+.origins-map-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.origins-map-legend-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(197, 5, 12, 0.15),
+    rgba(197, 5, 12, 0.92)
+  );
+  border: 1px solid var(--border);
+}
+
+.origins-map-footnote {
+  margin: 0.65rem 0 0;
+  line-height: 1.45;
+}
+
+.origins-map-tooltip {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  padding: 0.4rem 0.65rem;
+  border-radius: 6px;
+  background: var(--text-h);
+  color: var(--bg);
+  font-size: 0.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  max-width: 14rem;
+}
+
+.origins-map-tooltip strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}

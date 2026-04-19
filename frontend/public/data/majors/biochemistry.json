@@ -2,7 +2,7 @@
   "meta": {
     "project": "BadgerNet 4.0",
     "snapshot_date": "2026-04-11",
-    "academic_year": "2023-24",
+    "academic_year": "2016\u201325 cohorts (pooled; filter years in UI)",
     "tab": "industry",
     "major_id": "biochemistry",
     "degree_level": "undergraduate",
@@ -15,121 +15,325 @@
   "charts": {
     "by_industry": {
       "type": "bar",
-      "title": "Alumni by industry \u2014 Biochemistry, B.S. (sample)",
+      "title": "Alumni by industry \u2014 Biochemistry, B.S. (sample, pooled years)",
       "data": [
         {
           "label": "Pharma / biotech",
-          "value": 720
+          "value": 720,
+          "by_year": {
+            "2016": 32,
+            "2017": 50,
+            "2018": 111,
+            "2019": 52,
+            "2020": 53,
+            "2021": 88,
+            "2022": 31,
+            "2023": 137,
+            "2024": 120,
+            "2025": 46
+          }
         },
         {
           "label": "Healthcare providers",
-          "value": 540
+          "value": 540,
+          "by_year": {
+            "2016": 81,
+            "2017": 62,
+            "2018": 72,
+            "2019": 19,
+            "2020": 48,
+            "2021": 55,
+            "2022": 39,
+            "2023": 48,
+            "2024": 47,
+            "2025": 69
+          }
         },
         {
           "label": "Research / academia",
-          "value": 610
+          "value": 610,
+          "by_year": {
+            "2016": 64,
+            "2017": 48,
+            "2018": 42,
+            "2019": 66,
+            "2020": 90,
+            "2021": 44,
+            "2022": 54,
+            "2023": 50,
+            "2024": 99,
+            "2025": 53
+          }
         },
         {
           "label": "Other",
-          "value": 430
+          "value": 430,
+          "by_year": {
+            "2016": 43,
+            "2017": 39,
+            "2018": 62,
+            "2019": 21,
+            "2020": 17,
+            "2021": 60,
+            "2022": 19,
+            "2023": 53,
+            "2024": 61,
+            "2025": 55
+          }
         }
       ]
     },
     "top_employers": {
       "type": "bar",
-      "title": "Top employers \u2014 Biochemistry, B.S. (sample)",
+      "title": "Top employers \u2014 Biochemistry, B.S. (sample, pooled years)",
       "data": [
         {
           "label": "Pfizer",
-          "value": 62
+          "value": 62,
+          "by_year": {
+            "2016": 11,
+            "2017": 5,
+            "2018": 5,
+            "2019": 3,
+            "2020": 8,
+            "2021": 7,
+            "2022": 5,
+            "2023": 3,
+            "2024": 9,
+            "2025": 6
+          }
         },
         {
           "label": "UW Health",
-          "value": 118
+          "value": 118,
+          "by_year": {
+            "2016": 17,
+            "2017": 10,
+            "2018": 14,
+            "2019": 8,
+            "2020": 18,
+            "2021": 5,
+            "2022": 9,
+            "2023": 12,
+            "2024": 6,
+            "2025": 19
+          }
         },
         {
           "label": "AbbVie",
-          "value": 54
+          "value": 54,
+          "by_year": {
+            "2016": 8,
+            "2017": 3,
+            "2018": 3,
+            "2019": 4,
+            "2020": 7,
+            "2021": 5,
+            "2022": 5,
+            "2023": 6,
+            "2024": 7,
+            "2025": 6
+          }
         },
         {
           "label": "Genentech",
-          "value": 41
+          "value": 41,
+          "by_year": {
+            "2016": 6,
+            "2017": 5,
+            "2018": 7,
+            "2019": 4,
+            "2020": 2,
+            "2021": 3,
+            "2022": 5,
+            "2023": 3,
+            "2024": 4,
+            "2025": 2
+          }
         },
         {
           "label": "Other",
-          "value": 2025
+          "value": 2025,
+          "by_year": {
+            "2016": 330,
+            "2017": 297,
+            "2018": 82,
+            "2019": 151,
+            "2020": 101,
+            "2021": 329,
+            "2022": 240,
+            "2023": 119,
+            "2024": 90,
+            "2025": 286
+          }
         }
       ]
     },
     "career_flow": {
       "type": "sankey",
-      "title": "Common pathways \u2014 Biochemistry, B.S. (synthetic flow)",
+      "title": "Illustrative job stages \u2014 Biochemistry, B.S. (sample, not real counts)",
       "nodes": [
         {
           "id": "b_lab",
-          "label": "Early \u2014 lab / RA"
+          "label": "Lab tech or research assistant"
         },
         {
           "id": "b_assoc_sci",
-          "label": "Early \u2014 associate scientist"
+          "label": "Associate scientist"
         },
         {
           "id": "b_rd",
-          "label": "Mid \u2014 R&D scientist"
+          "label": "Industry research scientist"
         },
         {
           "id": "b_med",
-          "label": "Mid \u2014 med school / clinician track"
+          "label": "Medical school or clinical career"
         },
         {
           "id": "b_lead",
-          "label": "Senior \u2014 team lead"
+          "label": "Science team lead"
         },
         {
           "id": "b_pi",
-          "label": "Senior \u2014 PI / medical lead"
+          "label": "Lead scientist or senior physician"
         }
       ],
       "links": [
         {
           "source": "b_lab",
           "target": "b_assoc_sci",
-          "value": 480
+          "value": 480,
+          "by_year": {
+            "2016": 52,
+            "2017": 81,
+            "2018": 65,
+            "2019": 34,
+            "2020": 21,
+            "2021": 54,
+            "2022": 83,
+            "2023": 26,
+            "2024": 28,
+            "2025": 36
+          }
         },
         {
           "source": "b_lab",
           "target": "b_med",
-          "value": 220
+          "value": 220,
+          "by_year": {
+            "2016": 33,
+            "2017": 35,
+            "2018": 17,
+            "2019": 27,
+            "2020": 8,
+            "2021": 32,
+            "2022": 14,
+            "2023": 21,
+            "2024": 7,
+            "2025": 26
+          }
         },
         {
           "source": "b_assoc_sci",
           "target": "b_rd",
-          "value": 520
+          "value": 520,
+          "by_year": {
+            "2016": 54,
+            "2017": 64,
+            "2018": 44,
+            "2019": 39,
+            "2020": 27,
+            "2021": 73,
+            "2022": 36,
+            "2023": 52,
+            "2024": 79,
+            "2025": 52
+          }
         },
         {
           "source": "b_assoc_sci",
           "target": "b_med",
-          "value": 140
+          "value": 140,
+          "by_year": {
+            "2016": 13,
+            "2017": 13,
+            "2018": 15,
+            "2019": 7,
+            "2020": 14,
+            "2021": 6,
+            "2022": 18,
+            "2023": 15,
+            "2024": 22,
+            "2025": 17
+          }
         },
         {
           "source": "b_rd",
           "target": "b_lead",
-          "value": 260
+          "value": 260,
+          "by_year": {
+            "2016": 20,
+            "2017": 31,
+            "2018": 23,
+            "2019": 23,
+            "2020": 33,
+            "2021": 30,
+            "2022": 32,
+            "2023": 13,
+            "2024": 26,
+            "2025": 29
+          }
         },
         {
           "source": "b_rd",
           "target": "b_pi",
-          "value": 85
+          "value": 85,
+          "by_year": {
+            "2016": 14,
+            "2017": 10,
+            "2018": 15,
+            "2019": 5,
+            "2020": 9,
+            "2021": 3,
+            "2022": 4,
+            "2023": 8,
+            "2024": 9,
+            "2025": 8
+          }
         },
         {
           "source": "b_med",
           "target": "b_pi",
-          "value": 190
+          "value": 190,
+          "by_year": {
+            "2016": 12,
+            "2017": 9,
+            "2018": 15,
+            "2019": 19,
+            "2020": 11,
+            "2021": 24,
+            "2022": 26,
+            "2023": 15,
+            "2024": 32,
+            "2025": 27
+          }
         },
         {
           "source": "b_lead",
           "target": "b_pi",
-          "value": 70
+          "value": 70,
+          "by_year": {
+            "2016": 4,
+            "2017": 7,
+            "2018": 8,
+            "2019": 15,
+            "2020": 5,
+            "2021": 8,
+            "2022": 5,
+            "2023": 3,
+            "2024": 6,
+            "2025": 9
+          }
         }
       ]
     },

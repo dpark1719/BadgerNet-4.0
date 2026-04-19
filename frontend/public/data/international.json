@@ -2,14 +2,165 @@
   "meta": {
     "project": "BadgerNet 4.0",
     "tab": "international_outcomes",
-    "snapshot_date": "2026-04-11",
+    "snapshot_date": "2026-04-19",
     "degree_level": "all",
-    "source": "ipeds",
+    "academic_year": "2016\u201325 cohorts (pooled; filter years in UI)",
+    "source": "mixed",
     "source_url": "https://nces.ed.gov/ipeds/datacenter/",
-    "methodology": "DRVEF2022 field RMFRGNCN: count related to nonresident foreign students in IPEDS derived fall enrollment \u2014 **not** post-graduation destination. For country-of-destination after UW, use LinkedIn aggregate harvest + disclaimers.",
-    "disclaimer": "This tab\u2019s primary bar is an enrollment-related IPEDS aggregate, not \u2018where alumni moved.\u2019 Do not interpret as career migration statistics."
+    "methodology": "**Post-graduation destinations (sample):** The chart \u201cWhere alumni went after UW\u201d is a synthetic multi-year aggregate by country for UI demonstration only \u2014 not official UW migration or placement statistics. Replace via `ingest_international_destinations_csv.py` with your LinkedIn or survey roll-up. **IPEDS context:** DRVEF2022 field RMFRGNCN counts nonresident foreign students in derived fall enrollment \u2014 **not** where graduates moved after completing their program. **Open Doors context:** Rounded U.S.-level totals published by IIE Open Doors (https://opendoorsdata.org/) for scale only \u2014 not UW-specific enrollment or mobility.",
+    "disclaimer": "The destination-country chart is illustrative demo data. The IPEDS bar is enrollment-related only, not career geography. Open Doors bars are national-level IIE aggregates \u2014 not UW counts. Do not sum or compare cohorts across these charts as one population."
   },
   "charts": {
+    "post_graduation_destination_country": {
+      "type": "bar",
+      "title": "Where international alumni went after UW \u2014 by country (sample aggregate)",
+      "data": [
+        {
+          "label": "United States",
+          "value": 1850,
+          "by_year": {
+            "2016": 243,
+            "2017": 195,
+            "2018": 251,
+            "2019": 186,
+            "2020": 105,
+            "2021": 125,
+            "2022": 222,
+            "2023": 169,
+            "2024": 204,
+            "2025": 150
+          }
+        },
+        {
+          "label": "India",
+          "value": 620,
+          "by_year": {
+            "2016": 58,
+            "2017": 79,
+            "2018": 92,
+            "2019": 24,
+            "2020": 89,
+            "2021": 72,
+            "2022": 55,
+            "2023": 28,
+            "2024": 91,
+            "2025": 32
+          }
+        },
+        {
+          "label": "China",
+          "value": 510,
+          "by_year": {
+            "2016": 42,
+            "2017": 58,
+            "2018": 70,
+            "2019": 32,
+            "2020": 35,
+            "2021": 62,
+            "2022": 18,
+            "2023": 65,
+            "2024": 57,
+            "2025": 71
+          }
+        },
+        {
+          "label": "Canada",
+          "value": 280,
+          "by_year": {
+            "2016": 18,
+            "2017": 20,
+            "2018": 20,
+            "2019": 42,
+            "2020": 22,
+            "2021": 28,
+            "2022": 36,
+            "2023": 18,
+            "2024": 35,
+            "2025": 41
+          }
+        },
+        {
+          "label": "South Korea",
+          "value": 195,
+          "by_year": {
+            "2016": 35,
+            "2017": 13,
+            "2018": 15,
+            "2019": 27,
+            "2020": 23,
+            "2021": 10,
+            "2022": 12,
+            "2023": 21,
+            "2024": 32,
+            "2025": 7
+          }
+        },
+        {
+          "label": "United Kingdom",
+          "value": 142,
+          "by_year": {
+            "2016": 6,
+            "2017": 14,
+            "2018": 23,
+            "2019": 11,
+            "2020": 16,
+            "2021": 5,
+            "2022": 23,
+            "2023": 7,
+            "2024": 20,
+            "2025": 17
+          }
+        },
+        {
+          "label": "Germany",
+          "value": 88,
+          "by_year": {
+            "2016": 8,
+            "2017": 11,
+            "2018": 9,
+            "2019": 6,
+            "2020": 13,
+            "2021": 8,
+            "2022": 3,
+            "2023": 12,
+            "2024": 12,
+            "2025": 6
+          }
+        },
+        {
+          "label": "Japan",
+          "value": 76,
+          "by_year": {
+            "2016": 11,
+            "2017": 7,
+            "2018": 10,
+            "2019": 11,
+            "2020": 4,
+            "2021": 9,
+            "2022": 7,
+            "2023": 4,
+            "2024": 9,
+            "2025": 4
+          }
+        },
+        {
+          "label": "Other / unknown",
+          "value": 890,
+          "by_year": {
+            "2016": 146,
+            "2017": 42,
+            "2018": 60,
+            "2019": 126,
+            "2020": 68,
+            "2021": 38,
+            "2022": 113,
+            "2023": 112,
+            "2024": 49,
+            "2025": 136
+          }
+        }
+      ]
+    },
     "ipeds_foreign_context": {
       "type": "bar",
       "title": "IPEDS foreign-national context (DRVEF2022, UW\u2013Madison) \u2014 not destination",
@@ -17,6 +168,20 @@
         {
           "label": "RMFRGNCN (IPEDS derived)",
           "value": 801
+        }
+      ]
+    },
+    "open_doors_national_context": {
+      "type": "bar",
+      "title": "National mobility context (IIE Open Doors \u2014 U.S. totals, not UW)",
+      "data": [
+        {
+          "label": "International students in the U.S. (\u22482023/24 headline total)",
+          "value": 1106104
+        },
+        {
+          "label": "U.S. students studying abroad for credit (\u22482022/23 headline total)",
+          "value": 280782
         }
       ]
     }

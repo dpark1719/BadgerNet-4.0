@@ -2,7 +2,7 @@
   "meta": {
     "project": "BadgerNet 4.0",
     "snapshot_date": "2026-04-11",
-    "academic_year": "2023-24",
+    "academic_year": "2016\u201325 cohorts (pooled; filter years in UI)",
     "tab": "industry",
     "major_id": "economics",
     "degree_level": "undergraduate",
@@ -15,129 +15,357 @@
   "charts": {
     "by_industry": {
       "type": "bar",
-      "title": "Alumni by industry \u2014 Economics, B.A. (sample)",
+      "title": "Alumni by industry \u2014 Economics, B.A. (sample, pooled years)",
       "data": [
         {
           "label": "Banking / markets",
-          "value": 890
+          "value": 890,
+          "by_year": {
+            "2016": 63,
+            "2017": 159,
+            "2018": 42,
+            "2019": 41,
+            "2020": 70,
+            "2021": 100,
+            "2022": 174,
+            "2023": 121,
+            "2024": 46,
+            "2025": 74
+          }
         },
         {
           "label": "Consulting",
-          "value": 620
+          "value": 620,
+          "by_year": {
+            "2016": 89,
+            "2017": 36,
+            "2018": 72,
+            "2019": 93,
+            "2020": 36,
+            "2021": 52,
+            "2022": 37,
+            "2023": 81,
+            "2024": 64,
+            "2025": 60
+          }
         },
         {
           "label": "Government / policy",
-          "value": 410
+          "value": 410,
+          "by_year": {
+            "2016": 15,
+            "2017": 46,
+            "2018": 19,
+            "2019": 50,
+            "2020": 59,
+            "2021": 58,
+            "2022": 53,
+            "2023": 37,
+            "2024": 20,
+            "2025": 53
+          }
         },
         {
           "label": "Tech",
-          "value": 380
+          "value": 380,
+          "by_year": {
+            "2016": 34,
+            "2017": 21,
+            "2018": 25,
+            "2019": 50,
+            "2020": 54,
+            "2021": 14,
+            "2022": 66,
+            "2023": 45,
+            "2024": 16,
+            "2025": 55
+          }
         },
         {
           "label": "Other",
-          "value": 720
+          "value": 720,
+          "by_year": {
+            "2016": 93,
+            "2017": 63,
+            "2018": 49,
+            "2019": 84,
+            "2020": 34,
+            "2021": 59,
+            "2022": 93,
+            "2023": 87,
+            "2024": 77,
+            "2025": 81
+          }
         }
       ]
     },
     "top_employers": {
       "type": "bar",
-      "title": "Top employers \u2014 Economics, B.A. (sample)",
+      "title": "Top employers \u2014 Economics, B.A. (sample, pooled years)",
       "data": [
         {
           "label": "Goldman Sachs",
-          "value": 95
+          "value": 95,
+          "by_year": {
+            "2016": 6,
+            "2017": 5,
+            "2018": 7,
+            "2019": 12,
+            "2020": 16,
+            "2021": 9,
+            "2022": 10,
+            "2023": 16,
+            "2024": 4,
+            "2025": 10
+          }
         },
         {
           "label": "McKinsey",
-          "value": 72
+          "value": 72,
+          "by_year": {
+            "2016": 9,
+            "2017": 9,
+            "2018": 5,
+            "2019": 7,
+            "2020": 4,
+            "2021": 9,
+            "2022": 8,
+            "2023": 6,
+            "2024": 11,
+            "2025": 4
+          }
         },
         {
           "label": "JPMorgan Chase",
-          "value": 88
+          "value": 88,
+          "by_year": {
+            "2016": 9,
+            "2017": 12,
+            "2018": 8,
+            "2019": 12,
+            "2020": 8,
+            "2021": 6,
+            "2022": 7,
+            "2023": 10,
+            "2024": 10,
+            "2025": 6
+          }
         },
         {
           "label": "Federal Reserve",
-          "value": 48
+          "value": 48,
+          "by_year": {
+            "2016": 5,
+            "2017": 5,
+            "2018": 6,
+            "2019": 3,
+            "2020": 8,
+            "2021": 1,
+            "2022": 4,
+            "2023": 5,
+            "2024": 7,
+            "2025": 4
+          }
         },
         {
           "label": "Deloitte",
-          "value": 76
+          "value": 76,
+          "by_year": {
+            "2016": 8,
+            "2017": 4,
+            "2018": 10,
+            "2019": 5,
+            "2020": 9,
+            "2021": 7,
+            "2022": 7,
+            "2023": 10,
+            "2024": 11,
+            "2025": 5
+          }
         },
         {
           "label": "Other",
-          "value": 1640
+          "value": 1640,
+          "by_year": {
+            "2016": 244,
+            "2017": 103,
+            "2018": 82,
+            "2019": 78,
+            "2020": 287,
+            "2021": 69,
+            "2022": 157,
+            "2023": 157,
+            "2024": 247,
+            "2025": 216
+          }
         }
       ]
     },
     "career_flow": {
       "type": "sankey",
-      "title": "Common pathways \u2014 Economics, B.A. (synthetic flow)",
+      "title": "Illustrative job stages \u2014 Economics, B.A. (sample, not real counts)",
       "nodes": [
         {
           "id": "e_ra",
-          "label": "Early \u2014 research / analyst intern"
+          "label": "Summer internship (research or data)"
         },
         {
           "id": "e_analyst",
-          "label": "Early \u2014 analyst"
+          "label": "Analyst \u2014 first full-time job"
         },
         {
           "id": "e_assoc",
-          "label": "Mid \u2014 associate"
+          "label": "Associate (banking, consulting, etc.)"
         },
         {
           "id": "e_vp",
-          "label": "Senior \u2014 VP / principal"
+          "label": "Vice president or principal"
         },
         {
           "id": "e_policy",
-          "label": "Mid \u2014 policy / PhD track"
+          "label": "Policy or graduate-school track"
         },
         {
           "id": "e_partner",
-          "label": "Senior \u2014 partner / director"
+          "label": "Partner or senior director"
         }
       ],
       "links": [
         {
           "source": "e_ra",
           "target": "e_analyst",
-          "value": 520
+          "value": 520,
+          "by_year": {
+            "2016": 70,
+            "2017": 53,
+            "2018": 71,
+            "2019": 69,
+            "2020": 27,
+            "2021": 36,
+            "2022": 52,
+            "2023": 47,
+            "2024": 73,
+            "2025": 22
+          }
         },
         {
           "source": "e_ra",
           "target": "e_policy",
-          "value": 180
+          "value": 180,
+          "by_year": {
+            "2016": 6,
+            "2017": 25,
+            "2018": 25,
+            "2019": 9,
+            "2020": 26,
+            "2021": 11,
+            "2022": 19,
+            "2023": 18,
+            "2024": 15,
+            "2025": 26
+          }
         },
         {
           "source": "e_analyst",
           "target": "e_assoc",
-          "value": 640
+          "value": 640,
+          "by_year": {
+            "2016": 33,
+            "2017": 76,
+            "2018": 53,
+            "2019": 41,
+            "2020": 50,
+            "2021": 103,
+            "2022": 70,
+            "2023": 42,
+            "2024": 90,
+            "2025": 82
+          }
         },
         {
           "source": "e_analyst",
           "target": "e_policy",
-          "value": 120
+          "value": 120,
+          "by_year": {
+            "2016": 11,
+            "2017": 7,
+            "2018": 17,
+            "2019": 16,
+            "2020": 14,
+            "2021": 17,
+            "2022": 4,
+            "2023": 9,
+            "2024": 9,
+            "2025": 16
+          }
         },
         {
           "source": "e_assoc",
           "target": "e_vp",
-          "value": 280
+          "value": 280,
+          "by_year": {
+            "2016": 30,
+            "2017": 16,
+            "2018": 23,
+            "2019": 24,
+            "2020": 23,
+            "2021": 31,
+            "2022": 30,
+            "2023": 32,
+            "2024": 39,
+            "2025": 32
+          }
         },
         {
           "source": "e_assoc",
           "target": "e_partner",
-          "value": 95
+          "value": 95,
+          "by_year": {
+            "2016": 11,
+            "2017": 13,
+            "2018": 10,
+            "2019": 7,
+            "2020": 12,
+            "2021": 15,
+            "2022": 10,
+            "2023": 5,
+            "2024": 7,
+            "2025": 5
+          }
         },
         {
           "source": "e_policy",
           "target": "e_vp",
-          "value": 140
+          "value": 140,
+          "by_year": {
+            "2016": 5,
+            "2017": 20,
+            "2018": 20,
+            "2019": 16,
+            "2020": 12,
+            "2021": 10,
+            "2022": 18,
+            "2023": 20,
+            "2024": 10,
+            "2025": 9
+          }
         },
         {
           "source": "e_vp",
           "target": "e_partner",
-          "value": 160
+          "value": 160,
+          "by_year": {
+            "2016": 9,
+            "2017": 26,
+            "2018": 25,
+            "2019": 13,
+            "2020": 25,
+            "2021": 11,
+            "2022": 8,
+            "2023": 15,
+            "2024": 14,
+            "2025": 14
+          }
         }
       ]
     },

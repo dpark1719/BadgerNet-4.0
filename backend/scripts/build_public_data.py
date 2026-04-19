@@ -2,7 +2,7 @@
 """
 Run public, no-login data fetches that populate frontend JSON.
 
-  python build_public_data.py              # IPEDS origins + international proxy + Wikidata notable
+  python build_public_data.py              # Full pipeline
   python build_public_data.py --skip-wikidata
   python build_public_data.py --only ipeds_origins
 
@@ -21,31 +21,52 @@ PY = sys.executable
 SCRIPTS = ROOT / "backend" / "scripts"
 
 
-def run(name: str) -> None:
-    path = SCRIPTS / name
-    print(f"\n=== {name} ===")
-    subprocess.run([PY, str(path)], check=True)
+def run(script: str, *argv: str) -> None:
+    path = SCRIPTS / script
+    print(f"\n=== {script} {' '.join(argv)} ===")
+    subprocess.run([PY, str(path), *argv], check=True)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--only",
-        choices=("ipeds_origins", "ipeds_intl", "wikidata", "all"),
+        choices=(
+            "ipeds_origins",
+            "ipeds_intl",
+            "wikidata",
+            "outcomes",
+            "openalex",
+            "sources_index",
+            "all",
+        ),
         default="all",
     )
     ap.add_argument("--skip-wikidata", action="store_true")
     args = ap.parse_args()
 
-    if args.only in ("all", "ipeds_origins"):
-        run("build_origins_ipeds.py")
-    if args.only in ("all", "ipeds_intl"):
+    only = args.only
+    full = only == "all"
+
+    if full or only == "ipeds_origins":
+        run(
+            "build_origins_ipeds.py",
+            "--years",
+            "2019,2020,2021,2022",
+        )
+    if full or only == "ipeds_intl":
         run("build_international_proxy.py")
-    if args.only == "all" and not args.skip_wikidata:
+    if full or only == "outcomes":
+        run("build_outcomes_scorecard.py")
+    if full or only == "openalex":
+        run("build_openalex_research.py")
+    if only == "wikidata" or (full and not args.skip_wikidata):
         run("fetch_wikidata_notable.py")
+    if full or only == "sources_index":
+        run("build_sources_index.py")
 
     print("\nDone. Optional next steps:")
-    print("  COLLEGE_SCORECARD_API_KEY=… python backend/scripts/fetch_college_scorecard.py")
+    print("  COLLEGE_SCORECARD_API_KEY=… python backend/scripts/build_outcomes_scorecard.py")
     print("  python backend/scripts/ingest_uw_postgrad.py --csv path/to/fds.csv")
     print("  python backend/scripts/ingest_international_destinations_csv.py --csv path/to/countries.csv")
     print("  python backend/scripts/ingest_industry_uw_csv.py --csv path/to/industry_bars.csv")

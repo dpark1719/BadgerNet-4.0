@@ -31,6 +31,7 @@ from backend.lib.notable_enrichment import (  # noqa: E402
     fetch_wikipedia_summary,
     infer_achievement_from_text,
     photo_url_from_summary,
+    short_bio_from_summary,
 )
 
 OUT = ROOT / "frontend" / "public" / "data" / "notable.json"
@@ -100,7 +101,8 @@ def main() -> None:
         img_binding = b.get("image", {}).get("value", "").strip()
         wd_photo = commons_image_thumb(img_binding, 160) if img_binding else None
 
-        role_title = "Notable person (Wikidata: educated at UW–Madison)"
+        fallback_role = "Notable person (Wikidata: educated at UW–Madison)"
+        role_title = fallback_role
         organization = "—"
         summary = None
         photo_url = wd_photo
@@ -111,6 +113,10 @@ def main() -> None:
             summary = fetch_wikipedia_summary(session, wp, pause_s=args.thumb_delay)
             if not photo_url and summary:
                 photo_url = photo_url_from_summary(summary)
+            if summary:
+                bio = short_bio_from_summary(summary)
+                if bio:
+                    role_title = bio
             ach_url, ach_label = infer_achievement_from_text(
                 role_title, organization, summary
             )

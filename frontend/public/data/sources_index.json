@@ -1,0 +1,141 @@
+{
+  "snapshot_date": "2026-04-19",
+  "bundles": [
+    {
+      "tab_id": "data_sources",
+      "label": "Data catalog (this page)",
+      "relative_path": "",
+      "snapshot_date": null,
+      "source": null,
+      "methodology": "Self-index for this app: each row points to a JSON bundle (or special tab). Use URL query `?tab=` and `?years=` to deep-link views.",
+      "disclaimer": null,
+      "file_exists": true
+    },
+    {
+      "tab_id": "industry",
+      "label": "Industry",
+      "relative_path": "industry.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups. The \u201cpublic spotlight\u201d chart is a **hand-curated demo** of how you might surface employers named in UW news or annual reports \u2014 not inferred from private profiles.",
+      "disclaimer": "Not real UW\u2013Madison statistics.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "postgrad",
+      "label": "Post-grad education",
+      "relative_path": "postgrad.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic continuation rate, credential-type mix, trend, and **illustrative** grad/PhD destination counts (not a real UW tabulation). Replace with First Destination Survey or other UW-published tables.",
+      "disclaimer": "Not from an official first-destination survey. Institution list is demo-only until you import real FDS / outcomes data.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "international",
+      "label": "International outcomes",
+      "relative_path": "international.json",
+      "snapshot_date": "2026-04-19",
+      "source": "mixed",
+      "methodology": "**Post-graduation destinations (sample):** The chart \u201cWhere alumni went after UW\u201d is a synthetic multi-year aggregate by country for UI demonstration only \u2014 not official UW migration or placement statistics. Replace via `ingest_international_destinations_csv.py` with your LinkedIn or survey roll-up. **IPEDS context:** DRVEF2022 field RMFRGNCN counts nonresident foreign students in derived fall enrollment \u2014 **not** where graduates moved after completing their program. **Open Doors context:** Rounded U.S.-level totals published by IIE Open Doors (https://opendoorsdata.org/) for scale only \u2014 not UW-specific enrollment or mobility.",
+      "disclaimer": "The destination-country chart is illustrative demo data. The IPEDS bar is enrollment-related only, not career geography. Open Doors bars are national-level IIE aggregates \u2014 not UW counts. Do not sum or compare cohorts across these charts as one population.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "world_map",
+      "label": "World map (overlay)",
+      "relative_path": "map_destinations.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic destination mix for the World map tab only. Not tied to the IPEDS bar on the International tab.",
+      "disclaimer": "Illustrative flows for UI development. The \u201cOther\u201d bucket is not drawn as a single map point.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "visualize",
+      "label": "Visualize",
+      "relative_path": "vizualive.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic hierarchical cohort for the Vizualive bubble UI only. Each root\u2019s `count` equals the sum of its `children`. Replace with verified path rollups from UW surveys or reviewed LinkedIn aggregates.",
+      "disclaimer": "Not a census; paths like \u201cUW undergrad \u2192 M.S. at Georgia Tech\u201d are illustrative splits for UX testing.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "notable_alumni",
+      "label": "Notable alumni",
+      "relative_path": "notable.json",
+      "snapshot_date": "2026-04-11",
+      "source": "wikidata",
+      "methodology": "SPARQL against Wikidata: entities with P69 (educated at) = Q838330 (UW\u2013Madison), with an English Wikipedia sitelink. Optional P18 image; Wikipedia REST summary for missing photos and for achievement badges (Nobel, founder, etc.) inferred from lead text. Not vetted for graduation or degree type; verify each source.",
+      "disclaimer": "Automated list from Wikidata \u2014 not an official UW ranking, incomplete, and may include faculty or short-term attendees. Photos are Commons/Wikipedia-sourced; verify licensing for reuse.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "origins_undergrad",
+      "label": "Origins \u2014 Undergraduate",
+      "relative_path": "origins_undergrad.json",
+      "snapshot_date": "2026-04-19",
+      "source": "ipeds",
+      "methodology": "US states: IPEDS Fall Enrollment EF2019C\u2013EF2022C (one slice per fall collection year), residence of first-time degree/certificate-seeking undergraduate students (freshmen cohort), UNITID 240444. Each `by_year` key is the EF collection year (e.g. 2022 = EF2022C). Foreign row (EFCSTATE 90): aggregated count only \u2014 IPEDS does not break out country here.",
+      "disclaimer": "These are official IPEDS counts for the EF cohort definition above, not all UW undergraduates. Do not sum with other charts as a full enrollment census.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "origins_graduate",
+      "label": "Origins \u2014 Graduate",
+      "relative_path": "origins_graduate.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic US state + country origin for graduate enrollment. Production: IPEDS Fall Enrollment / CDS by level (UnitID 240444 = UW\u2013Madison).",
+      "disclaimer": "Not official IPEDS figures; for UI development only.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "origins_doctorate",
+      "label": "Origins \u2014 Doctorate",
+      "relative_path": "origins_doctorate.json",
+      "snapshot_date": "2026-04-11",
+      "source": "sample",
+      "methodology": "Synthetic US state + country origin for doctorate enrollment. Production: IPEDS Fall Enrollment / CDS by level (UnitID 240444 = UW\u2013Madison).",
+      "disclaimer": "Not official IPEDS figures; for UI development only.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "outcomes_scorecard",
+      "label": "Peer outcomes (Scorecard)",
+      "relative_path": "outcomes_scorecard.json",
+      "snapshot_date": "2026-04-19",
+      "source": "static_fallback",
+      "methodology": "Illustrative peer table for UI when COLLEGE_SCORECARD_API_KEY is not set. Numbers are rounded public-style benchmarks \u2014 not a live API pull. Set COLLEGE_SCORECARD_API_KEY and re-run this script for current Scorecard values.",
+      "disclaimer": "Not UW internal career analytics. Earnings reflect institution-level Scorecard cohorts, not starting salary by major.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "research_openalex",
+      "label": "Research footprint (OpenAlex)",
+      "relative_path": "research_openalex.json",
+      "snapshot_date": "2026-04-19",
+      "source": "openalex_static_fallback",
+      "methodology": "Illustrative peer-scale numbers for UI when the OpenAlex API cannot be reached (SSL, offline, or rate limits). Re-run this script on a machine with working TLS to pull live OpenAlex institution entities.",
+      "disclaimer": "Fallback values are order-of-magnitude placeholders \u2014 not live OpenAlex pulls.",
+      "file_exists": true
+    },
+    {
+      "tab_id": "rankings",
+      "label": "Rankings (hub)",
+      "relative_path": "rankings.json",
+      "snapshot_date": "2026-04-19",
+      "source": "wikidata_ipeds",
+      "methodology": "Single bundle for the Rankings tab. Institution tables use Wikidata `P1352` with `P459` = QS World University Rankings (Q1790510) and ARWU / Shanghai (Q478743), taking the latest qualifier year per edition. **Global** deliberately includes non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** are filtered views of the same metrics on subsets of that peer list (see `country`, `us`, and `public` flags in harvest_rankings.py). Majors: IPEDS C2024_A completions by CIP for UNITID 240444; optional `data/raw/major_ranks.csv` merges publisher ranks.",
+      "disclaimer": "Wikidata ranks are community-sourced and may disagree with official publisher tables. Verify before citing. IPEDS counts are administrative completions, not program quality ranks.",
+      "file_exists": true
+    }
+  ],
+  "notes": [
+    "Major slices live under data/majors/*.json (Industry tab only).",
+    "Run fetch_wikidata_notable.py to refresh notable.json.",
+    "IPEDS builders: build_origins_ipeds.py, build_international_proxy.py.",
+    "Rankings: run backend/scripts/harvest_rankings.py (Wikidata + IPEDS)."
+  ]
+}

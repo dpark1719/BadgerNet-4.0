@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "tab": "research_openalex",
+    "snapshot_date": "2026-04-19",
+    "degree_level": "all",
+    "source": "openalex_static_fallback",
+    "source_url": "https://openalex.org/",
+    "methodology": "Illustrative peer-scale numbers for UI when the OpenAlex API cannot be reached (SSL, offline, or rate limits). Re-run this script on a machine with working TLS to pull live OpenAlex institution entities.",
+    "disclaimer": "Fallback values are order-of-magnitude placeholders \u2014 not live OpenAlex pulls."
+  },
+  "charts": {
+    "works_count_peer_bar": {
+      "type": "bar",
+      "title": "Indexed works (OpenAlex institution entity)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 241000
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 198000
+        },
+        {
+          "label": "U of Michigan",
+          "value": 312000
+        },
+        {
+          "label": "UIUC",
+          "value": 225000
+        },
+        {
+          "label": "Ohio State",
+          "value": 205000
+        },
+        {
+          "label": "Penn State",
+          "value": 189000
+        }
+      ]
+    },
+    "cited_by_count_peer_bar": {
+      "type": "bar",
+      "title": "Cited-by count (OpenAlex institution aggregate)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 4200000
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 3100000
+        },
+        {
+          "label": "U of Michigan",
+          "value": 6100000
+        },
+        {
+          "label": "UIUC",
+          "value": 3800000
+        },
+        {
+          "label": "Ohio State",
+          "value": 3400000
+        },
+        {
+          "label": "Penn State",
+          "value": 2900000
+        }
+      ]
+    },
+    "works_share_uw": {
+      "type": "metric",
+      "title": "UW\u2013Madison share of peer group \u2014 indexed works",
+      "value": 17.59,
+      "unit": "percent"
+    },
+    "citations_per_work_proxy": {
+      "type": "bar",
+      "title": "Citations per work (cited_by_count / works_count)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 17.43
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 15.66
+        },
+        {
+          "label": "U of Michigan",
+          "value": 19.55
+        },
+        {
+          "label": "UIUC",
+          "value": 16.89
+        },
+        {
+          "label": "Ohio State",
+          "value": 16.59
+        },
+        {
+          "label": "Penn State",
+          "value": 15.34
+        }
+      ]
+    }
+  }
+}

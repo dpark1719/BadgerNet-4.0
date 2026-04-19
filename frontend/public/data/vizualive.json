@@ -59,7 +59,7 @@
         {
           "id": "job_tech",
           "label": "Technology",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 520,
           "children": [
             {
@@ -88,35 +88,35 @@
         {
           "id": "job_health",
           "label": "Healthcare",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 410,
           "children": []
         },
         {
           "id": "job_finance",
           "label": "Finance",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 320,
           "children": []
         },
         {
           "id": "job_edu",
           "label": "Education",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 240,
           "children": []
         },
         {
           "id": "job_mfg",
           "label": "Manufacturing",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 180,
           "children": []
         },
         {
           "id": "job_other",
           "label": "Other industries",
-          "subtitle": "First destination bucket",
+          "subtitle": "Broad industry for first job after school (demo)",
           "count": 340,
           "children": []
         }

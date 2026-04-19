@@ -2,74 +2,462 @@
   "meta": {
     "project": "BadgerNet 4.0",
     "snapshot_date": "2026-04-11",
-    "academic_year": "2023-24",
+    "academic_year": "2016\u201325 cohorts (pooled; filter years in UI)",
     "tab": "postgrad",
     "degree_level": "all",
     "source": "sample",
-    "source_url": "https://data.wisc.edu/first-destination-survey/",
     "methodology": "Synthetic continuation rate, credential-type mix, trend, and **illustrative** grad/PhD destination counts (not a real UW tabulation). Replace with First Destination Survey or other UW-published tables.",
-    "disclaimer": "Not from an official first-destination survey. Institution list is demo-only until you import real FDS / outcomes data via ingest_uw_postgrad.py."
+    "disclaimer": "Not from an official first-destination survey. Institution list is demo-only until you import real FDS / outcomes data."
   },
   "charts": {
     "continuation_rate": {
       "type": "metric",
       "title": "Continuing formal education within 1 year (sample)",
       "value": 22.4,
-      "unit": "percent"
+      "unit": "percent",
+      "by_year": {
+        "2016": 20.57,
+        "2017": 23.68,
+        "2018": 22.18,
+        "2019": 22.0,
+        "2020": 20.34,
+        "2021": 20.9,
+        "2022": 25.27,
+        "2023": 20.75,
+        "2024": 24.25,
+        "2025": 24.06
+      }
     },
     "continuation_trend": {
       "type": "trend",
       "title": "Continuing education rate \u2014 synthetic (% of cohort)",
       "x_key": "year",
       "data": [
-        { "year": 2016, "w1y": 19.5, "w5y": 20.1, "w10y": 21.0 },
-        { "year": 2017, "w1y": 19.75, "w5y": 20.32, "w10y": 21.18 },
-        { "year": 2018, "w1y": 20.0, "w5y": 20.54, "w10y": 21.36 },
-        { "year": 2019, "w1y": 20.25, "w5y": 20.76, "w10y": 21.54 },
-        { "year": 2020, "w1y": 20.5, "w5y": 20.98, "w10y": 21.72 },
-        { "year": 2021, "w1y": 20.75, "w5y": 21.2, "w10y": 21.9 },
-        { "year": 2022, "w1y": 21.0, "w5y": 21.42, "w10y": 22.08 },
-        { "year": 2023, "w1y": 21.25, "w5y": 21.64, "w10y": 22.26 },
-        { "year": 2024, "w1y": 21.5, "w5y": 21.86, "w10y": 22.44 },
-        { "year": 2025, "w1y": 21.75, "w5y": 22.08, "w10y": 22.62 }
+        {
+          "year": 2016,
+          "w1y": 19.5,
+          "w5y": 20.1,
+          "w10y": 21.0
+        },
+        {
+          "year": 2017,
+          "w1y": 19.75,
+          "w5y": 20.32,
+          "w10y": 21.18
+        },
+        {
+          "year": 2018,
+          "w1y": 20.0,
+          "w5y": 20.54,
+          "w10y": 21.36
+        },
+        {
+          "year": 2019,
+          "w1y": 20.25,
+          "w5y": 20.76,
+          "w10y": 21.54
+        },
+        {
+          "year": 2020,
+          "w1y": 20.5,
+          "w5y": 20.98,
+          "w10y": 21.72
+        },
+        {
+          "year": 2021,
+          "w1y": 20.75,
+          "w5y": 21.2,
+          "w10y": 21.9
+        },
+        {
+          "year": 2022,
+          "w1y": 21.0,
+          "w5y": 21.42,
+          "w10y": 22.08
+        },
+        {
+          "year": 2023,
+          "w1y": 21.25,
+          "w5y": 21.64,
+          "w10y": 22.26
+        },
+        {
+          "year": 2024,
+          "w1y": 21.5,
+          "w5y": 21.86,
+          "w10y": 22.44
+        },
+        {
+          "year": 2025,
+          "w1y": 21.75,
+          "w5y": 22.08,
+          "w10y": 22.62
+        }
       ],
       "series": [
-        { "dataKey": "w1y", "label": "1-year window", "color": "#c5050c" },
-        { "dataKey": "w5y", "label": "5-year window", "color": "#1e3a8a" },
-        { "dataKey": "w10y", "label": "10-year window", "color": "#047857" }
+        {
+          "dataKey": "w1y",
+          "label": "1-year window",
+          "color": "#c5050c"
+        },
+        {
+          "dataKey": "w5y",
+          "label": "5-year window",
+          "color": "#1e3a8a"
+        },
+        {
+          "dataKey": "w10y",
+          "label": "10-year window",
+          "color": "#047857"
+        }
       ]
     },
     "by_degree_type": {
       "type": "bar",
-      "title": "Next credential type (sample)",
+      "title": "Next credential type (sample, pooled years)",
       "data": [
-        { "label": "Master\u2019s", "value": 890 },
-        { "label": "Doctorate", "value": 210 },
-        { "label": "Professional (JD/MD/MBA)", "value": 140 },
-        { "label": "Certificate / other", "value": 95 }
+        {
+          "label": "Master\u2019s",
+          "value": 890,
+          "by_year": {
+            "2016": 99,
+            "2017": 38,
+            "2018": 57,
+            "2019": 130,
+            "2020": 70,
+            "2021": 81,
+            "2022": 54,
+            "2023": 154,
+            "2024": 126,
+            "2025": 81
+          }
+        },
+        {
+          "label": "Doctorate",
+          "value": 210,
+          "by_year": {
+            "2016": 32,
+            "2017": 23,
+            "2018": 9,
+            "2019": 31,
+            "2020": 24,
+            "2021": 9,
+            "2022": 15,
+            "2023": 12,
+            "2024": 25,
+            "2025": 30
+          }
+        },
+        {
+          "label": "Professional (JD/MD/MBA)",
+          "value": 140,
+          "by_year": {
+            "2016": 10,
+            "2017": 13,
+            "2018": 15,
+            "2019": 14,
+            "2020": 18,
+            "2021": 13,
+            "2022": 14,
+            "2023": 15,
+            "2024": 11,
+            "2025": 17
+          }
+        },
+        {
+          "label": "Certificate / other",
+          "value": 95,
+          "by_year": {
+            "2016": 15,
+            "2017": 4,
+            "2018": 11,
+            "2019": 10,
+            "2020": 5,
+            "2021": 17,
+            "2022": 15,
+            "2023": 4,
+            "2024": 5,
+            "2025": 9
+          }
+        }
       ]
     },
     "grad_phd_destinations": {
       "type": "bar",
       "title": "Further study \u2014 sample grad / PhD destinations (illustrative counts)",
       "data": [
-        { "label": "UW\u2013Madison (continuing)", "value": 612 },
-        { "label": "University of Michigan", "value": 198 },
-        { "label": "Northwestern University", "value": 156 },
-        { "label": "University of Chicago", "value": 134 },
-        { "label": "MIT", "value": 112 },
-        { "label": "Stanford University", "value": 98 },
-        { "label": "Harvard University", "value": 92 },
-        { "label": "UC Berkeley", "value": 88 },
-        { "label": "Cornell University", "value": 76 },
-        { "label": "Georgia Institute of Technology", "value": 71 },
-        { "label": "Johns Hopkins University", "value": 64 },
-        { "label": "Duke University", "value": 58 },
-        { "label": "UCLA", "value": 54 },
-        { "label": "University of Minnesota", "value": 49 },
-        { "label": "University of Illinois Urbana-Champaign", "value": 45 },
-        { "label": "University of Wisconsin Medical School (MD)", "value": 41 },
-        { "label": "Other / not specified", "value": 520 }
+        {
+          "label": "UW\u2013Madison (continuing)",
+          "value": 612,
+          "by_year": {
+            "2016": 67,
+            "2017": 72,
+            "2018": 78,
+            "2019": 70,
+            "2020": 21,
+            "2021": 74,
+            "2022": 48,
+            "2023": 52,
+            "2024": 67,
+            "2025": 63
+          }
+        },
+        {
+          "label": "University of Michigan",
+          "value": 198,
+          "by_year": {
+            "2016": 20,
+            "2017": 21,
+            "2018": 27,
+            "2019": 27,
+            "2020": 27,
+            "2021": 20,
+            "2022": 24,
+            "2023": 17,
+            "2024": 10,
+            "2025": 5
+          }
+        },
+        {
+          "label": "Northwestern University",
+          "value": 156,
+          "by_year": {
+            "2016": 6,
+            "2017": 23,
+            "2018": 6,
+            "2019": 21,
+            "2020": 20,
+            "2021": 21,
+            "2022": 17,
+            "2023": 17,
+            "2024": 8,
+            "2025": 17
+          }
+        },
+        {
+          "label": "University of Chicago",
+          "value": 134,
+          "by_year": {
+            "2016": 7,
+            "2017": 9,
+            "2018": 8,
+            "2019": 21,
+            "2020": 21,
+            "2021": 16,
+            "2022": 9,
+            "2023": 20,
+            "2024": 19,
+            "2025": 4
+          }
+        },
+        {
+          "label": "MIT",
+          "value": 112,
+          "by_year": {
+            "2016": 6,
+            "2017": 12,
+            "2018": 14,
+            "2019": 12,
+            "2020": 4,
+            "2021": 9,
+            "2022": 13,
+            "2023": 16,
+            "2024": 10,
+            "2025": 16
+          }
+        },
+        {
+          "label": "Stanford University",
+          "value": 98,
+          "by_year": {
+            "2016": 18,
+            "2017": 7,
+            "2018": 9,
+            "2019": 5,
+            "2020": 5,
+            "2021": 9,
+            "2022": 9,
+            "2023": 9,
+            "2024": 17,
+            "2025": 10
+          }
+        },
+        {
+          "label": "Harvard University",
+          "value": 92,
+          "by_year": {
+            "2016": 11,
+            "2017": 4,
+            "2018": 13,
+            "2019": 15,
+            "2020": 14,
+            "2021": 6,
+            "2022": 13,
+            "2023": 9,
+            "2024": 3,
+            "2025": 4
+          }
+        },
+        {
+          "label": "UC Berkeley",
+          "value": 88,
+          "by_year": {
+            "2016": 6,
+            "2017": 12,
+            "2018": 4,
+            "2019": 8,
+            "2020": 15,
+            "2021": 6,
+            "2022": 11,
+            "2023": 5,
+            "2024": 10,
+            "2025": 11
+          }
+        },
+        {
+          "label": "Cornell University",
+          "value": 76,
+          "by_year": {
+            "2016": 9,
+            "2017": 13,
+            "2018": 8,
+            "2019": 12,
+            "2020": 5,
+            "2021": 9,
+            "2022": 10,
+            "2023": 4,
+            "2024": 2,
+            "2025": 4
+          }
+        },
+        {
+          "label": "Georgia Institute of Technology",
+          "value": 71,
+          "by_year": {
+            "2016": 6,
+            "2017": 4,
+            "2018": 6,
+            "2019": 9,
+            "2020": 10,
+            "2021": 8,
+            "2022": 10,
+            "2023": 2,
+            "2024": 8,
+            "2025": 8
+          }
+        },
+        {
+          "label": "Johns Hopkins University",
+          "value": 64,
+          "by_year": {
+            "2016": 9,
+            "2017": 8,
+            "2018": 8,
+            "2019": 9,
+            "2020": 9,
+            "2021": 2,
+            "2022": 8,
+            "2023": 2,
+            "2024": 7,
+            "2025": 2
+          }
+        },
+        {
+          "label": "Duke University",
+          "value": 58,
+          "by_year": {
+            "2016": 6,
+            "2017": 9,
+            "2018": 7,
+            "2019": 6,
+            "2020": 6,
+            "2021": 7,
+            "2022": 2,
+            "2023": 3,
+            "2024": 7,
+            "2025": 5
+          }
+        },
+        {
+          "label": "UCLA",
+          "value": 54,
+          "by_year": {
+            "2016": 9,
+            "2017": 6,
+            "2018": 6,
+            "2019": 6,
+            "2020": 5,
+            "2021": 7,
+            "2022": 3,
+            "2023": 3,
+            "2024": 4,
+            "2025": 5
+          }
+        },
+        {
+          "label": "University of Minnesota",
+          "value": 49,
+          "by_year": {
+            "2016": 7,
+            "2017": 6,
+            "2018": 5,
+            "2019": 4,
+            "2020": 3,
+            "2021": 2,
+            "2022": 5,
+            "2023": 6,
+            "2024": 5,
+            "2025": 6
+          }
+        },
+        {
+          "label": "University of Illinois Urbana-Champaign",
+          "value": 45,
+          "by_year": {
+            "2016": 6,
+            "2017": 7,
+            "2018": 8,
+            "2019": 5,
+            "2020": 3,
+            "2021": 4,
+            "2022": 5,
+            "2023": 1,
+            "2024": 4,
+            "2025": 2
+          }
+        },
+        {
+          "label": "University of Wisconsin Medical School (MD)",
+          "value": 41,
+          "by_year": {
+            "2016": 6,
+            "2017": 3,
+            "2018": 6,
+            "2019": 4,
+            "2020": 1,
+            "2021": 3,
+            "2022": 5,
+            "2023": 5,
+            "2024": 4,
+            "2025": 4
+          }
+        },
+        {
+          "label": "Other / not specified",
+          "value": 520,
+          "by_year": {
+            "2016": 64,
+            "2017": 64,
+            "2018": 48,
+            "2019": 42,
+            "2020": 43,
+            "2021": 62,
+            "2022": 57,
+            "2023": 43,
+            "2024": 77,
+            "2025": 20
+          }
+        }
       ]
     }
   }

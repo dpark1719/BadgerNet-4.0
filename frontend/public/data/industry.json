@@ -2,42 +2,114 @@
   "meta": {
     "project": "BadgerNet 4.0",
     "snapshot_date": "2026-04-11",
-    "academic_year": "2023-24",
+    "academic_year": "2016\u201325 cohorts (pooled; filter years in UI)",
     "tab": "industry",
     "degree_level": "all",
     "source": "sample",
     "source_url": null,
-    "methodology": "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups.",
+    "methodology": "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups. The \u201cpublic spotlight\u201d chart is a **hand-curated demo** of how you might surface employers named in UW news or annual reports \u2014 not inferred from private profiles.",
     "disclaimer": "Not real UW\u2013Madison statistics."
   },
   "charts": {
     "by_industry": {
       "type": "bar",
-      "title": "Alumni by industry (sample, latest snapshot)",
+      "title": "Alumni by industry (sample, pooled cohort years)",
       "data": [
         {
           "label": "Technology",
-          "value": 4200
+          "value": 4200,
+          "by_year": {
+            "2016": 344,
+            "2017": 351,
+            "2018": 782,
+            "2019": 259,
+            "2020": 760,
+            "2021": 383,
+            "2022": 270,
+            "2023": 311,
+            "2024": 488,
+            "2025": 252
+          }
         },
         {
           "label": "Healthcare",
-          "value": 3100
+          "value": 3100,
+          "by_year": {
+            "2016": 418,
+            "2017": 364,
+            "2018": 200,
+            "2019": 138,
+            "2020": 111,
+            "2021": 452,
+            "2022": 309,
+            "2023": 246,
+            "2024": 503,
+            "2025": 359
+          }
         },
         {
           "label": "Finance",
-          "value": 2400
+          "value": 2400,
+          "by_year": {
+            "2016": 371,
+            "2017": 99,
+            "2018": 264,
+            "2019": 204,
+            "2020": 358,
+            "2021": 234,
+            "2022": 290,
+            "2023": 84,
+            "2024": 110,
+            "2025": 386
+          }
         },
         {
           "label": "Education",
-          "value": 1900
+          "value": 1900,
+          "by_year": {
+            "2016": 296,
+            "2017": 247,
+            "2018": 68,
+            "2019": 252,
+            "2020": 77,
+            "2021": 304,
+            "2022": 80,
+            "2023": 157,
+            "2024": 176,
+            "2025": 243
+          }
         },
         {
           "label": "Manufacturing",
-          "value": 1200
+          "value": 1200,
+          "by_year": {
+            "2016": 50,
+            "2017": 108,
+            "2018": 117,
+            "2019": 138,
+            "2020": 89,
+            "2021": 165,
+            "2022": 121,
+            "2023": 105,
+            "2024": 160,
+            "2025": 147
+          }
         },
         {
           "label": "Other",
-          "value": 2800
+          "value": 2800,
+          "by_year": {
+            "2016": 455,
+            "2017": 158,
+            "2018": 364,
+            "2019": 166,
+            "2020": 474,
+            "2021": 274,
+            "2022": 192,
+            "2023": 338,
+            "2024": 176,
+            "2025": 203
+          }
         }
       ]
     },
@@ -127,111 +199,405 @@
     },
     "top_employers": {
       "type": "bar",
-      "title": "Top employers (sample, all majors)",
+      "title": "Top employers (sample, all majors, pooled years)",
       "data": [
         {
           "label": "Google",
-          "value": 890
+          "value": 890,
+          "by_year": {
+            "2016": 108,
+            "2017": 75,
+            "2018": 126,
+            "2019": 69,
+            "2020": 44,
+            "2021": 99,
+            "2022": 92,
+            "2023": 64,
+            "2024": 119,
+            "2025": 94
+          }
         },
         {
           "label": "Epic",
-          "value": 720
+          "value": 720,
+          "by_year": {
+            "2016": 44,
+            "2017": 45,
+            "2018": 99,
+            "2019": 61,
+            "2020": 73,
+            "2021": 54,
+            "2022": 78,
+            "2023": 110,
+            "2024": 122,
+            "2025": 34
+          }
         },
         {
           "label": "Microsoft",
-          "value": 610
+          "value": 610,
+          "by_year": {
+            "2016": 83,
+            "2017": 41,
+            "2018": 106,
+            "2019": 33,
+            "2020": 44,
+            "2021": 44,
+            "2022": 50,
+            "2023": 59,
+            "2024": 82,
+            "2025": 68
+          }
         },
         {
           "label": "Amazon",
-          "value": 540
+          "value": 540,
+          "by_year": {
+            "2016": 27,
+            "2017": 50,
+            "2018": 41,
+            "2019": 57,
+            "2020": 91,
+            "2021": 28,
+            "2022": 36,
+            "2023": 51,
+            "2024": 80,
+            "2025": 79
+          }
         },
         {
           "label": "UW\u2013Madison",
-          "value": 480
+          "value": 480,
+          "by_year": {
+            "2016": 34,
+            "2017": 72,
+            "2018": 53,
+            "2019": 35,
+            "2020": 27,
+            "2021": 31,
+            "2022": 78,
+            "2023": 45,
+            "2024": 70,
+            "2025": 35
+          }
         },
         {
           "label": "Deloitte",
-          "value": 390
+          "value": 390,
+          "by_year": {
+            "2016": 16,
+            "2017": 54,
+            "2018": 65,
+            "2019": 18,
+            "2020": 42,
+            "2021": 59,
+            "2022": 34,
+            "2023": 26,
+            "2024": 42,
+            "2025": 34
+          }
         },
         {
           "label": "JPMorgan Chase",
-          "value": 340
+          "value": 340,
+          "by_year": {
+            "2016": 28,
+            "2017": 47,
+            "2018": 30,
+            "2019": 48,
+            "2020": 28,
+            "2021": 38,
+            "2022": 34,
+            "2023": 20,
+            "2024": 25,
+            "2025": 42
+          }
         },
         {
           "label": "Other / unknown",
-          "value": 12000
+          "value": 12000,
+          "by_year": {
+            "2016": 2033,
+            "2017": 1372,
+            "2018": 488,
+            "2019": 1080,
+            "2020": 1011,
+            "2021": 1376,
+            "2022": 1841,
+            "2023": 488,
+            "2024": 1443,
+            "2025": 868
+          }
+        }
+      ]
+    },
+    "employer_public_spotlight": {
+      "type": "bar",
+      "title": "Employers in public UW storytelling (curated sample, not placement data)",
+      "data": [
+        {
+          "label": "Epic Systems",
+          "value": 38,
+          "by_year": {
+            "2016": 4,
+            "2017": 3,
+            "2018": 4,
+            "2019": 5,
+            "2020": 5,
+            "2021": 4,
+            "2022": 2,
+            "2023": 5,
+            "2024": 2,
+            "2025": 4
+          }
+        },
+        {
+          "label": "Google",
+          "value": 31,
+          "by_year": {
+            "2016": 4,
+            "2017": 5,
+            "2018": 3,
+            "2019": 1,
+            "2020": 4,
+            "2021": 3,
+            "2022": 3,
+            "2023": 2,
+            "2024": 4,
+            "2025": 2
+          }
+        },
+        {
+          "label": "American Family Insurance",
+          "value": 24,
+          "by_year": {
+            "2016": 4,
+            "2017": 4,
+            "2018": 3,
+            "2019": 3,
+            "2020": 1,
+            "2021": 2,
+            "2022": 1,
+            "2023": 2,
+            "2024": 2,
+            "2025": 2
+          }
+        },
+        {
+          "label": "JPMorgan Chase",
+          "value": 19,
+          "by_year": {
+            "2016": 1,
+            "2017": 1,
+            "2018": 3,
+            "2019": 1,
+            "2020": 3,
+            "2021": 3,
+            "2022": 2,
+            "2023": 1,
+            "2024": 2,
+            "2025": 2
+          }
+        },
+        {
+          "label": "GE Healthcare",
+          "value": 16,
+          "by_year": {
+            "2016": 2,
+            "2017": 2,
+            "2018": 2,
+            "2019": 3,
+            "2020": 2,
+            "2021": 1,
+            "2022": 1,
+            "2023": 1,
+            "2024": 2,
+            "2025": 0
+          }
+        },
+        {
+          "label": "Other mentions",
+          "value": 52,
+          "by_year": {
+            "2016": 7,
+            "2017": 5,
+            "2018": 8,
+            "2019": 8,
+            "2020": 8,
+            "2021": 3,
+            "2022": 3,
+            "2023": 3,
+            "2024": 1,
+            "2025": 6
+          }
         }
       ]
     },
     "career_flow": {
       "type": "sankey",
-      "title": "Synthetic career flow \u2014 all majors (early bucket \u2192 later bucket)",
+      "title": "Illustrative career stages \u2014 all majors (first job \u2192 later career)",
       "nodes": [
         {
           "id": "e_intern",
-          "label": "Early \u2014 internship"
+          "label": "Internship"
         },
         {
           "id": "e_entry",
-          "label": "Early \u2014 entry IC"
+          "label": "First job after graduation"
         },
         {
           "id": "m_ic",
-          "label": "Mid \u2014 individual contributor"
+          "label": "Mid-career: specialist (not managing people)"
         },
         {
           "id": "m_mgmt",
-          "label": "Mid \u2014 management track"
+          "label": "Mid-career: people manager"
         },
         {
           "id": "s_lead",
-          "label": "Senior \u2014 lead / principal"
+          "label": "Later career: lead or principal expert"
         },
         {
           "id": "s_exec",
-          "label": "Senior \u2014 exec / founder"
+          "label": "Later career: executive or founder"
         }
       ],
       "links": [
         {
           "source": "e_intern",
           "target": "e_entry",
-          "value": 2400
+          "value": 2400,
+          "by_year": {
+            "2016": 195,
+            "2017": 366,
+            "2018": 233,
+            "2019": 165,
+            "2020": 346,
+            "2021": 129,
+            "2022": 131,
+            "2023": 208,
+            "2024": 223,
+            "2025": 404
+          }
         },
         {
           "source": "e_intern",
           "target": "m_ic",
-          "value": 800
+          "value": 800,
+          "by_year": {
+            "2016": 111,
+            "2017": 57,
+            "2018": 120,
+            "2019": 96,
+            "2020": 103,
+            "2021": 104,
+            "2022": 44,
+            "2023": 33,
+            "2024": 77,
+            "2025": 55
+          }
         },
         {
           "source": "e_entry",
           "target": "m_ic",
-          "value": 3200
+          "value": 3200,
+          "by_year": {
+            "2016": 343,
+            "2017": 557,
+            "2018": 212,
+            "2019": 134,
+            "2020": 144,
+            "2021": 366,
+            "2022": 531,
+            "2023": 356,
+            "2024": 198,
+            "2025": 359
+          }
         },
         {
           "source": "e_entry",
           "target": "m_mgmt",
-          "value": 900
+          "value": 900,
+          "by_year": {
+            "2016": 126,
+            "2017": 126,
+            "2018": 43,
+            "2019": 75,
+            "2020": 78,
+            "2021": 76,
+            "2022": 50,
+            "2023": 85,
+            "2024": 110,
+            "2025": 131
+          }
         },
         {
           "source": "m_ic",
           "target": "s_lead",
-          "value": 1400
+          "value": 1400,
+          "by_year": {
+            "2016": 159,
+            "2017": 150,
+            "2018": 129,
+            "2019": 129,
+            "2020": 128,
+            "2021": 117,
+            "2022": 179,
+            "2023": 214,
+            "2024": 91,
+            "2025": 104
+          }
         },
         {
           "source": "m_ic",
           "target": "s_exec",
-          "value": 220
+          "value": 220,
+          "by_year": {
+            "2016": 16,
+            "2017": 12,
+            "2018": 10,
+            "2019": 36,
+            "2020": 16,
+            "2021": 12,
+            "2022": 16,
+            "2023": 35,
+            "2024": 33,
+            "2025": 34
+          }
         },
         {
           "source": "m_mgmt",
           "target": "s_exec",
-          "value": 410
+          "value": 410,
+          "by_year": {
+            "2016": 53,
+            "2017": 51,
+            "2018": 58,
+            "2019": 39,
+            "2020": 60,
+            "2021": 23,
+            "2022": 43,
+            "2023": 13,
+            "2024": 22,
+            "2025": 48
+          }
         },
         {
           "source": "m_mgmt",
           "target": "s_lead",
-          "value": 380
+          "value": 380,
+          "by_year": {
+            "2016": 20,
+            "2017": 34,
+            "2018": 44,
+            "2019": 58,
+            "2020": 59,
+            "2021": 43,
+            "2022": 63,
+            "2023": 20,
+            "2024": 17,
+            "2025": 22
+          }
         }
       ]
     }

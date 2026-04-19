@@ -1,0 +1,160 @@
+.rankings-hub {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.rankings-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  padding: 0.25rem;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.rankings-subtab {
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.rankings-subtab:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.rankings-subtab.active {
+  background: var(--bg);
+  border-color: var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.rankings-subtitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.rankings-blurb {
+  margin: 0 0 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.rankings-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.rankings-inst-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.rankings-inst-table th,
+.rankings-inst-table td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.rankings-inst-table th {
+  font-weight: 600;
+  background: var(--header-tint, rgba(0, 0, 0, 0.03));
+}
+
+.rankings-inst-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.rankings-table-note {
+  margin: 0;
+  padding: 0.5rem 0.65rem 0.65rem;
+}
+
+.rankings-context-note {
+  margin: 0 0 1.25rem;
+  max-width: 48rem;
+}
+
+.rankings-neighborhood-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.rankings-neighborhood {
+  margin: 0;
+}
+
+.rankings-neighborhood-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.rankings-neighborhood-note {
+  margin: 0 0 0.75rem;
+  line-height: 1.45;
+  max-width: 48rem;
+}
+
+.rankings-expand-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.rankings-expand-bar-below {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.rankings-expand-btn {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.rankings-expand-btn:hover:not(:disabled) {
+  background: var(--panel);
+}
+
+.rankings-expand-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.rankings-expand-hint {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.rankings-unranked-footnote {
+  margin: 0.65rem 0 0;
+  max-width: 48rem;
+}
+
+.rankings-inst-table tr.rankings-anchor-row td {
+  background: rgba(212, 168, 75, 0.12);
+  font-weight: 600;
+}

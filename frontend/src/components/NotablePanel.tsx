@@ -14,6 +14,17 @@ function resolveAchievementSrc(url: string): string {
   return publicPath(url.replace(/^\/+/, ''))
 }
 
+const WIKIDATA_GENERIC_ROLE =
+  'Notable person (Wikidata: educated at UW–Madison)'
+
+function subtitleForEntry(entry: NotableEntry): string {
+  const t = entry.short_description ?? entry.role_title
+  if (t === WIKIDATA_GENERIC_ROLE) {
+    return 'Biography summary not loaded — open Wikipedia for details.'
+  }
+  return t
+}
+
 function notabilityLabel(n: NotableEntry['notability']): string {
   switch (n) {
     case 'widely_cited':
@@ -186,27 +197,63 @@ function NotablePhotoBlock({ entry, color }: { entry: NotableEntry; color: strin
   )
 }
 
+function decadeBucket(entry: NotableEntry): string | null {
+  const raw = entry.graduation_year ?? entry.year
+  if (!raw) return null
+  const m = String(raw).match(/(\d{4})/)
+  if (!m) return null
+  const y = parseInt(m[1], 10)
+  if (y < 1800 || y > 2100) return null
+  const d = Math.floor(y / 10) * 10
+  return `${d}s`
+}
+
 export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
   const [search, setSearch] = useState('')
   const [filterField, setFilterField] = useState('all')
+  const [filterNotability, setFilterNotability] = useState<
+    'all' | NotableEntry['notability']
+  >('all')
+  const [filterDecade, setFilterDecade] = useState<string>('all')
+  const [wikipediaOnly, setWikipediaOnly] = useState(false)
 
   const allFields = Array.from(
     new Set(bundle.entries.map((e) => e.field).filter(Boolean)),
   ).sort() as string[]
 
+  const allDecades = Array.from(
+    new Set(
+      bundle.entries.map(decadeBucket).filter((d): d is string => Boolean(d)),
+    ),
+  ).sort((a, b) => a.localeCompare(b))
+
   const filtered = bundle.entries.filter((entry) => {
+    const q = search.toLowerCase()
     const matchSearch =
       !search ||
-      entry.name.toLowerCase().includes(search.toLowerCase()) ||
-      (entry.organization ?? '').toLowerCase().includes(search.toLowerCase()) ||
-      (entry.field ?? '').toLowerCase().includes(search.toLowerCase())
+      entry.name.toLowerCase().includes(q) ||
+      (entry.organization ?? '').toLowerCase().includes(q) ||
+      (entry.field ?? '').toLowerCase().includes(q) ||
+      (entry.role_title ?? '').toLowerCase().includes(q) ||
+      (entry.short_description ?? '').toLowerCase().includes(q)
     const matchField = filterField === 'all' || entry.field === filterField
-    return matchSearch && matchField
+    const matchNotability =
+      filterNotability === 'all' || entry.notability === filterNotability
+    const dec = decadeBucket(entry)
+    const matchDecade = filterDecade === 'all' || dec === filterDecade
+    const matchWiki = !wikipediaOnly || entry.source_type === 'wikipedia'
+    return (
+      matchSearch &&
+      matchField &&
+      matchNotability &&
+      matchDecade &&
+      matchWiki
+    )
   })
 
   return (
     <section className="notable-list" aria-label="Notable alumni">
-      <div className="notable-controls">
+      <div className="notable-controls notable-controls--wrap">
         <input
           type="search"
           className="notable-search"
@@ -228,6 +275,42 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
             </option>
           ))}
         </select>
+        <select
+          className="notable-filter"
+          value={filterNotability}
+          onChange={(e) => {
+            const v = e.target.value
+            if (v === 'all') setFilterNotability('all')
+            else setFilterNotability(v as NotableEntry['notability'])
+          }}
+          aria-label="Filter by notability"
+        >
+          <option value="all">All notability</option>
+          <option value="widely_cited">Widely cited</option>
+          <option value="senior_role">Senior role</option>
+          <option value="other">Other</option>
+        </select>
+        <select
+          className="notable-filter"
+          value={filterDecade}
+          onChange={(e) => setFilterDecade(e.target.value)}
+          aria-label="Filter by graduation decade"
+        >
+          <option value="all">All decades</option>
+          {allDecades.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+        <label className="notable-checkbox">
+          <input
+            type="checkbox"
+            checked={wikipediaOnly}
+            onChange={(e) => setWikipediaOnly(e.target.checked)}
+          />
+          <span>Wikipedia source only</span>
+        </label>
         <span className="notable-count muted small">
           {filtered.length} of {bundle.entries.length}
         </span>
@@ -242,7 +325,7 @@ export function NotablePanel({ bundle }: { bundle: NotableBundle }) {
                 <NotablePhotoBlock entry={entry} color={color} />
                 <div className="notable-header-text">
                   <h3 className="notable-name">{entry.name}</h3>
-                  <p className="notable-role">{entry.role_title}</p>
+                  <p className="notable-role">{subtitleForEntry(entry)}</p>
                   {entry.organization && entry.organization !== '—' && (
                     <p className="notable-org">{entry.organization}</p>
                   )}

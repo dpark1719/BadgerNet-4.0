@@ -85,6 +85,53 @@
   min-width: 14rem;
 }
 
+.year-filter {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.year-filter-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.year-filter-actions {
+  margin-bottom: 0.55rem;
+}
+
+.year-filter-all {
+  font-size: 0.82rem;
+}
+
+.year-filter-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+}
+
+.year-filter-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.year-filter-item input {
+  accent-color: #c5050c;
+}
+
+.year-filter-hint {
+  margin: 0 0 0.75rem;
+}
+
 .tabs {
   display: flex;
   flex-wrap: nowrap;
@@ -265,6 +312,24 @@
   margin-bottom: 1rem;
 }
 
+.notable-controls--wrap {
+  align-items: flex-end;
+}
+
+.notable-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-h);
+  cursor: pointer;
+  user-select: none;
+}
+
+.notable-checkbox input {
+  accent-color: var(--accent, #c5050c);
+}
+
 .notable-search {
   font: inherit;
   font-size: 0.9rem;
@@ -422,9 +487,13 @@
 
 .notable-role {
   margin: 0.15rem 0 0;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .notable-org {
@@ -561,4 +630,54 @@
 
 .footer-panel p:first-child {
   margin-top: 0;
+}
+
+.major-rankings {
+  max-width: 100%;
+}
+
+.major-rankings-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.major-rankings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.major-rankings-table th,
+.major-rankings-table td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.major-rankings-table th {
+  font-weight: 600;
+  background: var(--header-tint, rgba(0, 0, 0, 0.03));
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.major-rankings-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.major-rankings-name {
+  display: block;
+  font-weight: 500;
+}
+
+.major-rankings-cip {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
 }

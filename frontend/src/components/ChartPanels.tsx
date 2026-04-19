@@ -182,8 +182,10 @@ function SankeyPanel({ spec }: { spec: SankeyChartSpec }) {
         />
       </div>
       <p className="muted small sankey-note">
-        Flow widths are aggregate counts (or weights), not individual career
-        paths. Cap nodes/links in production ETL for readability.
+        Each flow shows how many people in this <strong>demo dataset</strong>{' '}
+        moved from one job stage to the next. Wider bands mean more people;
+        this is not a map of one person’s résumé. Real data would come from
+        surveys or employer rollups you trust.
       </p>
     </div>
   )
@@ -195,13 +197,21 @@ export function renderChart(key: string, spec: ChartSpec) {
   }
   if (spec.type === 'bar') {
     const isEmployers = key === 'top_employers'
-    const isIntlProxy = key === 'aggregate_destination_proxy'
+    const isIntlProxy =
+      key === 'aggregate_destination_proxy' ||
+      key === 'post_graduation_destination_country' ||
+      key === 'destination_country'
+    const isRankBar = key.includes('rank')
     return (
       <BarPanel
         key={key}
         spec={spec}
         valueLabel={
-          isEmployers || isIntlProxy ? 'Estimated count' : 'Count'
+          isRankBar
+            ? 'Rank (lower is better)'
+            : isEmployers || isIntlProxy
+              ? 'Estimated count'
+              : 'Count'
         }
       />
     )

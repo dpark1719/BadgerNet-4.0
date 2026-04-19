@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "project": "BadgerNet 4.0",
+    "tab": "outcomes_scorecard",
+    "snapshot_date": "2026-04-19",
+    "degree_level": "all",
+    "source": "static_fallback",
+    "source_url": "https://collegescorecard.ed.gov/",
+    "methodology": "Illustrative peer table for UI when COLLEGE_SCORECARD_API_KEY is not set. Numbers are rounded public-style benchmarks \u2014 not a live API pull. Set COLLEGE_SCORECARD_API_KEY and re-run this script for current Scorecard values.",
+    "disclaimer": "Not UW internal career analytics. Earnings reflect institution-level Scorecard cohorts, not starting salary by major."
+  },
+  "charts": {
+    "enrollment_peer_bar": {
+      "type": "bar",
+      "title": "Total student enrollment (Scorecard latest.student.size)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 47625
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 54303
+        },
+        {
+          "label": "U of Michigan",
+          "value": 50422
+        },
+        {
+          "label": "UIUC",
+          "value": 56206
+        },
+        {
+          "label": "Ohio State",
+          "value": 61244
+        },
+        {
+          "label": "Penn State (University Park)",
+          "value": 47361
+        }
+      ]
+    },
+    "completion_rate_peer_bar": {
+      "type": "bar",
+      "title": "Overall completion rate (%)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 86.2
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 81.4
+        },
+        {
+          "label": "U of Michigan",
+          "value": 93.0
+        },
+        {
+          "label": "UIUC",
+          "value": 85.5
+        },
+        {
+          "label": "Ohio State",
+          "value": 87.0
+        },
+        {
+          "label": "Penn State (University Park)",
+          "value": 85.8
+        }
+      ]
+    },
+    "median_earnings_10yr_peer_bar": {
+      "type": "bar",
+      "title": "Median earnings 10 years after entry (USD)",
+      "data": [
+        {
+          "label": "UW\u2013Madison",
+          "value": 66100
+        },
+        {
+          "label": "U of Minnesota",
+          "value": 62800
+        },
+        {
+          "label": "U of Michigan",
+          "value": 72000
+        },
+        {
+          "label": "UIUC",
+          "value": 68800
+        },
+        {
+          "label": "Ohio State",
+          "value": 62000
+        },
+        {
+          "label": "Penn State (University Park)",
+          "value": 64000
+        }
+      ]
+    }
+  }
+}

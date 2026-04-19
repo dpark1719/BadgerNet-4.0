@@ -5,7 +5,7 @@
   },
   "github_repo": "https://github.com/dpark1719/BadgerNet-4.0",
   "github_project": "https://github.com/users/dpark1719/projects/2",
-  "methodology_blurb": "This app loads static JSON from /data. Industry supports an optional major filter via /data/majors/. Tabs include Post-grad, International (including IPEDS context where present), World map (sample destination flows), Visualize (interactive path tree + force-layout bubbles), Notable alumni (Wikidata-backed entries with source_url), and three Origins levels. Career flow may use sankey aggregates; replace synthetic data with UW surveys and reviewed LinkedIn rollups in production.",
+  "methodology_blurb": "This app loads static JSON from /data. Industry supports an optional major filter via /data/majors/. Use the Data catalog tab for per-bundle methodology. Peer outcomes pulls College Scorecard institution fields (or a labeled static fallback without an API key). Research footprint uses OpenAlex institution counts. International may mix sample destinations with IPEDS enrollment context and national IIE Open Doors benchmarks. The Rankings tab loads rankings.json (Wikidata QS/ARWU + IPEDS; sub-tabs inside the view). Replace synthetic career charts with UW surveys and reviewed LinkedIn rollups in production.",
   "tabs": [
     { "id": "industry", "label": "Industry" },
     { "id": "postgrad", "label": "Post-grad education" },
@@ -15,6 +15,10 @@
     { "id": "notable_alumni", "label": "Notable alumni" },
     { "id": "origins_undergrad", "label": "Origins \u2014 Undergraduate" },
     { "id": "origins_graduate", "label": "Origins \u2014 Graduate" },
-    { "id": "origins_doctorate", "label": "Origins \u2014 Doctorate" }
+    { "id": "origins_doctorate", "label": "Origins \u2014 Doctorate" },
+    { "id": "outcomes_scorecard", "label": "Peer outcomes" },
+    { "id": "research_openalex", "label": "Research footprint" },
+    { "id": "rankings", "label": "Rankings" },
+    { "id": "data_sources", "label": "Data catalog" }
   ]
 }

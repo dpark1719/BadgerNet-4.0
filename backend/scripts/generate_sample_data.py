@@ -9,10 +9,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
+from backend.lib.cohort_year_split import (  # noqa: E402
+    YEARS,
+    bars_with_years,
+    pct_by_year,
+    sankey_links_with_years,
+)
 from backend.lib.majors_index import sync_majors_index  # noqa: E402
 OUT = ROOT / "frontend" / "public" / "data"
-
-YEARS = list(range(2016, 2026))
 
 
 def write(name: str, payload: object) -> None:
@@ -46,7 +50,7 @@ def main() -> None:
     common = {
         "project": "BadgerNet 4.0",
         "snapshot_date": "2026-04-11",
-        "academic_year": "2023-24",
+        "academic_year": "2016–25 cohorts (pooled; filter years in UI)",
     }
 
     trend_series = [
@@ -64,21 +68,28 @@ def main() -> None:
                 "degree_level": "all",
                 "source": "sample",
                 "source_url": None,
-                "methodology": "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups.",
+                "methodology": (
+                    "Synthetic counts + trends for UI development. Replace with UW survey + LinkedIn rollups. "
+                    "The “public spotlight” chart is a **hand-curated demo** of how you might surface employers "
+                    "named in UW news or annual reports — not inferred from private profiles."
+                ),
                 "disclaimer": "Not real UW–Madison statistics.",
             },
             "charts": {
                 "by_industry": {
                     "type": "bar",
-                    "title": "Alumni by industry (sample, latest snapshot)",
-                    "data": [
-                        {"label": "Technology", "value": 4200},
-                        {"label": "Healthcare", "value": 3100},
-                        {"label": "Finance", "value": 2400},
-                        {"label": "Education", "value": 1900},
-                        {"label": "Manufacturing", "value": 1200},
-                        {"label": "Other", "value": 2800},
-                    ],
+                    "title": "Alumni by industry (sample, pooled cohort years)",
+                    "data": bars_with_years(
+                        [
+                            {"label": "Technology", "value": 4200},
+                            {"label": "Healthcare", "value": 3100},
+                            {"label": "Finance", "value": 2400},
+                            {"label": "Education", "value": 1900},
+                            {"label": "Manufacturing", "value": 1200},
+                            {"label": "Other", "value": 2800},
+                        ],
+                        11_001,
+                    ),
                 },
                 "tech_share_trend": {
                     "type": "trend",
@@ -89,39 +100,60 @@ def main() -> None:
                 },
                 "top_employers": {
                     "type": "bar",
-                    "title": "Top employers (sample, all majors)",
-                    "data": [
-                        {"label": "Google", "value": 890},
-                        {"label": "Epic", "value": 720},
-                        {"label": "Microsoft", "value": 610},
-                        {"label": "Amazon", "value": 540},
-                        {"label": "UW–Madison", "value": 480},
-                        {"label": "Deloitte", "value": 390},
-                        {"label": "JPMorgan Chase", "value": 340},
-                        {"label": "Other / unknown", "value": 12000},
-                    ],
+                    "title": "Top employers (sample, all majors, pooled years)",
+                    "data": bars_with_years(
+                        [
+                            {"label": "Google", "value": 890},
+                            {"label": "Epic", "value": 720},
+                            {"label": "Microsoft", "value": 610},
+                            {"label": "Amazon", "value": 540},
+                            {"label": "UW–Madison", "value": 480},
+                            {"label": "Deloitte", "value": 390},
+                            {"label": "JPMorgan Chase", "value": 340},
+                            {"label": "Other / unknown", "value": 12000},
+                        ],
+                        12_500,
+                    ),
+                },
+                "employer_public_spotlight": {
+                    "type": "bar",
+                    "title": "Employers in public UW storytelling (curated sample, not placement data)",
+                    "data": bars_with_years(
+                        [
+                            {"label": "Epic Systems", "value": 38},
+                            {"label": "Google", "value": 31},
+                            {"label": "American Family Insurance", "value": 24},
+                            {"label": "JPMorgan Chase", "value": 19},
+                            {"label": "GE Healthcare", "value": 16},
+                            {"label": "Other mentions", "value": 52},
+                        ],
+                        12_900,
+                    ),
                 },
                 "career_flow": {
                     "type": "sankey",
-                    "title": "Synthetic career flow — all majors (early bucket → later bucket)",
+                    "title": "Illustrative career stages — all majors (first job → later career)",
                     "nodes": [
-                        {"id": "e_intern", "label": "Early — internship"},
-                        {"id": "e_entry", "label": "Early — entry IC"},
-                        {"id": "m_ic", "label": "Mid — individual contributor"},
-                        {"id": "m_mgmt", "label": "Mid — management track"},
-                        {"id": "s_lead", "label": "Senior — lead / principal"},
-                        {"id": "s_exec", "label": "Senior — exec / founder"},
+                        {"id": "e_intern", "label": "Internship"},
+                        {"id": "e_entry", "label": "First job after graduation"},
+                        {"id": "m_ic", "label": "Mid-career: specialist (not managing people)"},
+                        {"id": "m_mgmt", "label": "Mid-career: people manager"},
+                        {"id": "s_lead", "label": "Later career: lead or principal expert"},
+                        {"id": "s_exec", "label": "Later career: executive or founder"},
                     ],
-                    "links": [
-                        {"source": "e_intern", "target": "e_entry", "value": 2400},
-                        {"source": "e_intern", "target": "m_ic", "value": 800},
-                        {"source": "e_entry", "target": "m_ic", "value": 3200},
-                        {"source": "e_entry", "target": "m_mgmt", "value": 900},
-                        {"source": "m_ic", "target": "s_lead", "value": 1400},
-                        {"source": "m_ic", "target": "s_exec", "value": 220},
-                        {"source": "m_mgmt", "target": "s_exec", "value": 410},
-                        {"source": "m_mgmt", "target": "s_lead", "value": 380},
-                    ],
+                    "links": sankey_links_with_years(
+                        [
+                            {"source": "e_intern", "target": "e_entry", "value": 2400},
+                            {"source": "e_intern", "target": "m_ic", "value": 800},
+                            {"source": "e_entry", "target": "m_ic", "value": 3200},
+                            {"source": "e_entry", "target": "m_mgmt", "value": 900},
+                            {"source": "m_ic", "target": "s_lead", "value": 1400},
+                            {"source": "m_ic", "target": "s_exec", "value": 220},
+                            {"source": "m_mgmt", "target": "s_exec", "value": 410},
+                            {"source": "m_mgmt", "target": "s_lead", "value": 380},
+                        ],
+                        13_700,
+                    ),
                 },
             },
         },
@@ -151,6 +183,7 @@ def main() -> None:
                     "title": "Continuing formal education within 1 year (sample)",
                     "value": 22.4,
                     "unit": "percent",
+                    "by_year": pct_by_year(22.4, 88_001),
                 },
                 "continuation_trend": {
                     "type": "trend",
@@ -161,36 +194,42 @@ def main() -> None:
                 },
                 "by_degree_type": {
                     "type": "bar",
-                    "title": "Next credential type (sample)",
-                    "data": [
-                        {"label": "Master’s", "value": 890},
-                        {"label": "Doctorate", "value": 210},
-                        {"label": "Professional (JD/MD/MBA)", "value": 140},
-                        {"label": "Certificate / other", "value": 95},
-                    ],
+                    "title": "Next credential type (sample, pooled years)",
+                    "data": bars_with_years(
+                        [
+                            {"label": "Master’s", "value": 890},
+                            {"label": "Doctorate", "value": 210},
+                            {"label": "Professional (JD/MD/MBA)", "value": 140},
+                            {"label": "Certificate / other", "value": 95},
+                        ],
+                        14_100,
+                    ),
                 },
                 "grad_phd_destinations": {
                     "type": "bar",
                     "title": "Further study — sample grad / PhD destinations (illustrative counts)",
-                    "data": [
-                        {"label": "UW–Madison (continuing)", "value": 612},
-                        {"label": "University of Michigan", "value": 198},
-                        {"label": "Northwestern University", "value": 156},
-                        {"label": "University of Chicago", "value": 134},
-                        {"label": "MIT", "value": 112},
-                        {"label": "Stanford University", "value": 98},
-                        {"label": "Harvard University", "value": 92},
-                        {"label": "UC Berkeley", "value": 88},
-                        {"label": "Cornell University", "value": 76},
-                        {"label": "Georgia Institute of Technology", "value": 71},
-                        {"label": "Johns Hopkins University", "value": 64},
-                        {"label": "Duke University", "value": 58},
-                        {"label": "UCLA", "value": 54},
-                        {"label": "University of Minnesota", "value": 49},
-                        {"label": "University of Illinois Urbana-Champaign", "value": 45},
-                        {"label": "University of Wisconsin Medical School (MD)", "value": 41},
-                        {"label": "Other / not specified", "value": 520},
-                    ],
+                    "data": bars_with_years(
+                        [
+                            {"label": "UW–Madison (continuing)", "value": 612},
+                            {"label": "University of Michigan", "value": 198},
+                            {"label": "Northwestern University", "value": 156},
+                            {"label": "University of Chicago", "value": 134},
+                            {"label": "MIT", "value": 112},
+                            {"label": "Stanford University", "value": 98},
+                            {"label": "Harvard University", "value": 92},
+                            {"label": "UC Berkeley", "value": 88},
+                            {"label": "Cornell University", "value": 76},
+                            {"label": "Georgia Institute of Technology", "value": 71},
+                            {"label": "Johns Hopkins University", "value": 64},
+                            {"label": "Duke University", "value": 58},
+                            {"label": "UCLA", "value": 54},
+                            {"label": "University of Minnesota", "value": 49},
+                            {"label": "University of Illinois Urbana-Champaign", "value": 45},
+                            {"label": "University of Wisconsin Medical School (MD)", "value": 41},
+                            {"label": "Other / not specified", "value": 520},
+                        ],
+                        15_200,
+                    ),
                 },
             },
         },
@@ -208,25 +247,31 @@ def main() -> None:
                 "methodology": (
                     "Population (target): non–U.S. citizens who came from abroad before UW. "
                     "Destination after UW: synthetic country mix; production = LinkedIn aggregate harvest "
-                    "with documented filters (no API). Replace with real rollups only."
+                    "with documented filters (no API). Replace with real rollups only. "
+                    "Open Doors bars: rounded U.S.-level totals from IIE Open Doors "
+                    "(https://opendoorsdata.org/) for national scale only — not UW-specific."
                 ),
                 "disclaimer": (
                     "Approximate and incomplete. LinkedIn-visible alumni are not a census; "
-                    "citizenship and ‘from abroad’ are proxy-filtered, not administrative records."
+                    "citizenship and ‘from abroad’ are proxy-filtered, not administrative records. "
+                    "Open Doors figures are national aggregates."
                 ),
             },
             "charts": {
-                "destination_country": {
+                "post_graduation_destination_country": {
                     "type": "bar",
-                    "title": "Post-UW country — sample (non-U.S. citizens from abroad)",
-                    "data": [
-                        {"label": "United States", "value": 450},
-                        {"label": "India", "value": 180},
-                        {"label": "China", "value": 120},
-                        {"label": "South Korea", "value": 55},
-                        {"label": "Canada", "value": 48},
-                        {"label": "Other", "value": 210},
-                    ],
+                    "title": "Where alumni went after UW — by country (sample)",
+                    "data": bars_with_years(
+                        [
+                            {"label": "United States", "value": 450},
+                            {"label": "India", "value": 180},
+                            {"label": "China", "value": 120},
+                            {"label": "South Korea", "value": 55},
+                            {"label": "Canada", "value": 48},
+                            {"label": "Other", "value": 210},
+                        ],
+                        16_300,
+                    ),
                 },
                 "return_vs_stay_trend": {
                     "type": "trend",
@@ -235,12 +280,31 @@ def main() -> None:
                     "data": trend_rows(62.0, 58.0, 55.0, drift=(0.4, 0.35, 0.3)),
                     "series": trend_series,
                 },
+                "open_doors_national_context": {
+                    "type": "bar",
+                    "title": "National mobility context (IIE Open Doors — U.S. totals, not UW)",
+                    "data": [
+                        {
+                            "label": "International students in the U.S. (≈2023/24 headline total)",
+                            "value": 1106104,
+                        },
+                        {
+                            "label": "U.S. students studying abroad for credit (≈2022/23 headline total)",
+                            "value": 280782,
+                        },
+                    ],
+                },
             },
         },
     )
 
     def origins_bundle(degree: str, tab: str, title_suffix: str) -> dict:
         scale = {"undergraduate": 1.0, "graduate": 0.42, "doctorate": 0.11}[degree]
+        oseed = {
+            "origins_undergraduate": 201_001,
+            "origins_graduate": 202_002,
+            "origins_doctorate": 203_003,
+        }[tab]
         return {
             "meta": {
                 **common,
@@ -257,24 +321,30 @@ def main() -> None:
                 "us_states": {
                     "type": "bar",
                     "title": f"US home state — enrolled (sample, {title_suffix})",
-                    "data": [
-                        {"label": "Wisconsin", "value": int(8200 * scale)},
-                        {"label": "Illinois", "value": int(2100 * scale)},
-                        {"label": "Minnesota", "value": int(980 * scale)},
-                        {"label": "California", "value": int(720 * scale)},
-                        {"label": "Other", "value": int(5400 * scale)},
-                    ],
+                    "data": bars_with_years(
+                        [
+                            {"label": "Wisconsin", "value": int(8200 * scale)},
+                            {"label": "Illinois", "value": int(2100 * scale)},
+                            {"label": "Minnesota", "value": int(980 * scale)},
+                            {"label": "California", "value": int(720 * scale)},
+                            {"label": "Other", "value": int(5400 * scale)},
+                        ],
+                        oseed,
+                    ),
                 },
                 "countries": {
                     "type": "bar",
                     "title": f"Country of origin — international enrolled (sample, {title_suffix})",
-                    "data": [
-                        {"label": "China", "value": int(1200 * scale)},
-                        {"label": "India", "value": int(890 * scale)},
-                        {"label": "South Korea", "value": int(410 * scale)},
-                        {"label": "Canada", "value": int(260 * scale)},
-                        {"label": "Other", "value": int(1500 * scale)},
-                    ],
+                    "data": bars_with_years(
+                        [
+                            {"label": "China", "value": int(1200 * scale)},
+                            {"label": "India", "value": int(890 * scale)},
+                            {"label": "South Korea", "value": int(410 * scale)},
+                            {"label": "Canada", "value": int(260 * scale)},
+                            {"label": "Other", "value": int(1500 * scale)},
+                        ],
+                        oseed + 800,
+                    ),
                 },
                 "enrollment_intl_trend": {
                     "type": "trend",
@@ -302,6 +372,7 @@ def main() -> None:
         sankey: dict,
         *,
         cip: str | None = None,
+        year_seed: int = 400_000,
     ) -> dict:
         meta = {
             **common,
@@ -323,19 +394,19 @@ def main() -> None:
             "charts": {
                 "by_industry": {
                     "type": "bar",
-                    "title": f"Alumni by industry — {label} (sample)",
-                    "data": sankey["by_industry_bars"],
+                    "title": f"Alumni by industry — {label} (sample, pooled years)",
+                    "data": bars_with_years(sankey["by_industry_bars"], year_seed),
                 },
                 "top_employers": {
                     "type": "bar",
-                    "title": f"Top employers — {label} (sample)",
-                    "data": employers,
+                    "title": f"Top employers — {label} (sample, pooled years)",
+                    "data": bars_with_years(employers, year_seed + 5000),
                 },
                 "career_flow": {
                     "type": "sankey",
-                    "title": f"Common pathways — {label} (synthetic flow)",
+                    "title": f"Illustrative job stages — {label} (sample, not real counts)",
                     "nodes": sankey["nodes"],
-                    "links": sankey["links"],
+                    "links": sankey_links_with_years(sankey["links"], year_seed + 2000),
                 },
                 "tech_share_trend": {
                     "type": "trend",
@@ -356,12 +427,12 @@ def main() -> None:
             {"label": "Other", "value": 910},
         ],
         "nodes": [
-            {"id": "cs_intern", "label": "Early — intern (SWE)"},
-            {"id": "cs_junior", "label": "Early — junior SWE"},
-            {"id": "cs_swe", "label": "Mid — software engineer"},
-            {"id": "cs_staff", "label": "Senior — staff / principal"},
-            {"id": "cs_pm", "label": "Mid — product / TPM"},
-            {"id": "cs_exec", "label": "Senior — exec / founder"},
+            {"id": "cs_intern", "label": "Internship (writing software)"},
+            {"id": "cs_junior", "label": "Junior software engineer"},
+            {"id": "cs_swe", "label": "Software engineer"},
+            {"id": "cs_staff", "label": "Staff or principal engineer"},
+            {"id": "cs_pm", "label": "Product manager"},
+            {"id": "cs_exec", "label": "Director, VP, or startup founder"},
         ],
         "links": [
             {"source": "cs_intern", "target": "cs_junior", "value": 980},
@@ -391,6 +462,7 @@ def main() -> None:
             cs_employers,
             cs_sankey,
             cip="11.0701",
+            year_seed=401_001,
         ),
     )
 
@@ -403,12 +475,12 @@ def main() -> None:
             {"label": "Other", "value": 720},
         ],
         "nodes": [
-            {"id": "e_ra", "label": "Early — research / analyst intern"},
-            {"id": "e_analyst", "label": "Early — analyst"},
-            {"id": "e_assoc", "label": "Mid — associate"},
-            {"id": "e_vp", "label": "Senior — VP / principal"},
-            {"id": "e_policy", "label": "Mid — policy / PhD track"},
-            {"id": "e_partner", "label": "Senior — partner / director"},
+            {"id": "e_ra", "label": "Summer internship (research or data)"},
+            {"id": "e_analyst", "label": "Analyst — first full-time job"},
+            {"id": "e_assoc", "label": "Associate (banking, consulting, etc.)"},
+            {"id": "e_vp", "label": "Vice president or principal"},
+            {"id": "e_policy", "label": "Policy or graduate-school track"},
+            {"id": "e_partner", "label": "Partner or senior director"},
         ],
         "links": [
             {"source": "e_ra", "target": "e_analyst", "value": 520},
@@ -448,12 +520,12 @@ def main() -> None:
             {"label": "Other", "value": 430},
         ],
         "nodes": [
-            {"id": "b_lab", "label": "Early — lab / RA"},
-            {"id": "b_assoc_sci", "label": "Early — associate scientist"},
-            {"id": "b_rd", "label": "Mid — R&D scientist"},
-            {"id": "b_med", "label": "Mid — med school / clinician track"},
-            {"id": "b_lead", "label": "Senior — team lead"},
-            {"id": "b_pi", "label": "Senior — PI / medical lead"},
+            {"id": "b_lab", "label": "Lab tech or research assistant"},
+            {"id": "b_assoc_sci", "label": "Associate scientist"},
+            {"id": "b_rd", "label": "Industry research scientist"},
+            {"id": "b_med", "label": "Medical school or clinical career"},
+            {"id": "b_lead", "label": "Science team lead"},
+            {"id": "b_pi", "label": "Lead scientist or senior physician"},
         ],
         "links": [
             {"source": "b_lab", "target": "b_assoc_sci", "value": 480},
@@ -481,101 +553,12 @@ def main() -> None:
             bio_employers,
             bio_sankey,
             cip="26.0202",
+            year_seed=403_003,
         ),
     )
 
     sync_majors_index(OUT / "majors", verbose=True)
-
-    write(
-        "notable.json",
-        {
-            "meta": {
-                **common,
-                "tab": "notable_alumni",
-                "degree_level": "all",
-                "source": "mixed",
-                "methodology": (
-                    "Sample entries mix illustrative public figures and synthetic “senior role” placeholders. "
-                    "Production: Wikidata SPARQL (educated at UW–Madison), UW news, and reviewed LinkedIn-aggregate flags. "
-                    "Every row requires source_url."
-                ),
-                "disclaimer": (
-                    "Not an official UW ranking. Inclusion is for illustration; verify via linked sources. "
-                    "LinkedIn-derived rows must be reviewed before publication."
-                ),
-            },
-            "entries": [
-                {
-                    "name": "Charles Lindbergh",
-                    "role_title": "Aviator (attended engineering, did not graduate)",
-                    "organization": "—",
-                    "notability": "widely_cited",
-                    "source_url": "https://en.wikipedia.org/wiki/Charles_Lindbergh",
-                    "source_type": "wikipedia",
-                    "year": "1920s attendance",
-                    "photo_url": (
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/"
-                        "Charles_Lindbergh_%28Harris_%26_Ewing_photo%2C_cropped%29.jpg/"
-                        "160px-Charles_Lindbergh_%28Harris_%26_Ewing_photo%2C_cropped%29.jpg"
-                    ),
-                    "achievement_image_url": "notable/badge-aviation.svg",
-                    "achievement_label": "Aviation",
-                },
-                {
-                    "name": "Frank Lloyd Wright",
-                    "role_title": "Architect (attended, did not graduate)",
-                    "organization": "—",
-                    "notability": "widely_cited",
-                    "source_url": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
-                    "source_type": "wikipedia",
-                    "photo_url": (
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/"
-                        "Frank_Lloyd_Wright_portrait.jpg/160px-Frank_Lloyd_Wright_portrait.jpg"
-                    ),
-                    "achievement_image_url": "notable/badge-architecture.svg",
-                    "achievement_label": "Architecture",
-                },
-                {
-                    "name": "Sample placeholder — CEO",
-                    "role_title": "Chief Executive Officer (synthetic)",
-                    "organization": "Example Corp",
-                    "notability": "senior_role",
-                    "source_url": "https://github.com/dpark1719/BadgerNet-4.0",
-                    "source_type": "other",
-                    "photo_url": "notable/placeholder-person.svg",
-                    "achievement_image_url": "notable/badge-exec.svg",
-                    "achievement_label": "Executive leadership",
-                },
-            ],
-        },
-    )
-
-    write(
-        "meta.json",
-        {
-            "site": {
-                "name": "BadgerNet 4.0",
-                "tagline": "Where UW–Madison students and alumni go — data-driven views (in progress).",
-            },
-            "github_repo": "https://github.com/dpark1719/BadgerNet-4.0",
-            "github_project": "https://github.com/users/dpark1719/projects/2",
-            "methodology_blurb": (
-                "This app loads static JSON from /data. Seven top-level tabs including Notable alumni. "
-                "Industry supports a major filter (see /data/majors/). Career flow uses sankey aggregates; "
-                "top employers use bar charts. Notable list requires source_url per row (Wikidata, news, reviewed LinkedIn)."
-            ),
-            "tabs": [
-                {"id": "industry", "label": "Industry"},
-                {"id": "postgrad", "label": "Post-grad education"},
-                {"id": "international", "label": "International outcomes"},
-                {"id": "origins_undergrad", "label": "Origins — Undergraduate"},
-                {"id": "origins_graduate", "label": "Origins — Graduate"},
-                {"id": "origins_doctorate", "label": "Origins — Doctorate"},
-                {"id": "notable_alumni", "label": "Notable alumni"},
-            ],
-        },
-    )
-
+    # notable.json: run fetch_wikidata_notable.py (do not overwrite here).
 
 if __name__ == "__main__":
     main()

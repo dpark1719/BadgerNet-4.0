@@ -63,6 +63,36 @@ def fetch_wikipedia_summary(
         return None
 
 
+def short_bio_from_summary(summary: dict[str, Any], max_chars: int = 260) -> str | None:
+    """
+    One-line Wikidata-style `description`, or first plain-text chunk of `extract`.
+    Suitable for alumni card subtitle (replaces generic 'Notable person' text).
+    """
+    d = summary.get("description")
+    if isinstance(d, str):
+        t = d.strip()
+        if len(t) > 3:
+            return t[:max_chars] + ("…" if len(t) > max_chars else "")
+
+    ext = summary.get("extract")
+    if not isinstance(ext, str):
+        return None
+    text = re.sub(r"<[^>]+>", " ", ext)
+    text = re.sub(r"\s+", " ", text).strip()
+    if not text:
+        return None
+    if len(text) <= max_chars:
+        return text
+    cut = text[:max_chars]
+    last_period = cut.rfind(". ")
+    last_space = cut.rfind(" ")
+    if last_period >= 80:
+        return cut[: last_period + 1].strip()
+    if last_space >= 60:
+        return cut[:last_space].strip() + "…"
+    return cut.rstrip() + "…"
+
+
 def photo_url_from_summary(summary: dict[str, Any]) -> str | None:
     t = summary.get("thumbnail") or summary.get("originalimage")
     if isinstance(t, dict):

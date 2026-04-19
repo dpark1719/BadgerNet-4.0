@@ -1,10 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { renderChart } from './components/ChartPanels'
 import LandingPage from './components/LandingPage'
 import { NotablePanel } from './components/NotablePanel'
 import VisualizePanel from './components/VizualivePanel'
+import { DataSourcesPanel } from './components/DataSourcesPanel'
+import { OriginsMaps } from './components/OriginsMaps'
+import { YearFilterBar } from './components/YearFilterBar'
 import WorldMapPanel from './components/WorldMapPanel'
-import type { MajorIndex, NotableBundle, SiteMeta, TabBundle } from './types/data'
+import { RankingsHubPanel } from './components/RankingsHubPanel'
+import type { MajorIndex, NotableBundle, RankingsHubBundle, SiteMeta, TabBundle } from './types/data'
 import {
   majorAwareTabs,
   majorSlicePath,
@@ -12,6 +16,7 @@ import {
   tabDataPath,
 } from './types/data'
 import { publicPath } from './publicPath'
+import { applyYearFilter, collectChartYears } from './yearFilter/yearFilterModel'
 import './App.css'
 
 type LoadState<T> =
@@ -26,6 +31,8 @@ type ViewState =
   | { status: 'ok'; mode: 'notable'; data: NotableBundle }
   | { status: 'ok'; mode: 'worldmap' }
   | { status: 'ok'; mode: 'visualize' }
+  | { status: 'ok'; mode: 'datasources' }
+  | { status: 'ok'; mode: 'rankings'; data: RankingsHubBundle }
 
 async function loadJson<T>(url: string): Promise<T> {
   const res = await fetch(url)
@@ -40,19 +47,64 @@ function syncMajorQueryParam(majorId: string) {
   window.history.replaceState(null, '', `${u.pathname}${u.search}${u.hash}`)
 }
 
+function readYearsParam(): string[] {
+  const raw = new URLSearchParams(window.location.search).get('years')
+  if (!raw) return []
+  return raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+function syncTabQueryParam(activeTab: string, defaultTab: string) {
+  const u = new URL(window.location.href)
+  if (activeTab === defaultTab) u.searchParams.delete('tab')
+  else u.searchParams.set('tab', activeTab)
+  window.history.replaceState(null, '', `${u.pathname}${u.search}${u.hash}`)
+}
+
+function syncYearsQueryParam(
+  selectedYears: Set<string>,
+  allYears: string[],
+) {
+  const u = new URL(window.location.href)
+  const full =
+    allYears.length > 0 &&
+    selectedYears.size === allYears.length &&
+    allYears.every((y) => selectedYears.has(y))
+  if (full || selectedYears.size === 0 || allYears.length === 0) {
+    u.searchParams.delete('years')
+  } else {
+    u.searchParams.set(
+      'years',
+      [...selectedYears].sort((a, b) => Number(a) - Number(b)).join(','),
+    )
+  }
+  window.history.replaceState(null, '', `${u.pathname}${u.search}${u.hash}`)
+}
+
+function initialTabFromUrl(): string {
+  try {
+    return new URLSearchParams(window.location.search).get('tab') || 'industry'
+  } catch {
+    return 'industry'
+  }
+}
+
 export default function App() {
   const [showLanding, setShowLanding] = useState(true)
-  const [site, setSite] = useState<LoadState<SiteMeta>>({ status: 'idle' })
-  const [majors, setMajors] = useState<LoadState<MajorIndex>>({ status: 'idle' })
-  const [activeTab, setActiveTab] = useState<string>('industry')
+  const [site, setSite] = useState<LoadState<SiteMeta>>({ status: 'loading' })
+  const [majors, setMajors] = useState<LoadState<MajorIndex>>({
+    status: 'loading',
+  })
+  const [activeTab, setActiveTab] = useState<string>(initialTabFromUrl)
   const [majorId, setMajorId] = useState<string>('all')
-  const [view, setView] = useState<ViewState>({ status: 'idle' })
+  const [view, setView] = useState<ViewState>({ status: 'loading' })
   const [methodOpen, setMethodOpen] = useState(false)
-  const majorInited = useRef(false)
+  const [selectedYears, setSelectedYears] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     let cancelled = false
-    setSite({ status: 'loading' })
     loadJson<SiteMeta>(publicPath('data/meta.json'))
       .then((data) => {
         if (!cancelled) setSite({ status: 'ok', data })
@@ -67,7 +119,6 @@ export default function App() {
 
   useEffect(() => {
     let cancelled = false
-    setMajors({ status: 'loading' })
     loadJson<MajorIndex>(majorsIndexPath)
       .then((data) => {
         if (!cancelled) setMajors({ status: 'ok', data })
@@ -81,13 +132,33 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (majors.status !== 'ok' || majorInited.current) return
-    majorInited.current = true
+    if (majors.status !== 'ok') return
+    let cancelled = false
     const raw = new URLSearchParams(window.location.search).get('major')
     if (raw && majors.data.majors.some((m) => m.id === raw)) {
-      setMajorId(raw)
+      void Promise.resolve().then(() => {
+        if (!cancelled) setMajorId(raw)
+      })
+    }
+    return () => {
+      cancelled = true
     }
   }, [majors])
+
+  useEffect(() => {
+    if (site.status !== 'ok') return
+    let cancelled = false
+    const allowed = new Set(site.data.tabs.map((t) => t.id))
+    if (!allowed.has(activeTab)) {
+      const fallback = site.data.tabs[0]?.id ?? 'industry'
+      void Promise.resolve().then(() => {
+        if (!cancelled) setActiveTab(fallback)
+      })
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [site, activeTab])
 
   const resolveDataUrl = useCallback((tabId: string, major: string): string => {
     if (tabId === 'notable_alumni') {
@@ -104,6 +175,10 @@ export default function App() {
   useEffect(() => {
     let cancelled = false
     const run = async () => {
+      if (activeTab === 'data_sources') {
+        if (!cancelled) setView({ status: 'ok', mode: 'datasources' })
+        return
+      }
       if (activeTab === 'world_map') {
         if (!cancelled) setView({ status: 'ok', mode: 'worldmap' })
         return
@@ -115,6 +190,11 @@ export default function App() {
       try {
         const url = resolveDataUrl(activeTab, majorId)
         if (!cancelled) setView({ status: 'loading' })
+        if (activeTab === 'rankings') {
+          const data = await loadJson<RankingsHubBundle>(url)
+          if (!cancelled) setView({ status: 'ok', mode: 'rankings', data })
+          return
+        }
         if (activeTab === 'notable_alumni') {
           const data = await loadJson<NotableBundle>(url)
           if (!cancelled) setView({ status: 'ok', mode: 'notable', data })
@@ -136,6 +216,82 @@ export default function App() {
       cancelled = true
     }
   }, [activeTab, majorId, resolveDataUrl])
+
+  const chartsFingerprint = useMemo(() => {
+    if (view.status !== 'ok' || view.mode !== 'charts') return ''
+    const m = view.data.meta
+    return `${activeTab}|${majorId}|${m.snapshot_date}|${m.tab}|${m.filter_fingerprint ?? ''}`
+  }, [view, activeTab, majorId])
+
+  useEffect(() => {
+    if (!chartsFingerprint) return
+    if (view.status !== 'ok' || view.mode !== 'charts') return
+    let cancelled = false
+    const opts = collectChartYears(view.data)
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      if (opts.length === 0) {
+        setSelectedYears(new Set())
+        return
+      }
+      const want = readYearsParam()
+      if (want.length > 0) {
+        const sel = new Set(opts.filter((y) => want.includes(y)))
+        if (sel.size > 0) {
+          setSelectedYears(sel)
+          return
+        }
+      }
+      setSelectedYears(new Set(opts))
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [chartsFingerprint, view])
+
+  const chartYearOptions = useMemo(() => {
+    if (view.status !== 'ok' || view.mode !== 'charts') return []
+    return collectChartYears(view.data)
+  }, [view])
+
+  useEffect(() => {
+    if (site.status !== 'ok') return
+    const defaultTab = site.data.tabs[0]?.id ?? 'industry'
+    syncTabQueryParam(activeTab, defaultTab)
+  }, [activeTab, site])
+
+  useEffect(() => {
+    if (chartYearOptions.length === 0) return
+    syncYearsQueryParam(selectedYears, chartYearOptions)
+  }, [selectedYears, chartYearOptions])
+
+  const chartsBundle = useMemo(() => {
+    if (view.status !== 'ok' || view.mode !== 'charts') return null
+    const all = collectChartYears(view.data)
+    if (all.length === 0) return view.data
+    if (selectedYears.size === 0) return view.data
+    return applyYearFilter(view.data, selectedYears)
+  }, [view, selectedYears])
+
+  const toggleChartYear = useCallback((y: string) => {
+    setSelectedYears((prev) => {
+      const next = new Set(prev)
+      if (next.has(y)) {
+        if (next.size <= 1) return next
+        next.delete(y)
+      } else {
+        next.add(y)
+      }
+      return next
+    })
+  }, [])
+
+  const selectAllChartYears = useCallback(() => {
+    if (view.status !== 'ok' || view.mode !== 'charts') return
+    setSelectedYears(new Set(collectChartYears(view.data)))
+  }, [view])
+
+  const isOriginsTab = activeTab.startsWith('origins_')
 
   const onMajorChange = (id: string) => {
     setMajorId(id)
@@ -159,7 +315,9 @@ export default function App() {
 
   const mainWide =
     view.status === 'ok' &&
-    (view.mode === 'worldmap' || view.mode === 'visualize')
+    (view.mode === 'worldmap' ||
+      view.mode === 'visualize' ||
+      view.mode === 'rankings')
       ? ' main--wide'
       : ''
 
@@ -209,7 +367,9 @@ export default function App() {
             key={t.id}
             type="button"
             className={t.id === activeTab ? 'tab active' : 'tab'}
-            onClick={() => setActiveTab(t.id)}
+            onClick={() => {
+              setActiveTab(t.id)
+            }}
           >
             {t.label}
           </button>
@@ -225,8 +385,46 @@ export default function App() {
             {view.message}
           </p>
         )}
+        {view.status === 'ok' && view.mode === 'datasources' && site.status === 'ok' && (
+          <DataSourcesPanel site={site.data} />
+        )}
         {view.status === 'ok' && view.mode === 'worldmap' && <WorldMapPanel />}
         {view.status === 'ok' && view.mode === 'visualize' && <VisualizePanel />}
+        {view.status === 'ok' && view.mode === 'rankings' && (
+          <>
+            <section className="meta-strip" aria-label="Data context">
+              <div className="meta-grid">
+                <div>
+                  <span className="meta-label">Snapshot</span>
+                  <span className="meta-value">
+                    {view.data.meta.snapshot_date}
+                  </span>
+                </div>
+                <div>
+                  <span className="meta-label">Source</span>
+                  <span className="meta-value">{view.data.meta.source}</span>
+                </div>
+              </div>
+              <p className="methodology">{view.data.meta.methodology}</p>
+              {view.data.meta.source_url && (
+                <p>
+                  <a
+                    className="link"
+                    href={view.data.meta.source_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Primary source (Wikidata)
+                  </a>
+                </p>
+              )}
+              {view.data.meta.disclaimer && (
+                <p className="disclaimer">{view.data.meta.disclaimer}</p>
+              )}
+            </section>
+            <RankingsHubPanel bundle={view.data} />
+          </>
+        )}
         {view.status === 'ok' && view.mode === 'notable' && (
           <>
             <section className="meta-strip" aria-label="Data context">
@@ -256,7 +454,7 @@ export default function App() {
             <NotablePanel bundle={view.data} />
           </>
         )}
-        {view.status === 'ok' && view.mode === 'charts' && (
+        {view.status === 'ok' && view.mode === 'charts' && chartsBundle && (
           <>
             <section className="meta-strip" aria-label="Data context">
               <div className="meta-grid">
@@ -299,6 +497,12 @@ export default function App() {
                   </div>
                 )}
               </div>
+              {chartYearOptions.length > 0 &&
+                selectedYears.size < chartYearOptions.length && (
+                  <p className="year-filter-hint muted small">
+                    Charts reflect the selected cohort years only (multi-select).
+                  </p>
+                )}
               <p className="methodology">{view.data.meta.methodology}</p>
               {view.data.meta.source_url && (
                 <p>
@@ -317,8 +521,19 @@ export default function App() {
               )}
             </section>
 
+            {chartYearOptions.length > 0 && (
+              <YearFilterBar
+                years={chartYearOptions}
+                selected={selectedYears}
+                onToggle={toggleChartYear}
+                onSelectAll={selectAllChartYears}
+              />
+            )}
+
+            {isOriginsTab && <OriginsMaps bundle={chartsBundle} />}
+
             <section className="charts" aria-label="Charts">
-              {Object.entries(view.data.charts).map(([key, spec]) =>
+              {Object.entries(chartsBundle.charts).map(([key, spec]) =>
                 renderChart(key, spec),
               )}
             </section>
@@ -373,4 +588,8 @@ const fallbackTabs = [
   { id: 'origins_undergrad', label: 'Origins — UG' },
   { id: 'origins_graduate', label: 'Origins — Grad' },
   { id: 'origins_doctorate', label: 'Origins — PhD' },
+  { id: 'outcomes_scorecard', label: 'Peer outcomes' },
+  { id: 'research_openalex', label: 'Research footprint' },
+  { id: 'rankings', label: 'Rankings' },
+  { id: 'data_sources', label: 'Data catalog' },
 ]
