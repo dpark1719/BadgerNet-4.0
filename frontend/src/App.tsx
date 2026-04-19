@@ -342,8 +342,8 @@ export default function App() {
         <img
           className="uw-bucky-image"
           src={publicPath('brand/bucky-badger.svg')}
-          alt="Bucky Badger mascot illustration"
-          width={112}
+          alt="Bucky Badger, official UW–Madison mascot mark"
+          width={109}
           height={140}
           decoding="async"
         />
