@@ -5,6 +5,72 @@
   text-align: left;
 }
 
+.app-branding {
+  position: relative;
+}
+
+.uw-banner-overlay {
+  background: linear-gradient(105deg, #5a0000 0%, #8a0000 22%, #c5050c 52%, #9e0408 100%);
+  color: #fff;
+  padding: 0.5rem clamp(5.5rem, 22vw, 7rem) 0.5rem 1.25rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 4px 18px rgba(80, 0, 0, 0.35);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.uw-banner-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.uw-banner-mark {
+  flex-shrink: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.12rem 0.4rem 0.08rem;
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.uw-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.uw-banner-title {
+  font-size: clamp(0.78rem, 2.1vw, 0.98rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.uw-banner-tag {
+  font-size: clamp(0.65rem, 1.6vw, 0.75rem);
+  font-weight: 500;
+  opacity: 0.9;
+  letter-spacing: 0.03em;
+}
+
+.uw-bucky-image {
+  position: absolute;
+  top: -0.35rem;
+  right: clamp(0.35rem, 2.5vw, 1.5rem);
+  width: clamp(4.25rem, 12vw, 6rem);
+  height: auto;
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
+}
+
 .header {
   padding: 2rem 1.5rem 1.25rem;
   border-bottom: 1px solid var(--border);
@@ -13,6 +79,10 @@
     var(--header-tint) 0%,
     var(--bg) 100%
   );
+}
+
+.app-branding .header {
+  border-top: none;
 }
 
 .header-split {

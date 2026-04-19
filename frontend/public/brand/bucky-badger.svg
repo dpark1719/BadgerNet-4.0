@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 160" fill="none" aria-hidden="true">
+  <title>Badger mascot</title>
+  <!-- Stylized mascot head (original artwork); UW cardinal + cream -->
+  <ellipse cx="64" cy="118" rx="38" ry="28" fill="#2a2419"/>
+  <path
+    d="M26 108c-8-18 4-42 38-42s46 24 38 42c-6 14-32 22-38 22s-32-8-38-22z"
+    fill="#c5050c"
+  />
+  <ellipse cx="64" cy="86" rx="44" ry="48" fill="#c5050c"/>
+  <path d="M64 38c-18 0-32 14-36 32 8-6 20-10 36-10s28 4 36 10c-4-18-18-32-36-32z" fill="#c5050c"/>
+  <path d="M22 52 8 28c-4-8 10-12 16-4l14 24c-6 4-12 4-16 4z" fill="#2a2419"/>
+  <path d="M106 52l14-24c6-8 20-4 16 4l-14 24c-4 0-10 0-16-4z" fill="#2a2419"/>
+  <ellipse cx="64" cy="88" rx="36" ry="40" fill="#f4e8d8"/>
+  <path d="M64 52v72" stroke="#2a2419" stroke-width="5" stroke-linecap="round"/>
+  <path d="M48 76h32" stroke="#2a2419" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="48" cy="82" rx="6" ry="7" fill="#1a1510"/>
+  <ellipse cx="80" cy="82" rx="6" ry="7" fill="#1a1510"/>
+  <ellipse cx="49" cy="81" rx="2" ry="2" fill="#fff"/>
+  <ellipse cx="81" cy="81" rx="2" ry="2" fill="#fff"/>
+  <path
+    d="M52 102c6 8 18 8 24 0"
+    stroke="#1a1510"
+    stroke-width="3"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <path d="M56 118c4 6 12 6 16 0" stroke="#2a2419" stroke-width="4" stroke-linecap="round" fill="none"/>
+</svg>
