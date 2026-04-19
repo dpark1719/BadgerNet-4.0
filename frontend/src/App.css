@@ -5,70 +5,86 @@
   text-align: left;
 }
 
-.app-branding {
-  position: relative;
-}
-
-.uw-banner-overlay {
-  background: linear-gradient(105deg, #5a0000 0%, #8a0000 22%, #c5050c 52%, #9e0408 100%);
-  color: #fff;
-  padding: 0.5rem clamp(5.5rem, 22vw, 7rem) 0.5rem 1.25rem;
+/* Centered glass banner — does not consume layout above the main header */
+.uw-brand-float {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  max-width: min(92vw, 26rem);
+  padding: 0.55rem 0.85rem 0.55rem 0.65rem;
+  border-radius: 12px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(197, 5, 12, 0.12) 0%,
+    rgba(197, 5, 12, 0.06) 45%,
+    rgba(255, 255, 255, 0.14) 100%
+  );
+  border: 1px solid rgba(197, 5, 12, 0.22);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.12) inset,
-    0 4px 18px rgba(80, 0, 0, 0.35);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 12px 40px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.uw-banner-strip {
+.uw-brand-float-inner {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  max-width: 72rem;
-  margin: 0 auto;
+  gap: 0.65rem;
+  justify-content: center;
 }
 
 .uw-banner-mark {
   flex-shrink: 0;
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   line-height: 1;
-  padding: 0.12rem 0.4rem 0.08rem;
-  border: 2px solid rgba(255, 255, 255, 0.88);
+  padding: 0.1rem 0.32rem 0.06rem;
+  border: 1.5px solid rgba(197, 5, 12, 0.45);
   border-radius: 4px;
   letter-spacing: 0.02em;
+  color: #7a0006;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .uw-banner-text {
   display: flex;
   flex-direction: column;
-  gap: 0.08rem;
+  gap: 0.06rem;
   min-width: 0;
 }
 
 .uw-banner-title {
-  font-size: clamp(0.78rem, 2.1vw, 0.98rem);
+  font-size: clamp(0.72rem, 1.9vw, 0.88rem);
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  color: var(--text-h);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
 }
 
 .uw-banner-tag {
-  font-size: clamp(0.65rem, 1.6vw, 0.75rem);
+  font-size: clamp(0.62rem, 1.5vw, 0.72rem);
   font-weight: 500;
-  opacity: 0.9;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.025em;
+  color: var(--text);
+  opacity: 0.88;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .uw-bucky-image {
-  position: absolute;
-  top: -0.35rem;
-  right: clamp(0.35rem, 2.5vw, 1.5rem);
-  width: clamp(4.25rem, 12vw, 6rem);
+  position: fixed;
+  top: clamp(0.35rem, 2vw, 0.85rem);
+  right: clamp(0.35rem, 2.5vw, 1.25rem);
+  width: clamp(3.75rem, 10vw, 5.25rem);
   height: auto;
-  z-index: 4;
+  z-index: 6;
   pointer-events: none;
-  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .header {
@@ -79,10 +95,6 @@
     var(--header-tint) 0%,
     var(--bg) 100%
   );
-}
-
-.app-branding .header {
-  border-top: none;
 }
 
 .header-split {

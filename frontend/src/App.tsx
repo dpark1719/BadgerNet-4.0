@@ -327,54 +327,56 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="app-branding">
-        <div className="uw-banner-overlay" aria-label="University branding">
-          <div className="uw-banner-strip">
-            <span className="uw-banner-mark" aria-hidden="true">
-              W
-            </span>
-            <div className="uw-banner-text">
-              <span className="uw-banner-title">University of Wisconsin–Madison</span>
-              <span className="uw-banner-tag">Official alumni outcomes explorer</span>
-            </div>
+      <div
+        className="uw-brand-float"
+        role="img"
+        aria-label="University of Wisconsin–Madison, alumni outcomes explorer"
+      >
+        <div className="uw-brand-float-inner">
+          <span className="uw-banner-mark" aria-hidden="true">
+            W
+          </span>
+          <div className="uw-banner-text">
+            <span className="uw-banner-title">University of Wisconsin–Madison</span>
+            <span className="uw-banner-tag">Official alumni outcomes explorer</span>
           </div>
         </div>
-        <img
-          className="uw-bucky-image"
-          src={publicPath('brand/bucky-badger.svg')}
-          alt="Bucky Badger, official UW–Madison mascot mark"
-          width={109}
-          height={140}
-          decoding="async"
-        />
-        <header className="header">
-          <div className="header-text">
-            <p className="eyebrow">University of Wisconsin–Madison</p>
-            <h1>{siteName}</h1>
-            <p className="tagline">{tagline}</p>
-          </div>
-          {activeTab === 'industry' && majorOptions.length > 0 && (
-            <div className="major-filter">
-              <label htmlFor="major-select" className="major-filter-label">
-                Filter by major
-              </label>
-              <select
-                id="major-select"
-                className="major-select"
-                value={majorId}
-                onChange={(e) => onMajorChange(e.target.value)}
-              >
-                <option value="all">All majors</option>
-                {majorOptions.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        </header>
       </div>
+      <img
+        className="uw-bucky-image"
+        src={publicPath('brand/bucky-badger.svg')}
+        alt="Bucky Badger, official UW–Madison mascot mark"
+        width={109}
+        height={140}
+        decoding="async"
+      />
+      <header className="header">
+        <div className="header-text">
+          <p className="eyebrow">University of Wisconsin–Madison</p>
+          <h1>{siteName}</h1>
+          <p className="tagline">{tagline}</p>
+        </div>
+        {activeTab === 'industry' && majorOptions.length > 0 && (
+          <div className="major-filter">
+            <label htmlFor="major-select" className="major-filter-label">
+              Filter by major
+            </label>
+            <select
+              id="major-select"
+              className="major-select"
+              value={majorId}
+              onChange={(e) => onMajorChange(e.target.value)}
+            >
+              <option value="all">All majors</option>
+              {majorOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </header>
 
       {site.status === 'err' && (
         <p className="banner error" role="alert">
