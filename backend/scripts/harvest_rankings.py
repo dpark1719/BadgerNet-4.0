@@ -33,6 +33,8 @@ CIP_CACHE = ROOT / "data" / "raw" / "cip" / "CIPCode2020.csv"
 CIP_LOOKUP_URL = "https://nces.ed.gov/ipeds/cipcode/Files/CIPCode2020.csv"
 MAJORS_INDEX_JSON = ROOT / "frontend" / "public" / "data" / "majors" / "index.json"
 OPTIONAL_MAJOR_RANKS = ROOT / "data" / "raw" / "major_ranks.csv"
+# UW Programs tab: only include rows with publisher vs-peer rank in [1, TOP_PUBLISHER_RANK].
+TOP_PUBLISHER_RANK = 10
 
 UNITID = 240444
 UA = "BadgerNet/4.0 (https://github.com/dpark1719/BadgerNet-4.0; harvest_rankings)"
@@ -499,6 +501,23 @@ def sort_major_entries(entries: list[dict]) -> list[dict]:
     return ranked + unranked
 
 
+def filter_majors_publisher_top(entries: list[dict], max_rank: int = TOP_PUBLISHER_RANK) -> list[dict]:
+    """Programs with a publisher vs-peer rank from 1 to max_rank (inclusive); sorted by rank then name."""
+    out: list[dict] = []
+    for e in entries:
+        pr = e.get("publisher_rank")
+        if pr is None:
+            continue
+        try:
+            r = int(pr)
+        except (TypeError, ValueError):
+            continue
+        if 1 <= r <= max_rank:
+            out.append(e)
+    out.sort(key=lambda x: (x["publisher_rank"], str(x.get("program_label") or "").lower()))
+    return out
+
+
 def main() -> None:
     qids = [p["qid"] for p in PEERS]
     entities = wikidata_entities(qids)
@@ -511,6 +530,7 @@ def main() -> None:
         entries = build_majors_from_ipeds()
         merge_optional_major_ranks(entries)
         entries = sort_major_entries(entries)
+        entries = filter_majors_publisher_top(entries)
     except Exception as e:  # noqa: BLE001
         print(f"warn: IPEDS majors: {e}", file=sys.stderr)
         entries = []
@@ -546,8 +566,9 @@ def main() -> None:
                 "non-U.S. universities (Oxford, Cambridge, ETH Zurich, Tsinghua, NUS, Toronto, etc.) "
                 "alongside U.S. peers so the comparison is not U.S.-only. **U.S.** and **Public** "
                 "are filtered views of the same metrics on subsets of that peer list (see `country`, "
-                "`us`, and `public` flags in harvest_rankings.py). Majors: IPEDS C2024_A completions "
-                "by CIP for UNITID 240444; optional `data/raw/major_ranks.csv` merges publisher ranks."
+                "`us`, and `public` flags in harvest_rankings.py). Majors: optional "
+                "`data/raw/major_ranks.csv` supplies publisher vs-peer ranks; bundle keeps only ranks "
+                f"1–{TOP_PUBLISHER_RANK} with NCES CIP titles from IPEDS C2024_A completions context."
             ),
             "disclaimer": (
                 "Wikidata ranks are community-sourced and may disagree with official publisher tables. "
@@ -582,10 +603,12 @@ def main() -> None:
                 "institutions": public_rows,
             },
             "majors": {
-                "title": "UW–Madison programs (IPEDS completions)",
+                "title": "UW–Madison programs — top publisher ranks (1–10)",
                 "blurb": (
-                    "Programs ranked by optional publisher rank when present, otherwise by IPEDS "
-                    "completions (C2024_A, UNITID 240444). Labels use NCES CIP-2020 titles (not raw codes)."
+                    "Only programs with an external publisher rank vs other schools (ranks 1–"
+                    f"{TOP_PUBLISHER_RANK}). Multiple UW programs that share the same national rank "
+                    "are listed together under that rank. Merge ranks from `data/raw/major_ranks.csv` "
+                    "and re-run harvest. CIP labels use NCES CIP-2020 titles."
                 ),
                 "entries": entries,
             },

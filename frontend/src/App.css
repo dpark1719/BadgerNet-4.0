@@ -681,3 +681,29 @@
   color: var(--muted);
   margin-top: 0.15rem;
 }
+
+.major-rankings-empty {
+  margin: 0;
+  max-width: 40rem;
+  line-height: 1.5;
+}
+
+.major-rankings .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.major-rankings-tier td {
+  padding: 0.55rem 0.65rem 0.35rem;
+  background: var(--header-tint, rgba(0, 0, 0, 0.04));
+  border-bottom: 1px solid var(--border);
+}
+
+.major-rankings-tier-label {
+  font-weight: 650;
+  margin-right: 0.65rem;
+}
+
+.major-rankings-tier-note {
+  font-weight: 400;
+}

@@ -138,7 +138,10 @@ export type NotableBundle = {
   entries: NotableEntry[]
 }
 
-/** UW programs (CIP) with IPEDS completion counts and optional publisher rank. */
+/**
+ * UW program (CIP) with IPEDS completions and optional publisher vs-peer rank.
+ * Rankings bundle only ships programs with publisher_rank in 1..10.
+ */
 export type MajorRankEntry = {
   cipcode: string
   program_label: string
