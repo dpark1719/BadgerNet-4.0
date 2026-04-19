@@ -6,8 +6,8 @@ Build a single rankings bundle: frontend/public/data/rankings.json
   **Global** peer set deliberately mixes U.S. and non-U.S. universities so the world view
   is not U.S.-only (earlier versions were mostly U.S. by design of the peer list).
 - Sub-sections inside the app: global | us | public | majors (no separate top-level tabs).
-- UW majors: IPEDS Completions C2024_A (UNITID 240444); NCES CIP-2020 titles; optional
-  data/raw/major_ranks.csv; optional labels from frontend/public/data/majors/index.json.
+- UW majors: IPEDS Completions C2024_A (UNITID 240444); NCES CIP-2020 titles; publisher ranks from
+  data/raw/major_ranks.csv if present, else backend/seed/major_ranks.csv; majors/index.json labels.
 
 Optional publisher probe: npm run harvest:publishers:probe (Playwright; does not merge).
 """
@@ -32,7 +32,11 @@ RAW = ROOT / "data" / "raw" / "ipeds"
 CIP_CACHE = ROOT / "data" / "raw" / "cip" / "CIPCode2020.csv"
 CIP_LOOKUP_URL = "https://nces.ed.gov/ipeds/cipcode/Files/CIPCode2020.csv"
 MAJORS_INDEX_JSON = ROOT / "frontend" / "public" / "data" / "majors" / "index.json"
-OPTIONAL_MAJOR_RANKS = ROOT / "data" / "raw" / "major_ranks.csv"
+# User override (often gitignored); else committed seed so UW Programs tab works out of the box.
+MAJOR_RANKS_PATHS = [
+    ROOT / "data" / "raw" / "major_ranks.csv",
+    ROOT / "backend" / "seed" / "major_ranks.csv",
+]
 # UW Programs tab: only include rows with publisher vs-peer rank in [1, TOP_PUBLISHER_RANK].
 TOP_PUBLISHER_RANK = 10
 
@@ -458,11 +462,19 @@ def build_majors_from_ipeds() -> list[dict]:
     return rows
 
 
+def major_ranks_csv_path() -> Path | None:
+    for p in MAJOR_RANKS_PATHS:
+        if p.exists():
+            return p
+    return None
+
+
 def merge_optional_major_ranks(entries: list[dict]) -> None:
-    if not OPTIONAL_MAJOR_RANKS.exists():
+    path = major_ranks_csv_path()
+    if path is None:
         return
     by_cip: dict[str, dict[str, Any]] = {}
-    with OPTIONAL_MAJOR_RANKS.open(newline="", encoding="utf-8") as f:
+    with path.open(newline="", encoding="utf-8") as f:
         rdr = csv.DictReader(f)
         for row in rdr:
             cip = (row.get("cipcode") or row.get("CIPCODE") or "").strip()
@@ -529,6 +541,9 @@ def main() -> None:
     try:
         entries = build_majors_from_ipeds()
         merge_optional_major_ranks(entries)
+        mpath = major_ranks_csv_path()
+        if mpath:
+            print(f"  Major ranks CSV: {mpath.relative_to(ROOT)}")
         entries = sort_major_entries(entries)
         entries = filter_majors_publisher_top(entries)
     except Exception as e:  # noqa: BLE001
@@ -607,8 +622,8 @@ def main() -> None:
                 "blurb": (
                     "Only programs with an external publisher rank vs other schools (ranks 1–"
                     f"{TOP_PUBLISHER_RANK}). Multiple UW programs that share the same national rank "
-                    "are listed together under that rank. Merge ranks from `data/raw/major_ranks.csv` "
-                    "and re-run harvest. CIP labels use NCES CIP-2020 titles."
+                    "are listed together under that rank. Override ranks in `data/raw/major_ranks.csv` "
+                    f"or use the bundled seed (`backend/seed/major_ranks.csv`). CIP labels use NCES titles."
                 ),
                 "entries": entries,
             },

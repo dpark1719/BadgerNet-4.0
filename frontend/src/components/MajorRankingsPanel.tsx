@@ -31,10 +31,10 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
     return (
       <section className="major-rankings" aria-label="UW top publisher-ranked programs">
         <p className="muted major-rankings-empty">
-          No UW programs in this bundle have a publisher rank between 1 and {MAX_PUBLISHER_RANK}{' '}
-          (vs other institutions). Add rows to <code className="mono">data/raw/major_ranks.csv</code>{' '}
-          with <code className="mono">cipcode</code> and <code className="mono">publisher_rank</code>, then
-          run <code className="mono">python3 backend/scripts/harvest_rankings.py</code>.
+          No UW programs in this bundle have a publisher rank between 1 and {MAX_PUBLISHER_RANK}. Re-run{' '}
+          <code className="mono">python3 backend/scripts/harvest_rankings.py</code> after a successful IPEDS
+          download. Ranks load from <code className="mono">data/raw/major_ranks.csv</code> if present, otherwise
+          from <code className="mono">backend/seed/major_ranks.csv</code>.
         </p>
       </section>
     )

@@ -2176,8 +2176,97 @@
     },
     "majors": {
       "title": "UW\u2013Madison programs \u2014 top publisher ranks (1\u201310)",
-      "blurb": "Only programs with an external publisher rank vs other schools (ranks 1\u201310). Multiple UW programs that share the same national rank are listed together under that rank. Merge ranks from `data/raw/major_ranks.csv` and re-run harvest. CIP labels use NCES CIP-2020 titles.",
-      "entries": []
+      "blurb": "Only programs with an external publisher rank vs other schools (ranks 1\u201310). Multiple UW programs that share the same national rank are listed together under that rank. Override ranks in `data/raw/major_ranks.csv` or use the bundled seed (`backend/seed/major_ranks.csv`). CIP labels use NCES titles.",
+      "entries": [
+        {
+          "cipcode": "11.0101",
+          "program_label": "Computer and Information Sciences, General",
+          "ipeds_awards": 1252,
+          "publisher_rank": 1,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "30.7001",
+          "program_label": "Data Science, General",
+          "ipeds_awards": 632,
+          "publisher_rank": 1,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "45.0601",
+          "program_label": "Economics, B.A.",
+          "ipeds_awards": 627,
+          "publisher_rank": 2,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "42.0101",
+          "program_label": "Psychology, General",
+          "ipeds_awards": 548,
+          "publisher_rank": 3,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "26.0101",
+          "program_label": "Biology/Biological Sciences, General",
+          "ipeds_awards": 506,
+          "publisher_rank": 4,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "52.0801",
+          "program_label": "Finance, General",
+          "ipeds_awards": 426,
+          "publisher_rank": 5,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "45.1001",
+          "program_label": "Political Science and Government, General",
+          "ipeds_awards": 370,
+          "publisher_rank": 6,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "27.0101",
+          "program_label": "Mathematics, General",
+          "ipeds_awards": 362,
+          "publisher_rank": 7,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "52.0701",
+          "program_label": "Entrepreneurship/Entrepreneurial Studies",
+          "ipeds_awards": 360,
+          "publisher_rank": 8,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "03.0103",
+          "program_label": "Environmental Studies",
+          "ipeds_awards": 350,
+          "publisher_rank": 9,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        },
+        {
+          "cipcode": "14.1901",
+          "program_label": "Mechanical Engineering",
+          "ipeds_awards": 345,
+          "publisher_rank": 10,
+          "publisher": "Demo \u2014 vs peer institutions (seed)",
+          "source_url": "https://www.wisc.edu/"
+        }
+      ]
     }
   }
 }
