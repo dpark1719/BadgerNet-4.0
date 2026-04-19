@@ -12,7 +12,7 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Program (CIP)</th>
+              <th scope="col">Program</th>
               <th scope="col" className="num">
                 IPEDS awards
               </th>
@@ -29,7 +29,9 @@ export function MajorRankingsPanel({ bundle }: { bundle: MajorRankingsBundle }) 
                 <td>{i + 1}</td>
                 <td>
                   <span className="major-rankings-name">{row.program_label}</span>
-                  <span className="major-rankings-cip mono">{row.cipcode}</span>
+                  <span className="major-rankings-cip mono" title="IPEDS CIP-2020 code">
+                    {row.cipcode}
+                  </span>
                 </td>
                 <td className="num">{fmt(row.ipeds_awards)}</td>
                 <td className="num">

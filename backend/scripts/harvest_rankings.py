@@ -6,7 +6,8 @@ Build a single rankings bundle: frontend/public/data/rankings.json
   **Global** peer set deliberately mixes U.S. and non-U.S. universities so the world view
   is not U.S.-only (earlier versions were mostly U.S. by design of the peer list).
 - Sub-sections inside the app: global | us | public | majors (no separate top-level tabs).
-- UW majors: IPEDS Completions C2024_A (UNITID 240444); optional data/raw/major_ranks.csv.
+- UW majors: IPEDS Completions C2024_A (UNITID 240444); NCES CIP-2020 titles; optional
+  data/raw/major_ranks.csv; optional labels from frontend/public/data/majors/index.json.
 
 Optional publisher probe: npm run harvest:publishers:probe (Playwright; does not merge).
 """
@@ -28,6 +29,9 @@ import requests
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "frontend" / "public" / "data" / "rankings.json"
 RAW = ROOT / "data" / "raw" / "ipeds"
+CIP_CACHE = ROOT / "data" / "raw" / "cip" / "CIPCode2020.csv"
+CIP_LOOKUP_URL = "https://nces.ed.gov/ipeds/cipcode/Files/CIPCode2020.csv"
+MAJORS_INDEX_JSON = ROOT / "frontend" / "public" / "data" / "majors" / "index.json"
 OPTIONAL_MAJOR_RANKS = ROOT / "data" / "raw" / "major_ranks.csv"
 
 UNITID = 240444
@@ -346,6 +350,58 @@ def download_c2024() -> Path:
     return dest
 
 
+def norm_cip_code_cell(cell: str) -> str:
+    """NCES CSV sometimes stores codes like =\\"11.0701\\"."""
+    s = (cell or "").strip().strip('"')
+    if s.startswith("="):
+        s = s[1:]
+    return s.strip().strip('"').strip()
+
+
+def load_majors_index_cip_labels() -> dict[str, str]:
+    """CIP -> display label from bundled majors index (overrides NCES title when present)."""
+    if not MAJORS_INDEX_JSON.exists():
+        return {}
+    try:
+        data = json.loads(MAJORS_INDEX_JSON.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    out: dict[str, str] = {}
+    for m in data.get("majors", []):
+        cip = str(m.get("cip") or "").strip()
+        lab = str(m.get("label") or "").strip()
+        if cip and lab:
+            out[cip] = lab
+    return out
+
+
+def download_cip_lookup_table() -> Path:
+    CIP_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    if not CIP_CACHE.exists():
+        print(f"Downloading {CIP_LOOKUP_URL} …")
+        r = requests.get(CIP_LOOKUP_URL, headers={"User-Agent": UA}, timeout=300)
+        r.raise_for_status()
+        CIP_CACHE.write_bytes(r.content)
+    return CIP_CACHE
+
+
+def load_cip_2020_titles(path: Path) -> dict[str, str]:
+    """Map 6-digit CIP '##.####' -> NCES CIPTitle (trailing period removed)."""
+    out: dict[str, str] = {}
+    with path.open(newline="", encoding="utf-8", errors="replace") as f:
+        rdr = csv.DictReader(f)
+        for row in rdr:
+            code = norm_cip_code_cell(row.get("CIPCode") or "")
+            if not re.fullmatch(r"\d{2}\.\d{4}", code):
+                continue
+            title = (row.get("CIPTitle") or "").strip().strip('"')
+            if title.endswith("."):
+                title = title[:-1].strip()
+            if title:
+                out[code] = title
+    return out
+
+
 def load_c2024_df(zip_path: Path) -> pd.DataFrame:
     inner = "c2024_a.csv"
     with zipfile.ZipFile(zip_path, "r") as zf:
@@ -374,12 +430,23 @@ def build_majors_from_ipeds() -> list[dict]:
     g = sub.groupby("_cip", as_index=False)["_n"].sum()
     g = g[g["_cip"].str.len() > 0]
     g = g.sort_values("_n", ascending=False)
+    cip_titles = load_cip_2020_titles(download_cip_lookup_table())
+    index_labels = load_majors_index_cip_labels()
     rows = []
     for _, r in g.iterrows():
+        cip = str(r["_cip"]).strip()
+        if cip in index_labels:
+            label = index_labels[cip]
+        elif cip in cip_titles:
+            label = cip_titles[cip]
+        elif re.fullmatch(r"\d{2}\.\d{4}", cip):
+            label = f"CIP {cip}"
+        else:
+            label = f"Unclassified reporting ({cip})"
         rows.append(
             {
-                "cipcode": r["_cip"],
-                "program_label": f"CIP {r['_cip']}",
+                "cipcode": cip,
+                "program_label": label,
                 "ipeds_awards": int(r["_n"]),
                 "publisher_rank": None,
                 "publisher": None,
@@ -517,8 +584,8 @@ def main() -> None:
             "majors": {
                 "title": "UW–Madison programs (IPEDS completions)",
                 "blurb": (
-                    "All CIP codes with total completions in IPEDS C2024_A for UW–Madison. "
-                    "Optional publisher ranks merge from data/raw/major_ranks.csv."
+                    "Programs ranked by optional publisher rank when present, otherwise by IPEDS "
+                    "completions (C2024_A, UNITID 240444). Labels use NCES CIP-2020 titles (not raw codes)."
                 ),
                 "entries": entries,
             },
